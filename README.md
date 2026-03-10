@@ -1,3 +1,3 @@
-# ELTE IK - (ENG) Computer Science B.Sc. -> Feb - Jun 2026 (2nd sem)
+# ELTE IK - (ENG) Computer Science B.Sc. -> Sep - Dec 2026 (3rd sem)
 
-My second year.
+My third year.
