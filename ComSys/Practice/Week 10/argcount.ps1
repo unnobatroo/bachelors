@@ -1,1 +1,0 @@
-Write-Host (get-content $agrv | measure)

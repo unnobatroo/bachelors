@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="ELTE Informatikai Kar" />
+  <title>Programming languages Java</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">
+  body {
+      max-width: 100% !important;
+  }
+
+  pre > code
+  {
+      all: unset;
+  }
+
+  code
+  {
+      color: blue;
+      font-size: 14px;
+      white-space: pre;
+      border-radius: 3px;
+      font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+      padding: 2px 4px;
+
+      display: inline-block;
+
+      background-image: radial-gradient(ellipse farthest-corner at 50% 50%, #e4e4e4, #ffffff);
+  }
+
+
+  pre code,
+  code.sourceCode
+  {
+    	margin-left: 3em;
+    	padding: 0.5em;
+
+    	border: 0.1em green solid !important;
+
+      display: inline-block;
+  }
+
+  table {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 24px;
+      border-spacing: 0;
+      border-bottom: 2px solid black;
+      border-top: 2px solid black;
+      width: auto !important;
+  }
+
+  table th {
+      padding: 3px 10px;
+      background-color: white;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid black;
+  }
+
+  table td {
+      padding: 3px 10px;
+      border-top: none;
+      border-left: none;
+      border-bottom: none;
+      border-right: none;
+  }
+
+  nav#TOC {
+      position: fixed;
+      top: .2em;
+      right: .2em;
+      border: 1px solid black;
+  }
+
+  h2#toc-title {
+      margin-top: 0em;
+  }
+
+  nav#TOC::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  a {
+      color: blue;
+      text-decoration: underline !important;
+  }
+
+  </style>
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Programming languages Java</h1>
+<p class="subtitle">Lab exercises</p>
+<p class="author">ELTE Informatikai Kar</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Contents</h2>
+<ul>
+<li><a href="#basics" id="toc-basics">01. Basics</a></li>
+<li><a href="#class-field-method" id="toc-class-field-method">02. Class,
+field, method</a></li>
+<li><a href="#package" id="toc-package">03. Package</a></li>
+<li><a href="#unit-testing-junit" id="toc-unit-testing-junit">04-05.
+Unit testing: JUnit</a></li>
+<li><a href="#array-enum-memmap" id="toc-array-enum-memmap">06. Array,
+enum, memmap</a></li>
+<li><a href="#io-exception" id="toc-io-exception">07. I/O,
+exception</a></li>
+<li><a href="#list-set-map" id="toc-list-set-map">08. <code>List</code>,
+<code>Set</code>, <code>Map</code></a></li>
+<li><a href="#generics" id="toc-generics">09. Generics</a></li>
+<li><a href="#inheritance" id="toc-inheritance">10. Inheritance</a></li>
+<li><a href="#interfaces-equality" id="toc-interfaces-equality">11.
+Interfaces, equality</a></li>
+</ul>
+</nav>
+<h2 class="en" id="foreword-1">Foreword</h2>
+<p>The lab class is bbased on the codes and concepts coveren on the
+theory class: your task here is to make similar codes. To ensure that
+you are prepared for this, most of you are obliged to attend theory
+classes.</p>
+<p><em>No matter whether or not you have an exemption from
+attendance</em>, you must be prepared: <strong>you must be familiar with
+what was covered in the recent theory classes</strong>. Watch (or
+rewatch) the recordings of the theory class before coming to the lab
+class.</p>
+<p>In case you miss the first couple of classes because you haven’t yet
+arrived in Hungary, you have to catch up with the materials as fast as
+you can. Watch the recordings of the theory classes week by week and try
+solving a couple of the exercises before coming to the first lab
+class.</p>
+<h1 class="en" id="basics">01. Basics</h1>
+<h2 class="en" id="first-steps-1">First steps</h2>
+<h3 class="en" id="task-demo-1">Task Demo 1</h3>
+<p>Download the <code>zip</code> file of the theory class demo codes and
+extract them into a separate subfolder. Run some of the first
+programs.</p>
+<ul>
+<li>Use both the <code>cmd</code> and the <code>pwsh</code> (PowerShell)
+command line at least once.</li>
+<li>Use them as a separate program and as a terminal inside VS Code.
+<ul>
+<li>For now, let’s use the simple way of execution: no separate
+compilation, just run them like this:
+<code>javac TheoryDemoProgram.java</code></li>
+</ul></li>
+</ul>
+<h2 class="en" id="exercises-1">Exercises</h2>
+<h3 class="en" id="task-1">Task 1</h3>
+<p>Based on: <code>BasicHelloWorld{N}</code>,
+<code>InputWithIO{1}</code>. A text is provided in the variable
+<code>txt</code>. Make <code>main</code> in
+<code>SimpleTextManipulation.java</code> program call helper methods
+<code>main01</code>, <code>main02</code> etc., passing <code>txt</code>
+as the argument. Their behaviour should be as follows:</p>
+<ol type="1">
+<li>Print the length of the text.
+<ul>
+<li>Look up a suitable method in the API documentation for the
+corresponding type.
+<ul>
+<li>You’ll find the link to the API docs in the sample codes.</li>
+</ul></li>
+<li>In later tasks, you may also need to look up certain methods. If you
+cannot find them after searching, ask your instructor for help.</li>
+</ul></li>
+<li>Print the first and the last character of the text, each on its own
+line.</li>
+<li>Now concatenate the first and last character into one text and print
+it.
+<ul>
+<li>Why does the output look wrong?</li>
+<li>Fix the problem.</li>
+</ul></li>
+<li>Instead of just one letter, take <code>n</code> letters from the
+beginning and the end of the text. Let <code>n</code> be a parameter.
+<ul>
+<li>Ensure that the text has at least <code>n</code> characters.
+<ul>
+<li>Check the program’s output when there are not enough
+characters.</li>
+</ul></li>
+<li>From now on, unless the instructions say otherwise, assume that all
+input data is valid.</li>
+</ul></li>
+<li>The method should return the text instead of printing it.
+<ul>
+<li>We always want to test the written code. From now on, unless
+specified otherwise, let the <code>main</code> method print the returned
+result.</li>
+</ul></li>
+<li>Make the method concatenate all prefixes of the text into one large
+text and return it.
+<ul>
+<li>Example: out of the text <code>abcde</code>, construct
+<code>aababcabcdabcde</code>.</li>
+</ul></li>
+</ol>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Based on: <code>InputWithIO{2,3}</code>. In the file
+<code>FindInTextBefore.java</code>, the method <code>findFirstIdx</code>
+receives a text and two positions. It returns the index where the first
+occurrence of the specified substring is found.</p>
+<ol type="1">
+<li>Variant: <code>findFirstIdxIgnoreSpaces</code> – ignore spaces.
+<ul>
+<li>Hint: replace spaces with the empty text.</li>
+<li>Hint: do not rewrite the entire code – make use of the previous
+version instead: call it.</li>
+</ul></li>
+<li>Variant: <code>findFirstIdxIgnoreCase</code> – in addition to
+ignoring spaces, also ignore differences between uppercase and lowercase
+letters.
+<ul>
+<li>Hint: convert the text to lowercase before checking.</li>
+</ul></li>
+<li>For each of the above methods, write a corresponding
+<code>verifyMMM</code> method (e.g.,
+<code>verifyFindFirstIdxIgnoreCase</code>).
+<ul>
+<li>The parameters should be the same, and it should call the
+corresponding method.</li>
+<li>Instead of printing the result, the method checks whether it is
+correct: verify that the given substring is indeed found at the returned
+position.</li>
+<li>It returns a boolean value.</li>
+<li>Testing guidelines: - When verifying a program part, try every
+significantly different case at least once. - Here, two possibilities
+exist: either the substring occurs earlier in the text, or the first
+found index is exactly at the given substring. - As before, we assume
+that all input is valid and that valid output can always be
+produced.</li>
+</ul></li>
+</ol>
+<h3 class="en" id="task-3">Task 3</h3>
+<p>Based on: <code>InputWithIO{4,5}</code>. The main program
+<code>LaundryList</code> is parameterised so that words form a washing
+list. For example: <code>3</code>, <code>trousers</code>,
+<code>6</code>, <code>pants</code>, <code>9</code>,
+<code>T-shirts</code>, <code>100 neckties</code>. Simply pass the
+argument to the following methods.</p>
+<ol type="1">
+<li><code>hasAllGoodNames</code> – check whether the input is valid:
+each name must be non-empty.
+<ul>
+<li>There is a built-in method specialised for this check. Write the
+solution both with and without using it.</li>
+</ul></li>
+<li><code>getItemCount</code> – return how many different clothing items
+are listed in total. (In the example: <code>4</code>).</li>
+<li><code>getKindCount</code> – return how many kinds of clothing items
+appear in the description. (In the example: <code>4</code>).
+<ul>
+<li>When counting kinds, do not include duplicates – only count each
+clothing type once.</li>
+</ul></li>
+<li><code>getCount</code> – receives the name of a clothing type as its
+first parameter. Return the total number of that type in the laundry
+list.
+<ul>
+<li>How should the code be written if the clothing type appears at most
+once?</li>
+<li>How should the code be written if the clothing type may appear
+multiple times?</li>
+</ul></li>
+<li><code>hasDuplicate</code> – check whether any clothing type appears
+more than once.
+<ul>
+<li>The solution does not need to be highly efficient.</li>
+</ul></li>
+</ol>
+<h1 class="en" id="class-field-method">02. Class, field, method</h1>
+<h3 class="en" id="task-1">Task 1</h3>
+<ol type="a">
+<li>Create a <code>Point</code> class containing two fields,
+<code>x</code> and <code>y</code> of type <code>double</code>.</li>
+</ol>
+<p>Create a simple constructor for it that takes two
+<code>double</code>s and sets up the fields using them.</p>
+<p>Create the method <code>print()</code> that creates a printout like
+this: <code>At (10.0, 20.0)</code>.</p>
+<ul>
+<li>Use <code>.formatted</code> to make your printout and
+<code>%2.1f</code> as the format style.</li>
+<li>Search the overview slideshow for a sample use of
+<code>.formatted</code>.</li>
+</ul>
+<p>In <code>PointMain.java</code>, create <code>main</code> which makes
+a <code>Point</code> instance and prints it using the method.</p>
+<ul>
+<li>Also try calling one of the following. Does the printout change? -
+<code>Locale.setDefault(Locale.of("en"));</code> -
+<code>Locale.setDefault(Locale.of("hu"));</code></li>
+<li>The sample outputs below sometimes use one, sometimes the
+other.</li>
+<li>In the following exercises, you can keep the already created code,
+copy it to a new file (e.g. <code>PointMain2</code>,
+<code>PointMain3</code>, …)</li>
+</ul>
+<ol start="2" type="a">
+<li>Create a method <code>shift(dx,dy)</code> which can change a point’s
+coordinates by <code>dx</code> and <code>dy</code>.</li>
+</ol>
+<ul>
+<li>Here, <code>d</code> indicates that these parameters are
+“differences” or “deltas.”</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode .java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">10.0</span><span class="op">,</span> <span class="fl">20.0</span><span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">11.2</span><span class="op">,</span> <span class="fl">16.6</span><span class="op">)</span> after being shifted <span class="fu">by</span> <span class="op">(</span><span class="fl">1.2</span><span class="op">,</span> <span class="op">-</span><span class="fl">3.4</span><span class="op">)</span></span></code></pre></div>
+<p>To support the longer printout, create another version of
+<code>print()</code> (keep the old one, too!) that takes two parameters:
+a text and a <code>Point</code>. Make the second printout using it
+following this schema:
+<code>At &lt;the current point&gt; &lt;the parameter message&gt; &lt;the parameter point&gt;</code></p>
+<ol start="3" type="a">
+<li>Now let <code>main</code> in <code>PointMain</code> also take text
+arguments: <code>String... args</code>.</li>
+</ol>
+<p>The first two describe the initial point. What follows is groups of
+two numbers: each describes a shift.</p>
+<ul>
+<li>Use <code>Double.parseDouble</code> to convert the texts.</li>
+<li>Print every change.</li>
+<li>Example: if the input is
+<code>10.0 20.0 1.2 -3.4 10.0 10.0 -5.11 7.77 -4.321 1.234</code> then
+the output will be the following.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode .java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">10.0</span><span class="op">,</span> <span class="fl">20.0</span><span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">30.0</span><span class="op">,</span> <span class="fl">21.2</span><span class="op">)</span> at step #<span class="dv">1</span> after being shifted <span class="fu">by</span> <span class="op">(</span><span class="fl">20.0</span><span class="op">,</span> <span class="fl">1.2</span><span class="op">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">26.6</span><span class="op">,</span> <span class="fl">31.2</span><span class="op">)</span> at step #<span class="dv">2</span> after being shifted <span class="fu">by</span> <span class="op">(-</span><span class="fl">3.4</span><span class="op">,</span> <span class="fl">10.0</span><span class="op">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">36.6</span><span class="op">,</span> <span class="fl">26.1</span><span class="op">)</span> at step #<span class="dv">3</span> after being shifted <span class="fu">by</span> <span class="op">(</span><span class="fl">10.0</span><span class="op">,</span> <span class="op">-</span><span class="fl">5.1</span><span class="op">)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">44.4</span><span class="op">,</span> <span class="fl">21.8</span><span class="op">)</span> at step #<span class="dv">4</span> after being shifted <span class="fu">by</span> <span class="op">(</span><span class="fl">7.8</span><span class="op">,</span> <span class="op">-</span><span class="fl">4.3</span><span class="op">)</span></span></code></pre></div>
+<p>Try running the program both from <code>jshell</code> and the command
+line.</p>
+<ol start="4" type="a">
+<li>To simplify the creation of <code>Point</code>s, create one more
+constructor that takes all <code>args</code> as a single parameter and
+an <code>idx</code> that indexes an element of it. Let it create the
+point made up from the number at <code>idx</code> (its <code>x</code>
+coordinate) and at <code>idx+1</code> (its <code>y</code>
+coordinate).</li>
+</ol>
+<p>Use it to simplify the previous <code>main</code>.</p>
+<ol start="5" type="a">
+<li>In <code>Point</code>, create the method <code>mirror(cx,cy)</code>
+which can reflect a point on the coordinates <code>cx</code> and
+<code>cy</code>.</li>
+</ol>
+<ul>
+<li>Here, <code>c</code> indicates that these parameters define the
+“centre” of mirroring.</li>
+</ul>
+<p>Create a <code>PointMain</code> program to test the
+<code>Point</code> class by using it a bit. Let it print the following
+as it performs the described steps.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode .java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">10.0</span><span class="op">,</span> <span class="fl">20.0</span><span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">11.2</span><span class="op">,</span> <span class="fl">16.6</span><span class="op">)</span> after being shifted <span class="fu">by</span> <span class="op">(</span><span class="fl">1.2</span><span class="op">,</span> <span class="op">-</span><span class="fl">3.4</span><span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="fl">8.8</span><span class="op">,</span> <span class="fl">3.4</span><span class="op">)</span> after being mirrored <span class="fu">on</span> <span class="op">(</span><span class="fl">10.0</span><span class="op">,</span> <span class="fl">10.0</span><span class="op">)</span></span></code></pre></div>
+<ol start="6" type="a">
+<li><p>If there are no arguments at all, then set <code>args</code> to
+<code>"10.0 20.0 1.2 -3.4 10.0 10.0".split(" ")</code> then proceed as
+usual.</p></li>
+<li><p>If only the initial point is given (in the first two arguments),
+then let the program read its input from the console using
+<code>IO.readln</code>.</p></li>
+</ol>
+<p>Then, read the data of a shift and of a mirroring: altogether, four
+coordinates.</p>
+<ul>
+<li>If the first number the user gives you is a specific number (say,
+<code>-123456</code>), then finish running. - Give this constant a name:
+<code>END_INDICATOR</code>. Using “funny” numbers without a name is bad
+practtice: they are called <a
+href="https://en.wikipedia.org/wiki/Magic_number_(programming)">magic
+numbers</a>.</li>
+<li>Make similar printouts to the previous exercise.</li>
+<li>Repeat reading data for a shift, a mirroring, a shift, a mirroring
+etc.</li>
+</ul>
+<ol start="8" type="a">
+<li>Bonus exercise: can you make one single program that does everything
+described so far?</li>
+</ol>
+<ul>
+<li>That is, it uses a default set of arguments if none are given; if a
+single point is given, it reads the other data from the console; if
+everything is given in advance, it uses that.</li>
+<li>Make a helper function <code>getNextPoint</code> that can give you
+the next point either from the arguments or from the console input as
+needed.</li>
+</ul>
+<pre><code>At (10,0, 20,0)
+Input x for shifting Point#1: 11.1
+Input y for shifting Point#1: 22.2
+At (21,1, 42,2) at step #1 after being shifted by (11,1, 22,2)
+Input x for mirroring Point#1: 33.3
+Input y for mirroring Point#1: 44.4
+At (45,5, 46,6) at step #2 after being mirrored on (33,3, 44,4)
+Input x for shifting Point#2: -123456
+Input y for shifting Point#2: 0
+Special input encountered, exiting</code></pre>
+<ol type="i">
+<li>Create a <code>distance(p)</code> method which computes the distance
+between the current point and given point <code>p</code>, the
+parameter.</li>
+</ol>
+<ul>
+<li>Use the <code>Math.sqrt(...)</code> function and the Pythagorean
+theorem.</li>
+<li>Make <code>PointPath.java</code> whose <code>main</code> takes an
+even number of command line arguments. Each two describes a point; you
+can assume that we have two or more of them. Using
+<code>distance</code>, print the following.</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode .java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="dv">10</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span><span class="dv">0</span><span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">)</span> with a total distance of <span class="dv">25</span><span class="op">,</span><span class="dv">0</span> and a distance of <span class="dv">25</span><span class="op">,</span><span class="dv">0</span> <span class="fu">from</span> <span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span> <span class="op">-</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(</span><span class="dv">10</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span><span class="dv">0</span><span class="op">)</span> with a total distance of <span class="dv">41</span><span class="op">,</span><span class="dv">0</span> and a distance of <span class="dv">16</span><span class="op">,</span><span class="dv">0</span> <span class="fu">from</span> <span class="op">(</span><span class="dv">10</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span><span class="dv">0</span><span class="op">)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(-</span><span class="dv">5</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span><span class="dv">8</span><span class="op">)</span> with a total distance of <span class="dv">56</span><span class="op">,</span><span class="dv">3</span> and a distance of <span class="dv">15</span><span class="op">,</span><span class="dv">3</span> <span class="fu">from</span> <span class="op">(-</span><span class="dv">5</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span> <span class="dv">7</span><span class="op">,</span><span class="dv">8</span><span class="op">)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">At</span> <span class="op">(-</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span> with a total distance of <span class="dv">62</span><span class="op">,</span><span class="dv">9</span> and a distance of <span class="dv">6</span><span class="op">,</span><span class="dv">6</span> <span class="fu">from</span> <span class="op">(-</span><span class="dv">4</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">)</span></span></code></pre></div>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Make the <code>Complex</code> class representing complex numbers with
+a real and imaginary part. The class contains fields <code>re</code> and
+<code>im</code> of type <code>double</code>.</p>
+<p>Create the following methods.</p>
+<ul>
+<li><code>abs()</code>: computes the absolute value of the complex
+number: the square root of <code>re²+im²</code>.
+<ul>
+<li>Hint: see the documentation of the <code>Math</code> class.</li>
+</ul></li>
+<li><code>add(c)</code>, <code>sub(c)</code>, <code>mul(c)</code>:
+add/subtract/multiply our number with <code>c</code>.
+<ul>
+<li>Implement subtraction by calling <code>add</code> with a negated
+<code>c</code>.
+<ul>
+<li>The multiplication formula is
+<code>(a + ib) * (c + id) = (ac - bd) + (ad + bc)i</code>.</li>
+</ul></li>
+</ul></li>
+<li><code>getText</code>: it returns a text that shows the complex
+number as <code>4,0+2,0i</code> or <code>1,0-13,0i</code> or
+<code>3,7</code> if the imaginary part is zero.</li>
+<li><code>print</code>: two versions of it, similar to how it was in
+<code>Point</code>.</li>
+</ul>
+<p>In <code>main</code>, perform some operations and print their results
+like this.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>The number is <span class="dv">4</span><span class="op">,</span><span class="dv">0</span><span class="op">+</span><span class="dv">2</span><span class="op">,</span><span class="er">0</span>i</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>The number is <span class="dv">5</span><span class="op">,</span><span class="dv">0</span><span class="op">-</span><span class="dv">11</span><span class="op">,</span><span class="er">0</span>i after adding <span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">-</span><span class="dv">13</span><span class="op">,</span><span class="er">0</span>i</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>The number is <span class="dv">16</span><span class="op">,</span><span class="dv">1</span><span class="op">-</span><span class="dv">8</span><span class="op">,</span><span class="er">6</span>i after subtracting <span class="dv">11</span><span class="op">,</span><span class="dv">1</span><span class="op">+</span><span class="dv">2</span><span class="op">,</span><span class="er">4</span>i</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>The number is <span class="dv">12</span><span class="op">,</span><span class="dv">8</span><span class="op">-</span><span class="dv">7</span><span class="op">,</span><span class="er">4</span>i after adding <span class="op">-</span><span class="dv">3</span><span class="op">,</span><span class="dv">3</span><span class="op">+</span><span class="dv">1</span><span class="op">,</span><span class="er">2</span>i</span></code></pre></div>
+<h2 class="en" id="practice-exercises-1">Practice exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Create the methods <code>conjugate()</code> and
+<code>reciprocate()</code> and <code>div()</code> in class
+<code>Complex</code>.</p>
+<ul>
+<li>The conjugate of <span class="math inline">\(a + bi = a -
+bi\)</span></li>
+<li>The reciprocate of <span class="math inline">\(a + bi = {a \over a^2
++ b^2} - {b \over a^2 + b^2}i\)</span></li>
+<li>Division works like this.</li>
+</ul>
+<p><span class="math display">\[\frac{a + bi}{c + di} = \frac{(a + bi)(c
+- di)}{(c + di)(c - di)} = \frac{(ac + bd) + (bc - ad)i}{c^2 + d^2} =
+\frac{ac + bd}{c^2 + d^2} + \frac{bc - ad}{c^2 + d^2}i\]</span></p>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<ol type="a">
+<li>Create class <code>Line</code> which represents a straight line on a
+2D plane using the formula <span class="math inline">\(ax + by =
+c\)</span>. Store <code>a</code>, <code>b</code> and <code>c</code> as
+<code>double</code>s; the 2D points <span
+class="math inline">\((x,y)\)</span> that satisfy the formula are on the
+line.</li>
+</ol>
+<ul>
+<li>Note that vertical lines cannot be represented this way.</li>
+</ul>
+<p>Create a method <code>contains(p)</code> which decides whether the
+point <code>p</code> lies on the line.</p>
+<p>Create the methods <code>isParallelWith(line)</code> and
+<code>isOrthogonalTo(line)</code>.</p>
+<ol start="2" type="a">
+<li>Create the class <code>Segment</code> representing line segments on
+a plane. Represent it using two <code>Point</code>s; in the text, we’ll
+refer to their coordinates as <code>x1</code>, <code>y1</code>,
+<code>x2</code>, <code>y2</code>.</li>
+</ol>
+<p>Create a method <code>line()</code> which returns a <code>Line</code>
+object representing the line that covers the segment.</p>
+<p>Create <code>contains(p)</code> which decides whether the point
+<code>p</code> lies on the segment.</p>
+<ol start="3" type="a">
+<li>Create <code>Rectangle</code>. We’ll only consider such whose sides
+are parallel to the coordinate axis. Store its <code>bottomRight</code>
+corner as a point and its <code>width</code> and <code>height</code> as
+(nonnegative) <code>double</code>s.</li>
+</ol>
+<ul>
+<li>Add <code>topLeft()</code>, <code>topRight()</code>, and
+<code>bottomLeft()</code> that return the other corners as
+<code>Point</code>s.</li>
+<li>Add <code>intersect(otherRect)</code> that returns the biggest
+rectangle contained in both the original and the parameter.
+<ul>
+<li>Hint: find the largest coordinates of the top left corners, and the
+smallest coordinates of the bottom right ones. </li>
+<li>You may use <code>Math.min(value1, value2)</code> and
+<code>Math.max</code>.</li>
+</ul></li>
+<li>Add <code>enclosing(otherRect)</code> that returns the smallest
+rectangle that contains both the original and the parameter.
+<ul>
+<li>Hint: similar to the one before, just the other way round with the
+<code>min</code>/<code>max</code>.</li>
+</ul></li>
+<li>Write <code>RectMain</code> that interprets its command line
+arguments as a sequence of rectangles and calculates the minimum
+bounding (enclosing) rectangle in each step.</li>
+</ul>
+<pre><code>Rectangle #1 is (1,2)-(3,4)
+Rectangle #2 is (1,2)-(3,4), current bounding: (x,x)-(x,x), current enclosing: (x,x)-(x,x)
+Rectangle #3 is (1,2)-(3,4), current bounding: (x,x)-(x,x), current enclosing: (x,x)-(x,x)
+Rectangle #4 is (1,2)-(3,4), current bounding: (x,x)-(x,x), current enclosing: (x,x)-(x,x)</code></pre>
+<ol start="4" type="a">
+<li><p>If you like exercises that are a bit heavier on the math side,
+add the following methods into <code>Segment</code>.</p>
+<ol type="1">
+<li><p><code>orientation(p)</code> decides whether the point
+<code>p</code> is “to the right” of the segment, “to the left” of it, or
+“on its line”.</p>
+<ul>
+<li><p>These are more properly called a clockwise orientation, a
+counter-clockwise one, or being collinear respectively.</p></li>
+<li><p>The method returns a positive number, a negative one, and
+<code>0</code> respectively.</p></li>
+<li><p>Mathematically, you only have to evaluate the following formula
+to get the result.</p>
+<p><span class="math display">\[(y_2 - y_1)(x_p - x_2) - (y_p - y_2)(x_2
+- x_1)\]</span></p></li>
+</ul></li>
+<li><p><code>intersects(seg2)</code> decides whether a segment
+intersects with the parameter segment <code>seg2</code>. You can use the
+following tutorial.</p>
+<p><a href="http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf"
+class="uri">http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf</a></p></li>
+</ol></li>
+</ol>
+<h1 class="en" id="package">03. Package</h1>
+<h2 class="en hu" id="demo-1">Demo</h2>
+<h3 class="en" id="demo-1">Demo 1</h3>
+<p>Reorganize the previous lab’s <code>Point</code> demo: put both
+<code>Point</code> and its corresponding <code>PointMain</code> into the
+<code>point2d</code> package.</p>
+<ol type="1">
+<li>Write <code>Point</code> so that it is not visible from outside of
+its package for now. In other words, do <em>not</em> make it
+<code>public</code>.</li>
+<li>Create the class whose fully qualified name is
+<code>pointless.AnotherMain</code>. This means that you need to create a
+class called <code>AnotherMain</code> in package <code>pointless</code>.
+The corresponding file is <code>pointless/AnotherMain.java</code>.
+<ul>
+<li>Try to instantiate <code>Point</code> from <code>main</code> in
+<code>AnotherMain</code>. Observe the error message.</li>
+</ul></li>
+</ol>
+<p>Important details.</p>
+<ul>
+<li>The “compact source classes” that we’ve been writing so far are
+<em>incompatible</em> with packages. So from this point on, we’ll have
+to write Java sources in their full form, all of your code will be a bit
+more verbose.</li>
+<li>Package names and folders <em>must</em> have matching
+structures.</li>
+<li>You <em>must</em> use the “base” or “root” folder (where the folder
+structure begins) to start the compilation.
+<ul>
+<li>If your terminal is set to a different folder, compilation
+fails!</li>
+</ul></li>
+</ul>
+<h2 class="en" id="tasks-1">Tasks</h2>
+<h3 class="en" id="task-1">Task 1</h3>
+<p>Let’s experiment a bit more with the visibility of classes. Now make
+the class <code>Point</code> visible for packages other than its
+own.</p>
+<ol type="a">
+<li>Now <code>AnotherMain</code> has to be able to access
+<code>Point</code>.
+<ol type="i">
+<li>Instantiate a <code>Point</code> using its fully qualified
+name.</li>
+<li>Instantiate a <code>Point</code> using an <code>import</code>.</li>
+</ol></li>
+<li>Create class <code>PointMainInDefaultPackage</code> in the default
+(anonymous) package.
+<ul>
+<li>Can you use <code>Point</code> in this class? For example, can you
+instantiate a <code>Point</code> in
+<code>PointMainInDefaultPackage</code>?</li>
+<li>Conversely, can <code>Point</code> use this class?</li>
+</ul></li>
+</ol>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Copy Lab 2’s <code>Circle</code> into two classes:
+<code>plane.PublicCircle</code> and <code>plane.Circle</code>.</p>
+<ul>
+<li>If you haven’t created its code yet, do it now.</li>
+<li>Initialise the fields: the centre as a <code>Point</code> and the
+<code>radius</code> as <code>1.0</code>.
+<ul>
+<li>In <code>PublicCircle</code>, make all fields <code>public</code>.
+In the plain <code>Circle</code>, add no such modifier.</li>
+</ul></li>
+</ul>
+<ol type="a">
+<li>Write <code>plane.but.not.flying.CircleMain.main</code> (you have to
+understand how to take this name apart!), do the following.
+<ul>
+<li>Create a <code>PublicCircle</code> instance.</li>
+<li>Print its area.</li>
+<li>Set its center to <code>(5, 2)</code>, radius to
+<code>10.0</code>.</li>
+<li>Print its area again.</li>
+</ul></li>
+<li>In <code>Circle</code>, create getters and setters for its fields.
+<ol type="i">
+<li>In the latter, throw an <code>IllegalArgumentException</code> if the
+radius would be <code>0.0</code> or lower.</li>
+<li>Make <code>CircleMain.main</code> in the anonymous package, use each
+functionality of the circle in it.
+<ul>
+<li>Trigger the exception by feeding an illegal <code>radius</code>
+value to a new circle.</li>
+<li>Do not try to catch the exception, that will be discussed
+later.</li>
+</ul></li>
+</ol></li>
+<li>In <code>Circle</code>, create a constructor that initialises the
+fields.
+<ol type="i">
+<li>Let the constructor throw an exception similar to the setter.</li>
+<li>In <code>CircleMain.main</code>, use each functionality.</li>
+</ol></li>
+</ol>
+<h3 class="en" id="task-3">Task 3</h3>
+<p>Create the class <code>string.utils.IterLetter</code>.</p>
+<ol type="a">
+<li>Its constructor takes a <code>String</code> parameter.
+<ul>
+<li>If it is <code>null</code>, throw an
+<code>IllegalArgumentException</code>.</li>
+</ul></li>
+<li>In this class, create the method <code>printNext()</code>.
+<ul>
+<li>The first call to the method prints the first letter of the text to
+the standard output on a single line. The second call prints the second
+letter and so on.
+<ul>
+<li>Open the Java API documentation for <code>String</code> and find the
+method that gives you the first letter.</li>
+</ul></li>
+<li>After all the letters of the string have been printed, the method
+prints an empty line on further calls.</li>
+</ul></li>
+<li>Create the following classes that contain a <code>main</code>
+method: <code>Main</code> (in the default package),
+<code>stringmain.Main</code>, <code>string.main.Main</code>,
+<code>string.utils.Main</code>, and <code>string.utils.main.Main</code>.
+<ul>
+<li>All except one of them have to call <code>main</code> in one of the
+others. So you’ll have a chain of four <code>main</code>s calling four
+other <code>main</code>s.
+<ul>
+<li>The order is your choice.</li>
+<li>Hint: call (static) method <code>m</code> from class <code>X</code>
+like this: <code>X.m(...)</code>.
+<ul>
+<li>Which form of <code>X</code>’s name should you use here?</li>
+</ul></li>
+<li>How many possible orders could there be?</li>
+<li>Some order choices are invalid. Which ones? Why?</li>
+</ul></li>
+<li>The last one takes two command line arguments. The code takes the
+first one (a number <code>n</code>), and it calls <code>printNext</code>
+<code>n</code> times with the second arg as a parameter.</li>
+<li>Run each of your <code>Main</code>s. Use various numbers and texts,
+including the empty one (pass it as <code>""</code>).</li>
+</ul></li>
+<li>In <code>IterLetter</code>, create the method <code>reset()</code>.
+<ul>
+<li>Once it’s called, the following <code>printNext</code> calls will
+start printing from the beginning of the text again.</li>
+<li>In your <code>main</code>s, make the iteration restart once after
+<code>m</code> printouts, and have <code>k</code> printouts after that.
+Here, <code>m</code> and <code>k</code> are the third and fourth command
+line argument.</li>
+</ul></li>
+<li>Finally, add a <code>hasNext()</code> method, which returns
+<code>true</code> if (and only if) there are letters remaining to be
+printed in the string.
+<ul>
+<li>In your <code>main</code>s, invoke this before and after the
+restart, and just before <code>main</code> finishes.</li>
+</ul></li>
+</ol>
+<h2 class="en" id="practice-exercises-2">Practice exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Create the class <code>zoo.animal.Panda</code>.</p>
+<ol type="a">
+<li>This class stores the panda’s name, age, and country. Represent them
+with appropriately typed and named fields.</li>
+<li>The class has two constructors.
+<ol type="i">
+<li>One describes a newborn panda. It takes and stores contents for the
+other two fields.</li>
+<li>The other constructor takes two parameters, but not the name. The
+name is chosen as <code>N years old foundling from C</code> where
+<code>N</code> and <code>C</code> are the age and the country,
+respectively.</li>
+</ol></li>
+<li>The class also contains the method <code>happyBirthday()</code>.
+<ul>
+<li>It prints the panda’s name, country, and age which is increased by
+one.</li>
+<li>The method also takes a number (<code>limitYear</code>), and if the
+panda is older than that, then it is repatriated to the
+<code>People's Republic of China</code>.</li>
+</ul></li>
+<li>Write <code>zoo.keeper.Crikey.main</code> to test the above
+functionality.</li>
+</ol>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>Add a <code>string.utils.IterWord</code> class to the
+<code>IterLetter</code> exercise above.</p>
+<ol type="a">
+<li>The constructor of this class takes a string as parameter.</li>
+<li>The <code>printNext()</code> method prints the next <em>word</em> of
+this string to the standard output (on a new line).</li>
+<li>Also add a <code>reset()</code> and a <code>hasNext()</code> method
+that are similar to those in the original exercise.</li>
+<li>Create a <code>WordMain</code> beside each <code>Main</code> and use
+it to demonstrate the use of the new class.</li>
+</ol>
+<h3 class="en" id="exercise-3">Exercise 3</h3>
+<p>Create the class <code>magic.library.Incantation</code> that
+represents a sort of a magic spell. An incantation has a
+<code>text</code> and a magical <code>index</code> (an integer)
+associated with it.</p>
+<ol type="a">
+<li>The constructor of the class takes both and sets up the fields
+accordingly.
+<ul>
+<li>If <code>text</code> is <code>null</code>, throw an
+<code>IllegalArgumentException</code>.</li>
+</ul></li>
+<li>Add another constructor that takes an <code>Incantation</code>
+instance, and sets up its own fields using those of the parameter.</li>
+<li>Create getters for the fields, and a setter for <code>index</code>
+only.</li>
+<li>The class has an <code>enchant()</code> method that takes another
+<code>Incantation</code> (<code>otherInc</code>) instance and a
+<code>boolean</code> value (<code>isPrepend</code>). The parameter
+incantation’s text is changed the following way.
+<ol type="i">
+<li>First, we try to access word number <code>index</code> in
+<code>text</code>.
+<ul>
+<li>For example if <code>index</code> is <code>3</code>, then we are
+trying to access the third word.</li>
+<li>Hint: use the <code>split()</code> method of the <code>String</code>
+class.</li>
+</ul></li>
+<li>If the <code>index</code> is wrong (too high or too low, possibly
+even negative), and no such word number is available, the method returns
+<code>false</code>.</li>
+<li>That word is added to either the beginning or the end of
+<code>otherInc</code>’s text. This choice depends on the second
+parameter.
+<ul>
+<li>A space is also placed between the new word and the old text.</li>
+</ul></li>
+<li>The <code>index</code> field is increased/decreased by
+<code>1</code> depending on the value of <code>isPrepend</code>.</li>
+<li>The method returns <code>true</code> showing that the text has been
+changed.</li>
+</ol></li>
+<li>In <code>magic.Soliloquy</code>, create
+<code>reciteIncantations()</code> that will be called from
+<code>main</code> and does the following.
+<ol type="i">
+<li>It takes two <code>Incantation</code> instances <code>inc1</code>
+and <code>inc2</code>, a number <code>idx</code> and a
+<code>boolean</code> value <code>startWithAppend</code>.</li>
+<li>It calls <code>enchant</code> on <code>inc1</code> with the
+parameter <code>inc2</code> three times.
+<ul>
+<li>The first time, use the opposite of <code>startWithAppend</code> as
+the second parameter.</li>
+<li>The second time, use <code>startWithAppend</code>.</li>
+<li>The third time, <code>true</code>.</li>
+</ul></li>
+<li>After each call, print the result of the expression, and the
+contents of both objects (accessed using the getters).
+<ul>
+<li>Create the helper method <code>printStatus</code> for this
+purpose.</li>
+</ul></li>
+<li>After the first printout, set <code>index</code> in
+<code>inc1</code> to <code>idx</code>.</li>
+</ol></li>
+<li>In <code>magic.Soliloquy</code>, write <code>main</code> that takes
+six command line arguments (<code>argN</code> below) and does the
+following.
+<ol type="i">
+<li>You may assume that the args are fine. No checks are necessary.</li>
+<li>It creates <code>Incantation</code> instances <code>inc1</code>,
+<code>inc2</code>, and <code>inc3</code>. Initialise the first two using
+the first four command line arguments. Initialise the third one using
+the second one.
+<ul>
+<li>You will need to put quotes (<code>"</code>) around the first and
+third arg as their contents include space characters.</li>
+</ul></li>
+<li>Do the following.
+<ul>
+<li>Invoke <code>reciteIncantations</code> with
+<code>inc1, inc2, arg5, true</code>.</li>
+<li>Set <code>index</code> in <code>inc1</code> to
+<code>arg6</code>.</li>
+<li>Invoke <code>reciteIncantations</code> with
+<code>inc1, inc3, arg5, false</code>.</li>
+</ul></li>
+</ol></li>
+<li>Call <code>main</code> with the following arguments:
+<code>programming is a creative activity</code>, <code>4</code>,
+<code>to be or not to be</code>, <code>-123</code>, <code>1</code>. The
+printouts should look like the following.</li>
+</ol>
+<pre><code>true;7;programming is a fun and creative activity;-123;to be or not to be creative
+true;1;programming is a fun and creative activity;-123;to be or not to be creative
+true;0;programming is a fun and creative activity;-123;programming to be or not to be creative
+false;0;programming is a fun and creative activity;-123;programming to be or not to be creative
+
+true;3;programming is a fun and creative activity;-123;fun to be or not to be
+true;1;programming is a fun and creative activity;-123;fun to be or not to be
+true;2;programming is a fun and creative activity;-123;fun to be or not to be programming
+true;1;programming is a fun and creative activity;-123;is fun to be or not to be programming</code></pre>
+<h3 class="en" id="exercise-4">Exercise 4</h3>
+<p>Create the class <code>game.utils.Vehicle</code> which represents a
+vehicle in a game. Such a vehicle has a model id (<code>int</code>), a
+registration number (<code>String</code>) and two colors:
+<code>color1</code> and <code>color2</code> of type <code>int</code>.
+Create getter and setter for the registration number.</p>
+<p>Create a class <code>game.Player</code> that represents a player in a
+game. A player has a name (<code>String</code>), an IP-address
+(<code>String</code>), an integer value describing their health, and
+their vehicle (of type <code>Vehicle</code>). If the player has no
+vehicle, a <code>null</code> reference should be stored.</p>
+<p>Create the <code>toString()</code> method in the
+<code>game.Player</code> class to convert player data to string,
+including the name, the IP-address, health status, and – if they have a
+vehicle – the registration number of the vehicle.</p>
+<p>Create the main program in the class <code>game.Main</code>, which
+instantiates three vehicles and two players. Let one of the players own
+a vehicle. The program prints the players’ data to the standard
+output.</p>
+<h1 class="en" id="unit-testing-junit">04-05. Unit testing: JUnit</h1>
+<h2 class="en hu" id="demo-2">Demo</h2>
+<h3 class="en" id="demo-1">Demo 1</h3>
+<ol type="a">
+<li>Create the method <code>fib()</code> in the class
+<code>famous.sequence.Fibonacci</code> that takes a number
+<code>n</code> and gives the <a
+href="https://en.wikipedia.org/w/index.php?title=Fibonacci_sequence#Definition"><code>n</code>th
+number in the Fibonacci sequence</a>. Here, we’ll assume that the input
+is always a small, positive number.</li>
+</ol>
+<ul>
+<li>Make the method <code>static</code>. We’ll talk more about this
+keyword later.</li>
+<li>This famous function can be coded in many different ways. For now,
+let’s use the standard definition.</li>
+</ul>
+<ol type="a">
+<li>We are going to test the code now. Let’s start by verifying if its
+technical details (method name, parameter and return type etc.) are OK.
+Use the provided <code>famous.sequence.FibonacciStructureTest</code>.
+<ul>
+<li>For the sake of simplicity, all structural tests are in the default
+package. So you have to put them in the base folder.</li>
+<li>It uses the <code>CheckThat</code> tool, so that must be around,
+too.</li>
+<li>Compile and run it.
+<ul>
+<li>Compile <code>FibonacciStructureTest</code>. For details, see the
+description in the demo <code>zip</code> file.</li>
+<li>Here, <code>Fibonacci.java</code> has to be compiled separately, as
+the tester doesn’t refer to it, which would force <code>javac</code> to
+compile it.</li>
+<li>Run the tests.</li>
+</ul></li>
+</ul></li>
+<li>Create <code>famous.sequence.FibonacciTest</code>.
+<ul>
+<li>In it, test for specific values of <code>n</code>.</li>
+<li>Also use parameterized tests.</li>
+<li>Compile and run it. See the lecture slides for the commands.
+<ul>
+<li>For a better understanding of the process, delete all previously
+compiled <code>.class</code> files. (Keep your <code>.java</code> files,
+though!)</li>
+<li>Compile <code>FibonacciTest</code>. Notice that this time,
+<code>Fibonacci.java</code> is compiled as well.</li>
+<li>Run the tests.</li>
+</ul></li>
+</ul></li>
+<li>Use the provided <code>famous.sequence.FibonacciTestSuite</code>.
+<ul>
+<li>Place it in the folder that is appropriate to its package.</li>
+<li>Again, for a better understanding of the process, delete all
+previously compiled <code>.class</code> files.</li>
+<li>Compile <code>FibonacciTestSuite</code>. Notice that this time,
+<code>Fibonacci.java</code> and the previous two test classes are
+compiled as well.</li>
+<li>Run the tests.</li>
+</ul></li>
+</ol>
+<h2 class="en" id="exercises-2">Exercises</h2>
+<h3 class="en" id="task-1">Task 1</h3>
+<p>Do the same as above for <a
+href="https://en.wikipedia.org/wiki/Triangular_number">triangular
+numbers</a>.</p>
+<ul>
+<li>Put your implementation in
+<code>static famous.sequence.TriangularNumbers.getTriangularNumber()</code>,
+its tester code in
+<code>famous.sequence.TriangularNumbersTest</code>.</li>
+<li>A structural test and a test suite are provided once again. Use
+them.
+<ul>
+<li>Don’t forget that you have to put the files in the appropriate
+folders, otherwise the system won’t work.</li>
+</ul></li>
+</ul>
+<p>Test the following input.</p>
+<ul>
+<li>zero</li>
+<li>one</li>
+<li><a
+href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss#Anecdotes">the
+number little Gauss is anecdotally famous for</a></li>
+<li>negative one</li>
+<li>another negative number</li>
+</ul>
+<p>Also write a failing test case (one with an intentionally wrong
+output). Run the tester; have a look at its output, including the
+summary and the stack trace.</p>
+<p>Also create <code>getTriangularNumberAlternative()</code> that is
+equivalent to <code>getTriangularNumber()</code> but uses the
+formula.</p>
+<ul>
+<li>Test it the same way as you did with
+<code>getTriangularNumber()</code>.</li>
+</ul>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Create
+<code>static math.operation.safe.Increment.increment()</code>.</p>
+<ul>
+<li>Make it <code>static</code>.</li>
+<li>Let it take an <code>int</code>.</li>
+<li>If its value is the largest possible value of an <code>int</code>,
+return it. Otherwise, return one greater than the input.
+<ul>
+<li>It can be referenced as
+<code>Integer.WRITE_THE_APPROPRIATE_FIELD_NAME_HERE</code>.</li>
+<li>Check <a
+href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Integer.html#field-summary">the
+Java API documentation</a> to find out the missing name.</li>
+</ul></li>
+</ul>
+<p>Create <code>IncrementTest</code> in the same package and test the
+functionality of <code>increment()</code>.</p>
+<ul>
+<li>As input, use zero.</li>
+<li>As input, use the smallest possible value of an
+<code>int</code>.</li>
+<li>As input, use the largest possible value of an
+<code>int</code>.</li>
+<li>As input, use a common positive number.</li>
+<li>As input, use a common negative number.</li>
+<li>As input, use <code>-1</code>.</li>
+</ul>
+<p>Create a similar tester in another package, too. Compile and run it
+there, too.</p>
+<h3 class="en" id="task-3">Task 3</h3>
+<p>Create the classes according to the structure described in the
+provided structural tests <code>RecordLabelStructureTest</code>,
+<code>ArtistStructureTest</code>, and <code>FanStructureTest</code>.</p>
+<p>In this exercise, you are also provided with some functionality
+tests. You also have to write some tests of your own. Add them to the
+provided test files.</p>
+<ul>
+<li>Test that all getters return the proper values on freshly created
+objects of each type.
+<ul>
+<li>Test that a fan’s name, a fan’s artist’s name, and the fan’s
+artist’s label’s name are all OK.</li>
+<li>Test that a fan has spent no money immediately after creation.</li>
+</ul></li>
+</ul>
+<p>The functionality tester already contains tests for the following
+methods of <code>Fan</code>. You have to write the implementation.</p>
+<ul>
+<li><code>buyMerchandise()</code> computes the final cost of some
+merchandise that the fan buys.
+<ul>
+<li>Of course, the fan always buys from his favourite artist.</li>
+<li>The unit cost of the merchandise is given as a parameter, but the
+cost is lessened by 10% per person if one or two friends also buy the
+merchandise at the same time.
+<ul>
+<li>The friends will be passed in a so-called vararg argument.</li>
+<li>Declare it like this: <code>Fan... friends</code>.</li>
+<li>Call the method like this:
+<code>fan1.buyMerchandise(100, friend1, friend2, friend3)</code> where
+<code>friendN</code> is a <code>Fan</code> instance.</li>
+<li>The cost rebate doesn’t get higher than 20% even if more than 2
+friends join in.</li>
+</ul></li>
+<li>The fan and the friends all spend this amount of money. It will also
+be the return value of the method.</li>
+<li>Half of what they all paid is transferred to the recording studio
+using <code>gotIncome()</code>.</li>
+</ul></li>
+<li><code>favesAtSameLabel()</code> checks whether their favourites work
+for the same label.</li>
+<li>Four methods provide a textual representation of a fan. They output
+the same content, but you’ll have to use different approaches.
+<ul>
+<li>In <code>toString1()</code>, use the <code>+</code> operator to
+append text parts.
+<ul>
+<li>This is very efficient but tedious to write and read.</li>
+</ul></li>
+<li>In <code>toString2()</code>, use the <code>formatted</code> method
+like this: <code>"%s=%d".formatted("one hundred", 100)</code>.
+<ul>
+<li>This is very nice to read.</li>
+</ul></li>
+<li>In <code>toString3()</code>, use
+<code>String.format("%s=%d", "one hundred", 100)</code>.
+<ul>
+<li>This is similar to the previous one, but a bit older.</li>
+</ul></li>
+<li>In <code>toString4()</code>, use a <code>StringBuilder</code>
+instance.
+<ul>
+<li>Call <code>sb.append(123)</code> to add parts to it.</li>
+<li>Call <code>sb.toString()</code> to get the final output.</li>
+<li>This is useful if the output is large and complex.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 class="en" id="task-4">Task 4</h3>
+<p>The <code>math.operation.textual.Adder.addAsText()</code> operation
+takes two <code>String</code>s.</p>
+<ul>
+<li>If they both represent integers, their sum is returned as a
+string.</li>
+<li>It also works if both represent doubles.</li>
+<li>However, if the input is anything else than numbers-as-text, it
+returns <code>Operands are not numbers</code>.</li>
+<li>The code is <strong>not</strong> available now, only the
+<code>.class</code> file.
+<ul>
+<li>Put it in the appropriate folder.</li>
+</ul></li>
+</ul>
+<p>Create <code>AdderTest</code> in the same package which tests the
+following.</p>
+<ul>
+<li><code>wrongInput</code>: use texts as input that cannot be
+interpreted as numbers</li>
+<li><code>addZero</code>: add zero to the number
+<ul>
+<li>Test adding zero both from the left and the right.</li>
+<li>Test adding zero as a double to an int.</li>
+</ul></li>
+<li><code>add</code>: add two numbers, test for a specific result
+<ul>
+<li>Test adding with the operands in order and in swapped order.</li>
+<li>Test adding two ints, adding two doubles, and adding an int and a
+double.</li>
+</ul></li>
+<li><code>addCommutative</code>: add two numbers in order and in swapped
+order, test for the equality of the two results.</li>
+</ul>
+<p>Permissible simplification.</p>
+<ul>
+<li>You may write more than one <code>assertX</code> call in a single
+tester method to simplify testing.</li>
+<li>This is not good in more realistic code.</li>
+<li>A more advanced tool (<code>assertAll</code>) could help us with
+that, but that is out of scope for this course.</li>
+</ul>
+<p>Make the above fancier in the following ways.</p>
+<ul>
+<li>For some (or even all) of the above conditions, test them with
+multiple sets of parameters: use <code>@ParameterizedTest</code>.</li>
+<li>Move the <code>wrongInput</code> test into
+<code>AdderInvalidTest.java</code>. Create a test suite that calls
+both.</li>
+</ul>
+<h2 class="en" id="practice-exercises-3">Practice exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>In <code>cipher.CaesarCipher</code>, implement the <a
+href="https://en.wikipedia.org/wiki/Caesar_cipher">Caesar cipher</a> for
+the English alphabet in the following way.</p>
+<ul>
+<li>Its constructor takes the <code>shift</code> value and stores
+it.</li>
+<li>Its method <code>encrypt()</code> takes a text and returns its
+encrypted version.
+<ul>
+<li>Each letter is encrypted separately.</li>
+<li>If the character is not a letter (not a character between
+<code>'a'</code> and <code>'z'</code>), it is kept unchanged. Otherwise,
+it is shifted by <code>shift</code> positions.
+<ul>
+<li>For example, <code>'d'</code> shifted by <code>3</code> positions
+becomes <code>'g'</code>.</li>
+<li>Attention: shifts can wrap around: <code>'z'</code> shifted by
+<code>2</code> becomes <code>'b'</code>.</li>
+<li>Attention: shifts can be negative and wrap around: <code>'c'</code>
+shifted by <code>-5</code> becomes <code>'x'</code>.</li>
+</ul></li>
+<li>Further considerations:
+<ul>
+<li>You may use the <code>+</code> operator to construct the result
+text. An even better solution is to use <code>StringBuilder</code>.</li>
+<li>Note that after shifting, you’ll have to use the conversion
+<code>(char)shiftedChar</code>.</li>
+</ul></li>
+</ul></li>
+<li>Its method <code>decrypt()</code> is the opposite of
+<code>encrypt()</code>.</li>
+</ul>
+<p>In <code>cipher.CaesarCipherTest</code>, test the following.</p>
+<ul>
+<li><code>noShift</code>: encrypting or decrypting with a
+<code>shift</code> value of <code>0</code> returns the original
+text</li>
+<li><code>encryptBy</code>: test encrypting specific texts with specific
+<code>shift</code> values
+<ul>
+<li>the empty text (write it as <code>""</code> into the
+<code>textBlock</code>)</li>
+<li>a text with a single letter</li>
+<li>a couple of longer texts</li>
+<li>texts containing non-lowercase characters</li>
+</ul></li>
+<li><code>inverseOperation</code>: apply two operations in sequence that
+are the opposites of each other, and get the original text back
+<ul>
+<li>encrypt then decrypt with the same <code>shift</code> value</li>
+<li>decrypt then encrypt with the same <code>shift</code> value</li>
+<li>encrypt by <code>shift</code> then encrypt by
+<code>-shift</code></li>
+<li>encrypt by <code>-shift</code> then encrypt by
+<code>shift</code></li>
+<li>decrypt by <code>shift</code> then decrypt by
+<code>-shift</code></li>
+<li>decrypt by <code>-shift</code> then decrypt by
+<code>shift</code></li>
+</ul></li>
+</ul>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<h5 class="en" id="a">a</h5>
+<p>Create <code>static math.operation.Power.power()</code> for
+calculating powers of natural numbers (both power base and exponent are
+natural numbers). Although the result will always be an integer, make
+the return type a <code>double</code> because we will soon enhance this
+function. For our purposes, let’s define <code>0⁰</code> to be
+<code>1</code>.</p>
+<p>Test the <code>power()</code> method.</p>
+<h5 class="en" id="b">b</h5>
+<p>Modify <code>power()</code> so that it should be able to calculate
+powers with negative integer exponents.</p>
+<p>Let’s try if the unit test written in part <strong>a</strong> are
+still passing.</p>
+<p>Add unit tests for testing the new functionality.</p>
+<h1 class="en" id="array-enum-memmap">06. Array, enum, memmap</h1>
+<h3 class="en" id="task-1">Task 1</h3>
+<p>Create the program whose structure is described in
+<code>ArrayUtilStructureTest</code>. Let it compute the maximum value of
+an array in the following ways. All of them will return the same
+result.</p>
+<ul>
+<li><code>max()</code>: iterate the elements of the array using an
+index; keep track of the current maximum: replace it if if the current
+element is bigger than the previous maximum
+<ul>
+<li>For an empty array, let’s return <code>0</code>.</li>
+<li>For a nonempty array, let’s start with
+<code>Integer.MIN_VALUE</code> as the initial maximum value.</li>
+<li>For the maximum replacement check, use a simple <code>if</code>
+condition.</li>
+</ul></li>
+<li><code>max2()</code>: same, but for the maximum replacement check,
+use the <code>?:</code> ternary operator</li>
+<li><code>max3()</code>: same, but for the maximum replacement check,
+use <code>Math.max()</code></li>
+<li><code>max4()</code>: same, but for the iteration, use a
+<code>foreach</code> loop</li>
+</ul>
+<p>Write the following functional tests.</p>
+<ul>
+<li><code>maxLength0</code>: an empty array’s maximum is <code>0</code>
+<ul>
+<li>Invoke all four implementations.</li>
+<li>Note that the “Permissible simplification” mentioned above still
+applies.</li>
+</ul></li>
+<li><code>maxLength1</code>: an array with a single element has that
+element as its maximum
+<ul>
+<li>Make it a parameterized test with a couple of values.</li>
+<li>Include <code>0</code>, <code>1</code>, large values, negative
+values.</li>
+</ul></li>
+<li><code>maxLength2</code>: test arrays with two elements
+<ul>
+<li>Make it a parameterized test that takes a <code>min</code> and a
+<code>max</code>.</li>
+<li>Test the case where the elements are in the order
+<code>min, max</code> as well as <code>max, min</code> for all four
+methods.</li>
+</ul></li>
+</ul>
+<p>Also create <code>minMax()</code> that returns the minimum and
+maximum value of the array in a two element array.</p>
+<ul>
+<li>You may use any of the above strategies to compute the values.</li>
+<li>Hint: you’ll need to use <code>Integer.MAX_VALUE</code> in the
+implementation.</li>
+<li>Also write functional tests: <code>minMaxLengthN</code> for
+<code>N=0, 1, 2</code>.</li>
+</ul>
+<p>Also create <code>array.util.main.Main.main()</code> which lets the
+user input the array.</p>
+<ul>
+<li>First, let the user input the number of values in the array. Store
+it in the local variable <code>arrayLenTxt</code>, then convert it into
+<code>arrayLen</code>, an <code>int</code>.</li>
+<li>Then create an array with size <code>arrayLen</code>.</li>
+<li>Then read <code>arrayLen</code> values from the user, and store them
+in the array.</li>
+<li>Finally, use the methods to get the min/max values and print them.
+<ul>
+<li>Note that arrays don’t play nice:
+<code>System.out.println(array)</code> isn’t useful.</li>
+<li>Rather, use <code>System.out.println(Arrays.toString(array))</code>
+with the class <code>java.util.Arrays</code>.</li>
+<li>Print both the input array and the result of <code>minMax()</code>
+like this.</li>
+</ul></li>
+</ul>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Create the classes described in <code>SectorTimerTestSuite</code> and
+its related test classes. All of these will describe the same idea: a
+class that is suitable for timing Sectors of race cars.</p>
+<p>First, create <code>race.car.WrongSectorTimer1</code>. Make it
+<em>intentionally wrong</em> by marking its field as
+<code>public</code>. Test the following.</p>
+<ul>
+<li>All following test cases begin with instatiating the class with an
+array containing <code>1, 2, 3</code>.
+<ul>
+<li>For those who are more adventurous: <code>@BeforeEach</code> can
+make the solution more elegant.</li>
+</ul></li>
+<li><code>seemsGood</code>: there are three elements in the field, and
+they have the proper values</li>
+<li><code>setArrayElemsBreaksEncapsulation</code>: setting the
+individual elements in the field array doesn’t change its length, but
+its values are changed
+<ul>
+<li>Note that this method (and the next one) is unusual because it tests
+a <strong>wrong implementation</strong>.</li>
+<li>So the test case’s accepted (green) outcome indicates that
+<strong>this class is bad</strong>.</li>
+</ul></li>
+<li><code>setArrayElemsBreaksEncapsulation</code>: setting the whole
+field array in one go can change its length and also its values</li>
+</ul>
+<p>Let’s try fixing it: create <code>race.car.WrongSectorTimer2</code>.
+Now set the field’s visibility as <code>private</code> but use a
+“naïve,” trivial implementation for the getters and setters.</p>
+<ul>
+<li>First of all, notice that you cannot access the field directly
+anymore. This is good.</li>
+<li><code>seemsGood</code>: like before</li>
+<li><code>constructorBreaksEncapsulation</code>: create an array of
+<code>1, 2, 3</code> as a local variable and instantiate
+<code>WrongSectorTimer2</code> using it, then write the array’s elements
+<ul>
+<li>This does not change the length of
+<code>timer.getSectorTimes()</code>.</li>
+<li>Check that it changes the elements, both using
+<code>timer.getSectorTimes()</code> and
+<code>timer.getSectorTime()</code>.</li>
+</ul></li>
+<li><code>getterBreaksEncapsulation</code>: write into a couple of
+<code>timer.getSectorTimes()[n]</code> values
+<ul>
+<li>This does not change the length of
+<code>timer.getSectorTimes()</code> but once again, it changes the
+elements.</li>
+</ul></li>
+<li><code>setterBreaksEncapsulation</code>: pass a local variable array
+containing <code>4, 5, 6, 7</code> as the parameter of the setter, then
+write the elements of the local variable
+<ul>
+<li>This changes both the length of the array and its elements.</li>
+</ul></li>
+</ul>
+<p>Let’s fix the encapsulation properly this time: create
+<code>race.car.SectorTimer</code>.</p>
+<ul>
+<li>Let the constructor, getter, and setter create a new array of the
+parameter/output, and copy the values from the original in a loop.
+<ul>
+<li>It is even better if you create a private helper function
+<code>initSectorTimes</code>, and both the constructor and the setter
+call that one.</li>
+</ul></li>
+<li>In the tester, create <code>constructorEncapsulatesWell</code>,
+<code>getterEncapsulatesWell</code>, and
+<code>setterEncapsulatesWell</code>.
+<ul>
+<li>Use the same approaches as before, and use the same
+<code>assert</code>s.</li>
+<li>Observe that the encapsulation is fixed: all the break-in attempts
+fail.</li>
+</ul></li>
+<li>Create another version of the constructor/getter/setter where you
+use <code>System.arraycopy</code> instead of a loop.
+<ul>
+<li>Usually it’s a good idea to use built-in functionality rather than
+reinventing the wheel.</li>
+<li>As you cannot have two constructors with the same set of arguments,
+let one of them take a “fake” <code>boolean</code> argument, too.</li>
+<li>Pass the arguments to the constructor/setter as <em>varargs</em>
+rather than just a simple array.</li>
+</ul></li>
+</ul>
+<h3 class="en" id="task-3">Task 3</h3>
+<p>Create the class and the enum described in
+<code>ElectionTestSuite</code>. They describe an election where
+candidates can be given votes.</p>
+<p><code>ElectionTestStructureTest</code> describes the structure of the
+functional tests that you have to write.</p>
+<ul>
+<li><code>noVotes</code>: if there are no votes at all, the election is
+won by the first candidate (who happens to be <code>JACK</code>)</li>
+<li><code>singleCandidate</code>: a number of votes are given, all to
+the same person – who becomes the winner
+<ul>
+<li>Note that an enum element can be passed as a parameter to the
+tester. Just write the element name into the CSV part, and use
+<code>Candidate</code> as the parameter type.</li>
+</ul></li>
+<li><code>twoCandidatesSameVoteCount</code>: the candidate who appears
+first in the enum wins
+<ul>
+<li>Test that this is the case no matter who gets the votes first.</li>
+</ul></li>
+<li><code>candidateVoteCount</code>: the candidates get 1, 4, 3, and 2
+votes respectively
+<ul>
+<li>Test that <code>getCandidatesWithMoreVotesThan</code> gives the
+correct output with 0, 1, 2, 3, and 4 as a parameter.</li>
+<li>As <code>@CsvSource</code> cannot take arrays as parameters quite
+comfortably, test each call’s output one after another in a sequence.
+<ul>
+<li>More difficult: pass the expected candidate names as a single
+<code>String</code> parameter like <code>'JILL,SAM,MAX'</code>, then
+convert them into an array of <code>Candidate</code>s.</li>
+</ul></li>
+<li>Note that you have to use <code>assertArrayEquals</code>, not
+<code>assertEquals</code>.</li>
+</ul></li>
+</ul>
+<h3 class="en" id="task-4">Task 4</h3>
+<p>Draw a memory map of the following Java program for every lines
+marked (1)-(5). After executing (5), which objects may be deleted by
+garbage collector?</p>
+<p>Main.java:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Foo</span><span class="op">(</span><span class="dt">int</span> initX<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> initX<span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> counter <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>       <span class="co">// (1)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        Foo obj<span class="op">;</span>                <span class="co">// (2)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        obj <span class="op">=</span> <span class="kw">new</span> <span class="fu">Foo</span><span class="op">(</span><span class="dv">5</span><span class="op">);</span>       <span class="co">// (3)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        Foo obj2 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Foo</span><span class="op">(</span><span class="dv">7</span><span class="op">);</span>  <span class="co">// (4)</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        obj2 <span class="op">=</span> obj<span class="op">;</span>             <span class="co">// (5)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ...</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Modify the constructor in <code>Foo</code> to it’s parameter name
+should be <code>x</code> instead of <code>initX</code>, use the
+<code>this</code> keyword to indicate <code>x</code> member field
+access.</p>
+<h2 class="en" id="practice-exercises-4">Practice exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Draw the memory map of the following Java program. (Present the
+contents of the execution stack and the heap.)</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Foo <span class="op">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">Foo</span><span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Main <span class="op">{</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        Foo obj <span class="op">=</span> <span class="kw">new</span> <span class="fu">Foo</span><span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        obj <span class="op">=</span> <span class="kw">new</span> <span class="fu">Foo</span><span class="op">(</span><span class="dv">10</span><span class="op">);</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        Foo obj2 <span class="op">=</span> obj<span class="op">;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        obj2 <span class="op">=</span> <span class="kw">new</span> <span class="fu">Foo</span><span class="op">(</span><span class="dv">20</span><span class="op">);</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h1 class="en" id="io-exception">07. I/O, exception</h1>
+<h2 class="en" id="exercises-3">Exercises</h2>
+<h3 class="en" id="task-1">Task 1</h3>
+<p>sing <code>SingleLineFileStructureTest</code>, create
+<code>text.to.numbers.SingleLineFile.addNumbers()</code> that takes a
+file name and returns the sum of the numbers in it.</p>
+<ul>
+<li>If the file doesn’t exist, let the <code>IOException</code>
+propagate outside the method.</li>
+<li>If the file is empty, throw an <code>IllegalArgumentException</code>
+with the message <code>Empty file</code>.</li>
+<li>For each word that does not represent an <code>int</code>, print it
+on <code>System.err</code>. This is usable in the same way as
+<code>System.out</code>.</li>
+<li>Make sure that you properly close the input using try-with-resources
+once you’re done.</li>
+</ul>
+<ol type="a">
+<li>The file contains only one line and the numbers are separated by
+exactly one space.
+<ol type="1">
+<li>Use a <code>BufferedReader</code> to read the single line in one
+go.</li>
+<li>Use a <code>Scanner</code> to read the single line in one go.</li>
+</ol></li>
+<li>The file contains multiple lines. Each line has some numbers
+(potentially none), they are separated by exactly one space.
+<ol type="1">
+<li>Use a <code>BufferedReader</code> to read the input file line by
+line.</li>
+<li>Use a <code>Scanner</code> to read the input file line by line using
+<code>hasNextLine()</code> and <code>nextLine()</code>.</li>
+</ol></li>
+<li>The file contains numbers all over the place, separated by any
+number of newlines, spaces, tabs.
+<ol type="1">
+<li>Use a <code>Scanner</code> to read all the numbers using
+<code>hasNext()</code> and <code>next()</code>.</li>
+</ol></li>
+</ol>
+<p>Create a tester with the following test cases.</p>
+<ul>
+<li>Test the two cases where exceptions are thrown.
+<ul>
+<li>In the tester method, simply catch the exception.
+<ul>
+<li>If no exception is caught, use <code>fail()</code>. You may give it
+a message, too.</li>
+<li>Use <code>e.getMessage()</code> to get the error message in the
+second case.</li>
+</ul></li>
+<li>Note: there is also an <code>assertThrows()</code> method in JUnit
+which is even better, but it is more advanced.</li>
+</ul></li>
+<li>Also use a valid file with <code>1 2 not text 3 -123</code> on its
+first line.
+<ul>
+<li>We don’t test printouts to the standard output/error stream using
+JUnit, but the printouts should be there.</li>
+</ul></li>
+<li>Note: these are not proper unit tests, because they use the file
+system.</li>
+</ul>
+<h3 class="en" id="task-2">Task 2</h3>
+<p>Using <code>MultiLineFileStructureTest</code>, create
+<code>text.to.numbers.MultiLineFile.addNumbers()</code> that is similar
+to the previous one, but it adds the numbers on all lines. Also, it
+takes a second argument, a single character that separates the numbers
+on each line.</p>
+<p>Once again, test it. Difference from before: in the case of an empty
+file, make sure that no exception is thrown. Also, test the valid file
+both with a space and a comma as a separator.</p>
+<h3 class="en" id="task-3">Task 3</h3>
+<p>Modify the previous two solutions: let them output the wrong texts to
+<code>wrong.in.txt</code> if the input file is called
+<code>in.txt</code>.</p>
+<p>You don’t need to write JUnit tests for this.</p>
+<h3 class="en" id="task-4">Task 4</h3>
+<p>Using <code>StatisticsStructureTest</code>, write
+<code>textfile.Statistics.numberOfLines()</code> that takes a filename
+and returns the number of lines in it. If the file does not exist,
+return <code>0</code>.</p>
+<p>In the same class, write <code>numberOfCharacters()</code> that
+counts the characters (except newlines) in all lines in a similar
+fashion.</p>
+<p>Test both.</p>
+<h3 class="en" id="task-5">Task 5</h3>
+<p>Using <code>FileContentStructureTest</code>, write
+<code>textfile.lookup.FileContent.contentLineCount()</code> that takes a
+filename and a text. Let it return in an array the number of lines that
+this text appears in.</p>
+<ul>
+<li>Hint: there is a useful method in <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html#method-summary">the
+Java API documentation of class <code>String</code></a>.</li>
+</ul>
+<p>Also write
+<code>textfile.lookup.FileContent.contentLineNumbers()</code> that takes
+a filename and a text. Let it return all the line numbers (starting at
+1) that the given text appears in.</p>
+<p>Test both.</p>
+<h2 class="en" id="practice-exercises-5">Practice exercises</h2>
+<h3 class="en" id="task-1-1">Task 1</h3>
+<p>Create <code>plane.util.CircleUtil.writeCircle()</code> that takes a
+filename and a <code>plane.Circle</code> object from the Lab 2 exercise.
+Let it open the file and print the circle’s coordinates and its radius
+into it like this:</p>
+<pre><code>12.34
+-54.12
+54.3</code></pre>
+<p>Create <code>plane.util.CircleUtil.readCircle()</code> that takes a
+filename. It reads the data from the file and returns a corresponding
+<code>Circle</code> object. You may assume that the file exists and
+contains data in the appropriate format.</p>
+<p>Create a tester that writes the data of a circle and reads it back,
+then checks all fields.</p>
+<ul>
+<li>You may also call <code>assertNotSame()</code> to check that the
+original circle and the result of the read are indeed not the same
+object.</li>
+</ul>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>In <code>file.line.SumChecker.main()</code>, write code that opens
+<code>sum_input.txt</code> and <code>sum_output.txt</code>. The former
+contains lines like these:</p>
+<pre><code>7 2,5,-7,6,9
+-2 2,5,-7,6,9
+12 2,5,-7,6,9
+12 2,6,5,-7,6,9</code></pre>
+<p>Write code that loops through each line, and finds two numbers in the
+comma separated parts that sum to the first number on the line.</p>
+<ul>
+<li>You will have to loop through the numbers twice, using a loop within
+a loop.</li>
+<li>Make sure that you don’t use the same number twice: on line 3, don’t
+output <code>12=6+6</code>.</li>
+</ul>
+<p>Write output like this into the output file:</p>
+<pre><code>7=2+5
+-2=5+-7
+12 none
+12=6+6</code></pre>
+<p>When you’ve found a match, don’t check all the other possible
+combinations.</p>
+<ul>
+<li>Hint: you may find the following <code>continue</code> instruction
+useful:</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>outer<span class="op">:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">loop</span> <span class="op">(</span><span class="kw">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">loop</span> <span class="op">(</span><span class="kw">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">...</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span> outer<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h1 class="en hu" id="list-set-map">08. <code>List</code>,
+<code>Set</code>, <code>Map</code></h1>
+<h2 class="en hu" id="demo-3">Demo</h2>
+<h3 class="en" id="demo-1">Demo 1</h3>
+<p>Create the class described in
+<code>WorkerScheduleStructureTest</code>. For each week, a
+<code>HashSet</code> of worker names indicate who’s on the job. Let’s
+index the weeks starting at <code>1</code> externally, but store them
+starting at <code>0</code> internally.</p>
+<p>Let the workers be added using two different <code>add()</code>
+operations.</p>
+<ul>
+<li>One specifies a single week. Add all the workers in the second
+argument there.
+<ul>
+<li>You may add them individually, or you can use the
+<code>addAll()</code> method of <code>HashSet</code>.</li>
+<li>If the week is not a key of the <code>weekToWorkers</code> field
+yet, make sure to create it first with no workers (an empty set).</li>
+</ul></li>
+<li>The other gives you a couple of weeks. Add all the workers on all
+the weeks.
+<ul>
+<li>Let this method call the other one.</li>
+</ul></li>
+</ul>
+<p>The other two methods return whether a given person works on a given
+week, and the other returns a <code>HashSet</code> of all the weeks that
+the person’s working on.</p>
+<ul>
+<li>For the latter, use the <code>entrySet()</code> method of
+<code>HashMap</code> to iterate through its elements.
+<ul>
+<li>It lets you iterate through all key-value pairs in the
+<code>HashMap</code>.</li>
+<li>During the iteration, you’ll access
+<code>Entry&lt;key type, value type&gt;</code> values
+(<code>java.util.Map.Entry</code>).</li>
+</ul></li>
+</ul>
+<p>Test it using the following methods.</p>
+<ul>
+<li><code>emptySchedule</code>: no person is working on any given day
+<ul>
+<li>You may use <code>assertFalse(&lt;condition&gt;)</code> here instead
+of the also valid but longer
+<code>assertEquals(false, &lt;condition&gt;)</code>.</li>
+</ul></li>
+<li><code>schedule</code>: add a couple of workers on a couple of weeks
+using both <code>add()</code> methods, then test the other two methods.
+<ul>
+<li>Create some <code>ArrayList</code>s by <code>add</code>ing persons
+to them.</li>
+<li>Also use
+<code>new ArrayList&lt;&gt;(List.of(name1, name2, ...))</code> to create
+a list. The package of <code>List</code> is also
+<code>java.util</code>.</li>
+<li>As usual, <code>@ParameterizedTest</code> lets you create tests with
+a simpler structure and more extensive coverage.</li>
+</ul></li>
+</ul>
+<h2 class="en" id="exercises-4">Exercises</h2>
+<h3 class="en" id="task-1a">Task 1a</h3>
+<p>In the following tasks, create code according to
+<code>ListUtilStructureTest</code>.</p>
+<p>Create <code>divisors()</code> that takes a nonnegative integer and
+returns its divisors in an <code>ArrayList</code> data structure.</p>
+<p>Test for input values <code>0</code>, <code>1</code>, and
+<code>64</code>.</p>
+<h3 class="en" id="task-1b">Task 1b</h3>
+<p>According to <code>ListUtilStructureTest</code>, create the method
+<code>withSameStartEnd()</code> that loops through in an
+<code>ArrayList</code> of strings. The method returns the
+<code>ArrayList</code> of strings that aren’t empty or <code>null</code>
+and the first and the last letter is the same.</p>
+<p>For testing, create an empty <code>ArrayList</code>. Test that
+<code>withSameStartEnd()</code> returns an empty list. Then, in the same
+test method, continue adding the following texts to the list; at each
+stage, test the output.</p>
+<ul>
+<li>an empty text (output unchanged)</li>
+<li>a <code>null</code> (output unchanged)</li>
+<li>a text containing a single space (added to the output)</li>
+<li>the text <code>x</code> (added to the output)</li>
+<li>an empty text (output unchanged)</li>
+<li>the text <code>different start and end?</code> (output
+unchanged)</li>
+<li>the text <code>ends and starts the same</code> (added to the
+output)</li>
+</ul>
+<h3 class="en" id="task-1c">Task 1c</h3>
+<p>Create <code>maxToFront()</code> that moves the lexicographical
+maximum element (the last text alphabetically) to the front of the
+argument list.</p>
+<ul>
+<li>Do not create another list; change the argument list in place.</li>
+<li>If the list is <code>null</code> or empty, there is nothing to
+do.</li>
+<li>Hint: use <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/Collections.html#max(java.util.Collection)"><code>Collections.max()</code></a>.</li>
+<li>Hint: use methods of <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/ArrayList.html#method-summary"><code>ArrayList</code></a>
+to take out the maximum element and put it back at index
+<code>0</code>.</li>
+</ul>
+<p>Test the method with the following input.</p>
+<ul>
+<li><code>null</code>: you don’t need to call any sort of
+<code>assertX</code>, just invoke the method</li>
+<li>empty list</li>
+<li>list with one text</li>
+<li>a list containing three texts <code>can, you, succeed</code> that
+should give <code>you, can, succeed</code></li>
+<li>a list containing three texts <code>-123, 2000, 100</code> that
+should give <code>2000, 100, -123</code></li>
+</ul>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>Here, use <code>CharacterStatisticsStructureTest</code>.</p>
+<p>The constructor takes a text and for each character in it, inserts
+its frequency in the text into the field.</p>
+<ul>
+<li>Hint: use <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/String.html#toCharArray()">the
+<code>toCharArray()</code> method of <code>String</code></a> to easily
+access all characters of a text.</li>
+<li>Hint: the <code>getOrDefault()</code> method of <code>HashMap</code>
+may also be useful. Solve the exercise with and without it.</li>
+</ul>
+<p>The <code>getCount()</code> method simply returns the frequency of
+the given character.</p>
+<p>Also create a <code>toString()</code> method that outputs a text with
+the character frequencies. Annotate it with <code>@Override</code>. The
+characters are shown in the order of <code>entrySet()</code> of
+<code>HashMap</code>.</p>
+<p>Testing: for each of the following texts, check the frequency of at
+least one character.</p>
+<ul>
+<li>Don’t forget the case where the argument character is not in the
+string.</li>
+</ul>
+<p>Also check the output of <code>toString()</code>.</p>
+<ul>
+<li>This will look similar to this, but the order of the characters may
+be different on your machine.</li>
+<li>Mind the space characters in the output.</li>
+</ul>
+<p>The texts are:</p>
+<ul>
+<li>empty text: empty output</li>
+<li><code>aaaaaaaa</code>: <code>a(8)</code></li>
+<li><code>HgFeDcBa</code>:
+<code>a(1) B(1) c(1) D(1) e(1) F(1) g(1) H(1)</code></li>
+<li><code>a?!_#@{}</code>:
+<code>@(1) a(1) !(1) #(1) {(1) }(1) ?(1) _(1)</code></li>
+<li><code>Hello world!</code>:
+<code>(1) !(1) r(1) d(1) e(1) w(1) H(1) l(3) o(2)</code>
+<ul>
+<li>Note that the first character here is the space
+(<code></code>).</li>
+</ul></li>
+</ul>
+<h1 class="en" id="generics">09. Generics</h1>
+<h2 class="en" id="exercises-5">Exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Using <code>MultiSetStructureTest</code>, create a class that stores
+elements of type <code>E</code> with multiplicity. The field describes
+how many copies of a given element is in the data structure. This data
+structure is also called a bag.</p>
+<p>The constructor takes some elements and stores them in the bag. Note
+that they may be the same element.</p>
+<p>Use <code>add()</code> to put an element into the bag. If it is not
+there yet, put it in with multiplicity <code>1</code>, if it is there
+already, increase its multiplicity by one. Return the increased
+count.</p>
+<p><code>getCount()</code> returns the given element’s multiplicity. If
+the element is not in the bag, return <code>0</code>.</p>
+<p><code>intersect()</code> returns a bag that contains only such
+elements that are present in both bags, the associated multiplicity is
+the lower one. The method does not change the original bags.</p>
+<p><code>countExcept()</code> returns the summed multiplicity of all
+elements except the ones indicated in the argument.</p>
+<p>Test the data structure like this.</p>
+<ul>
+<li><code>multiSetInteger</code>, <code>multiSetString</code>: create a
+bag with the indicated element type
+<ul>
+<li>Use the constructor and <code>add()</code> to put some elements in
+there, and check the result of <code>getCount()</code>.</li>
+</ul></li>
+<li><code>intersect</code>, <code>countExcept</code>: create two bags
+and test <code>intersect()</code> and <code>countExcept()</code> with
+them</li>
+</ul>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>Using <code>OrganiserStructureTest</code>, create a class that stores
+some elements in its <code>elems</code> field. The other field contains
+pairs of positions.</p>
+<p>The constructor takes some data and initialises the first field. In
+the beginning, there are no swaps.</p>
+<ul>
+<li>You will get a warning for the constructor. As we are doing nothing
+suspicious, you may annotate the constructor with
+<code>@SafeVarargs</code>.</li>
+</ul>
+<p>There are two alternatives of <code>get()</code>.</p>
+<ul>
+<li>One takes an index and returns the indexed element. Let’s assume
+that the index is valid.</li>
+<li>The other alternative returns all the elements.
+<ul>
+<li>Be careful: keep the encapsulation!</li>
+</ul></li>
+</ul>
+<p><code>addSwap()</code> adds a pair of <code>int</code>s to
+<code>swaps</code>.</p>
+<ul>
+<li>As there is no built-in tuple/pair type in Java, the field’s list
+contains elements of type <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/Map.Entry.html"><code>Map.Entry</code></a>.
+<ul>
+<li>Its type parameters need to be <code>Integer</code>s, because type
+parameters cannot take primitives.</li>
+</ul></li>
+<li>Use <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/Map.html#entry(K,V)">Map.entry(from,
+to)</a> to create such a “pair”.</li>
+</ul>
+<p>Create a helper method <code>swap()</code> that makes two elements in
+<code>elems</code> switch places.</p>
+<ul>
+<li>This method needn’t be visible to anybody outside of the class.</li>
+<li>Hint: you’ll need a temporary variable.</li>
+</ul>
+<p><code>runSwaps()</code> performs all the position switches described
+in <code>swaps</code>.</p>
+<ul>
+<li>To do each individual swap, use <code>swap()</code>.</li>
+</ul>
+<p>Let the standard textual representation of the class be like this:
+<code>[1 3 5 7 9 ]</code> or <code>[d a c b e ]</code>.</p>
+<h3 class="en" id="exercise-3">Exercise 3</h3>
+<p>Using <code>RangedStackSuite</code>, create a class represents a
+stack data structure, but its elements can be added and removed in
+batches, not one by one.</p>
+<p>It can be constructed as empty, or it can use a copy constructor:
+take its elements from another <code>RangedStack</code>. In the second
+case, make sure that the fields of the two <code>RangedStack</code>
+objects are not aliases.</p>
+<p>Test it the following way.</p>
+<ul>
+<li><code>empty</code>: create an empty <code>RangedStack</code> and a
+copy of it
+<ul>
+<li>In both cases, popping any number of elements off the
+<code>RangedStack</code> (e.g. <code>0</code>, <code>1</code>, or
+<code>100</code>) will produce an empty list.</li>
+</ul></li>
+<li><code>testString</code>, <code>testInteger</code>: for both types,
+create a list of <code>6</code> elements (e.g. <code>2</code>,
+<code>4</code>, <code>6</code>, <code>8</code>, <code>10</code>,
+<code>12</code> for the integer one), and also create a copy of it
+<ul>
+<li>Pop <code>1</code>, then <code>2</code>, then <code>3</code>, then
+<code>100</code> elements off the original <code>RangedStack</code>. The
+expected output lists are <code>[12]</code>, <code>[10, 8]</code>,
+<code>[6, 4, 2]</code>, and an empty list.</li>
+<li>Pop <code>100</code> elements off the copy, then <code>100</code>
+more. The expected output lists are <code>[12, 10, 8, 6, 4, 2]</code>,
+and an empty list.</li>
+</ul></li>
+</ul>
+<h1 class="en" id="inheritance">10. Inheritance</h1>
+<h2 class="en" id="exercises-6">Exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Create the classes indicated in <code>BookSuite</code>.</p>
+<p>Both constructors invoke <code>initBook</code>. The no-arg one uses
+the <code>DEFAULT_...</code> fields as content, the other first runs
+<code>checkInitData</code> on the received content. This check throws an
+<code>IllegalArgumentException</code> if either the
+<code>author</code>’s length is shorter than two letters or the
+<code>title</code> is shorter than four or <code>pageCount</code> is not
+a positive number.</p>
+<p>The price of the book is the same as its page count.</p>
+<p>In testing, use the following three books.</p>
+<pre><code>John Steinbeck, Of Mice and Men, 107
+Kozsik Tamás, Java programozás, 234
+Alan Alexander Milne, Winnie-the-Pooh, 145</code></pre>
+<p>It should test that the textual representation of the three books are
+as follows. Also test that the <code>decode()</code> method can turn
+these texts back into books with fields that have the same content as
+the original book instances.</p>
+<ul>
+<li>Hint: use the <code>strip()</code> method to remove whitespace from
+the beginning and end of texts.</li>
+</ul>
+<pre><code>John Steinbeck: Of Mice and Men; 107
+Kozsik Tamás: Java programozás; 234
+Alan Alexander Milne: Winnie-the-Pooh; 145</code></pre>
+<p>Also, <code>getShortInfo()</code> returns the book’s data in
+shortened form. For the authors’ names, use
+<code>getAuthorWithInitials()</code>, and to implement that, use a
+<code>StringBuilder</code>.</p>
+<pre><code>J. Steinbeck: Of M; 107
+K. Tamás: Java; 234
+A. A. Milne: Winn; 145</code></pre>
+<p>Further, test that books that fail <code>checkInitData</code> in any
+way throw an <code>InvalidBookException</code>. Also test that the
+exception instances carry the book’s author and title.</p>
+<p><strong>Child class</strong>: <code>EBook</code></p>
+<p>Class <code>EBook</code> takes a <code>Book</code> instance and three
+pieces of information, and stores them in the new fields of the
+class.</p>
+<p>Its price is <code>pdfSize</code> more than its page count.</p>
+<p>If the above books have 5, 10000, and 8 as <code>pdfSize</code>
+respecively, let their textual representations be the following. Here,
+following the good old practice of misleading the buyer, the indicated
+price is <code>0.01</code> unit lower if the actual price is
+<code>1000</code> units or less.</p>
+<pre><code>EBook(John Steinbeck: Of Mice and Men; 107, $111.99)
+EBook(Kozsik Tamás: Java programozás; 234, 10233 Ft)
+EBook(Alan Alexander Milne: Winnie-the-Pooh; 145, £152.99)</code></pre>
+<p>As it would be tricky to <code>decode()</code> these, let the method
+throw an <code>UnsupportedOperationException</code>.</p>
+<p><strong>Child class</strong>: <code>PrintedBook</code></p>
+<p>A <code>PrintedBook</code> can be constructed using data like its
+parent plus a <code>CoverType</code> that is stored in the field. A
+<code>PrintedBook</code> contains six pages more than a usual book.</p>
+<p>A <code>PrintedBook</code> can also be constructed using the data of
+a <code>Book</code>. In this case, it will be a hardcover book. Let this
+constructor call the other one.</p>
+<p>Its price is the page count times a multiplier: two for a softcover
+book and three for a hardcover one.</p>
+<p>When you use its first constructor with the above book, the textual
+representation should look like this.</p>
+<pre><code>John Steinbeck: Of Mice and Men; 113 (HARDCOVER)
+Kozsik Tamás: Java programozás; 240 (HARDCOVER)
+Alan Alexander Milne: Winnie-the-Pooh; 151 (HARDCOVER)</code></pre>
+<p>As it is quite easy to <code>decode()</code> this, let the method be
+implemented.</p>
+<ul>
+<li>Hint: parentheses have a special meaning in the <code>split</code>
+operation of <code>String</code>s, they need to be used like this:
+<code>txt.split("[(]")</code></li>
+</ul>
+<p><strong>Book collection</strong></p>
+<p>Let <code>BookCollection</code> store several books in a list, and
+save and load them. The books will be saved in the following format.</p>
+<pre><code>Book--John Steinbeck: Of Mice and Men; 107
+Book--abcd: ABCD; 123
+EBook--EBook(abcd: ABCD; 123, 356.99$)
+PrintedBook--abcd: ABCD; 129 (HARDCOVER)</code></pre>
+<p>When loading an <code>EBook</code> or any book that is not valid,
+replace it with a <code>DamagedBook</code>.</p>
+<p>Test the save/load functionality with no books, a single book (with
+the default data), and many books (including at least one
+<code>EBook</code> and one <code>PrintedBook</code>).</p>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>Create <code>StuffyList</code> with the provided structure.</p>
+<p>This data structure is just like a regular list that carries sets of
+an element type <code>E</code>… except for one thing: when a set is
+added to the list, the data structure makes sure that
+<code>neededElement</code> is in the added set.</p>
+<ul>
+<li>If the argument list is missing <code>neededElement</code>, do not
+modify the original set. Rather, create a new set object, and add that
+to the list.</li>
+</ul>
+<p>Write some simple cases where <code>neededElement</code> is/isn’t
+already in the sets that are added to a <code>StuffyList</code>. Test
+that <code>neededElement</code> is contained in all added sets.</p>
+<ul>
+<li>You may use <code>List.of(...)</code> and <code>Set.of(...)</code>
+in the expected value.
+<ul>
+<li>Do <strong>not</strong> use these methods outside of expected values
+in <code>assert</code>s.</li>
+</ul></li>
+</ul>
+<h1 class="en" id="interfaces-equality">11. Interfaces, equality</h1>
+<h2 class="en" id="exercises-7">Exercises</h2>
+<h3 class="en" id="exercise-1">Exercise 1</h3>
+<p>Following <code>MultiDimensionalPointSuite</code>, create a point
+that can have any number of dimensions. Its constructor takes its
+initial coordinates. The methods <code>get</code> and <code>set</code>
+operate on individual indexes.</p>
+<p>The class implements two interfaces.</p>
+<ul>
+<li>Implement the method of <code>Scalable</code>. It multiplies each
+coordinate by a number.</li>
+<li>For <code>Undoable</code>, your task is more complex.
+<ul>
+<li>You need to be able to undo the effect of all methods that change
+the point’s coordinates.</li>
+<li>Therefore, the <code>lastCoordinates</code> field is always filled
+with the previous state of the point.
+<ul>
+<li>Upon creation, fill it with the initial coordinates.</li>
+</ul></li>
+<li>The interface’s method restores the last state.
+<ul>
+<li>If the method is called again immediately, the state that was
+replaced just now is restored.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Test the following. In the following test cases, take the following
+steps.</p>
+<ol type="1">
+<li>Create a point.</li>
+<li>Perform the described action.</li>
+<li>For each coordinate, check that it contains the expected value.</li>
+<li>Call undo.</li>
+<li>For each coordinate, check that it contains the value after
+creation.</li>
+<li>Call undo again.</li>
+<li>For each coordinate, check that it contains the expected value
+again.</li>
+</ol>
+<p>The scenarios are the following.</p>
+<ul>
+<li><code>testInitUndo</code>: just create a point</li>
+<li><code>testSet</code>: create a point, then set one of its
+coordinates</li>
+<li><code>testScale</code>: create a point, then scale it</li>
+</ul>
+<p>Let two points be equal to each other if their
+<code>coordinates</code> exactly match, ignoring their histories.</p>
+<p>In method <code>testEquality</code>, test that if you create two
+lists of points that are pairwise equal to each other, then the two
+lists are equal to each other.</p>
+<ul>
+<li>You may use <code>List.of</code> here.</li>
+<li>Make sure that you create separate points. Do <em>not</em> simply
+put references to the same objects in the two lists!</li>
+</ul>
+<p>Also define the natural comparison of two points as follows: if one
+has fewer dimensions, that one is smaller; otherwise, the first
+coordinate they differ in determines which is smaller; if all their
+coordinates match, they are equal.</p>
+<p>In method <code>testOrdering</code>, put lots of points into a list.
+Create them with various dimensions and values. Then invoke <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List)">Collections.shuffle</a>
+on the list followed by <a
+href="https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/util/Collections.html#sort(java.util.List)">Collections.sort</a>.
+After that, test that the elements of the list are in the expected
+increasing order.</p>
+<ul>
+<li>As the list will be modified, it <em>cannot</em> be created using
+<code>List.of</code>.
+<ul>
+<li>However, you can use it to make the expected value.</li>
+</ul></li>
+<li>This is a bit broader than unit testing: within each run, the list
+will be shuffled differently.</li>
+</ul>
+<h3 class="en" id="exercise-2">Exercise 2</h3>
+<p>Following <code>GoAroundStructureTest</code>, create a class that
+stores some elements. Its iterator
+(<code>GoAroundIteratorStructureTest</code>) produces the stored
+elements <code>roundCount</code> times.</p>
+<p>Test that if the elements are <code>1, 2, 3, 4</code> and
+<code>roundCount</code> is <code>2</code>, then the iterator outputs
+<code>1, 2, 3, 4, 1, 2, 3, 4</code>. Before each step, test that
+<code>hasNext()</code> is <code>true</code>; after the last step,
+<code>hasNext()</code> has to output <code>false</code>.</p>
+</body>
+</html>
