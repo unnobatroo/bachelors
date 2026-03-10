@@ -1,0 +1,11 @@
+Dear <name>,
+
+Santa Claus cordially invites you to a special holiday gathering at the North Pole!
+
+Please come to the workshop located at <address> at exactly <time>.
+
+We look forward to seeing you!
+
+Ho ho ho,
+
+Santa's Elf
