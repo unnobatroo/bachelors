@@ -1,0 +1,80 @@
+@startuml Library
+skinparam DefaultFontName "JetBrains Mono"
+
+class Library {
+    + books: List<Book>
+    ---
+    + Library()
+    + getFirstNameMatch(usrGenre: String): Book
+    + getMaxPageBook(): Book
+    + getGenreBooks(usrGenre: String): List<Book>
+    + getGenreBooksCount(usrGenre: String): int
+    + findBooksByAuthor(usrAuthor: String): List<Books>
+    + addBook(usrBook: Book): void
+    + lendBook(usrBook: Book): void
+    - addAndSort(usrBook: book): void
+}
+
+class Book {
+    + genre: String
+    + author: String
+    + pageCount: int
+    ---
+    + Book(author: String, pageCount: int, genre: String)
+}
+
+note right of Library::getFirstNameMatch
+    for book : this.books
+        return if book == usrGenre;
+    return None;
+end note
+
+note right of Library::getMaxPageBook
+    return this.books[-1];
+end note
+
+note right of Library::getGenreBooks
+    List<Book> selectedGenreBooks = new List<Book>;
+    for book : books
+        if book.genre == usrGenre
+            selectedGenreBooks.add(book);
+    return selectedGenreBooks;
+end note
+
+note right of Library::getGenreBooksCount
+    return this.getGenreBooks.length();
+end note
+
+note right of Library::findBooksByAuthor
+    List<Book> selectedAuthorBooks = new List<Book>;
+    for book : books
+        if book.author == usrAuthor
+            selectedAuthorBooks.add(book);
+    return selectedAuthorBooks;
+end note
+
+note right of Library::addBook
+    if books.addAndSort(usrBook)
+        IO.println("Done! Your book's been added to the library.");
+    else
+        IO.println("What a pity! Your book hasn't been added to the library :(");
+end note
+
+note right of Library::lendBook
+    if books.remove(usrBook)
+        IO.println("Done! Your book's been removed to the library.");
+    else
+        IO.println("What a pity! Your book hasn't been removed from the library :(");
+end note
+
+note right of Library::addAndSort
+    int i = books.size() - 1;
+    books.add(usrBook);
+    while (i >= 0 && books[i].pageCount > usrBook.pageCount)
+        books.set(i + 1, books[i]);
+        i--;
+    books.set(i + 1, usrBook);
+end note
+
+Library --- Book
+@enduml

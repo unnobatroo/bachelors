@@ -1,4 +1,4 @@
-package VideoGameStore;
+package videogamestore;
 
 /**
  * Supported game genres.

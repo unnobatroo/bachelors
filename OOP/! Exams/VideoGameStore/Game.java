@@ -1,4 +1,4 @@
-package VideoGameStore;
+package videogamestore;
 
 import java.util.ArrayList;
 import java.util.Comparator;
