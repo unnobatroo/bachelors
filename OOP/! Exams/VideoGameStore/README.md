@@ -64,13 +64,13 @@ The PlantUML class diagram is available in [design.puml](design.puml).
 Compile and run the demo entry point:
 
 ```sh
-javac --release 25 -d out *.java
-java -cp out VideoGameStore.Main
+javac --release 25 -d out src/videogamestore/*.java
+java -cp out videogamestore.Main
 ```
 
 ### Running Tests
 
-The tests use JUnit 5. A helper script downloads the standalone JUnit runner and executes the tests:
+The tests use JUnit 5. The helper script downloads the standalone JUnit runner and executes the tests:
 
 ```sh
 ./run_tests.sh
