@@ -12,6 +12,7 @@ class Animal:
     def sleep(self):
         print(f"{self.name} is sleeping.")
 
+
 # Child Class (Subclass)
 class Dog(Animal):
     def __init__(self, name: str, breed: str):
@@ -31,6 +32,7 @@ class Dog(Animal):
     # 3. New Child-Specific Method: This behavior is unique to Dog.
     def wag_tail(self):
         print(f"{self.name} wags its tail excitedly!")
+
 
 # --- Using the classes ---
 my_dog = Dog("Fido", "Golden Retriever")

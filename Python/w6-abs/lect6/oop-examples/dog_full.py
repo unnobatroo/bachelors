@@ -1,10 +1,11 @@
 class Dog:
     """Data + behavior bundled: name, age, energy, hunger, tricks."""
+
     def __init__(self, name, age):
         self.name = name
         self.age = age
-        self.energy = 80        # 0–100
-        self.hunger = 20        # 0–100 (higher = hungrier)
+        self.energy = 80  # 0–100
+        self.hunger = 20  # 0–100 (higher = hungrier)
         self.tricks = set()
 
     def walk(self, km=1):
@@ -26,14 +27,17 @@ class Dog:
         print(f"Happy Birthday, {self.name}! Now {self.age}.")
 
     def status(self):
-        return (f"age={self.age}, energy={self.energy}, "
-                f"hunger={self.hunger}, tricks={sorted(self.tricks)}")
+        return (
+            f"age={self.age}, energy={self.energy}, "
+            f"hunger={self.hunger}, tricks={sorted(self.tricks)}"
+        )
+
 
 # Demo: methods update the same object's internal state
 mochi = Dog("Mochi", 2)
-print(mochi.status())            # age=2, energy=80, hunger=20, tricks=[]
-mochi.walk(2)                    # energy↓, hunger↑
-mochi.feed(150)                  # hunger↓, energy↑
-mochi.learn("roll over")         # new capability stored
-mochi.birthday()                 # age changes
-print(mochi.status())            # age=3, energy=57, hunger=25, tricks=['roll over']
+print(mochi.status())  # age=2, energy=80, hunger=20, tricks=[]
+mochi.walk(2)  # energy↓, hunger↑
+mochi.feed(150)  # hunger↓, energy↑
+mochi.learn("roll over")  # new capability stored
+mochi.birthday()  # age changes
+print(mochi.status())  # age=3, energy=57, hunger=25, tricks=['roll over']

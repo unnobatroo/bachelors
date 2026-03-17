@@ -1,9 +1,9 @@
 import sys
 
 # 1. Check if the correct number of arguments was provided.
-if len(sys.argv)!= 4:
+if len(sys.argv) != 4:
     print("Usage: python3 calc.py <num1> <operator> <num2>")
-    sys.exit(1) # Exit the script with a non-zero status to indicate an error.
+    sys.exit(1)  # Exit the script with a non-zero status to indicate an error.
 
 # 2. Access arguments. Remember they are all strings.
 num1_str = sys.argv[1]
@@ -19,13 +19,13 @@ except ValueError:
     sys.exit(1)
 
 # 4. Perform the calculation based on the operator.
-if op == '+':
+if op == "+":
     result = num1 + num2
-elif op == '-':
+elif op == "-":
     result = num1 - num2
-elif op == '*':
+elif op == "*":
     result = num1 * num2
-elif op == '/':
+elif op == "/":
     result = num1 / num2
 else:
     print(f"Error: Unknown operator '{op}'")
