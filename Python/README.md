@@ -1,15 +1,13 @@
-## Syllabus
+# Syllabus
 
 ### Weeks 1–5: Foundations of Python
 
 1. **Introduction to Programming with Python**
-2. **Data Objects in Python** – scalar and non-scalar types,
-**Flow control** branching, loops
-3. **Data objects + operators** – numbering systems, bitwise operators
-**Abstraction** - function
-4. **Pythonic Expressions** – data sequence comprehensions (list, set, dict), lambda functions
-5. **File Handling & Management** – reading/writing files, CSV/JSON, directory operations
-6. **Python Package Management** – installing, upgrading, and managing packages
+2. [**Data Objects in Python** – scalar and non-scalar types](w2/README.md)
+3. [**Data objects + operators** – numbering systems, bitwise operators](w3/README.md)
+4. [**Pythonic Expressions** – data sequence comprehensions (list, set, dict), lambda functions](w4/README.md)
+5. [**File Handling & Management** – reading/writing files, CSV/JSON, directory operations](w5-abs/README.md)
+6. [**Python Package Management** – installing, upgrading, and managing packages](w6-abs/README.md)
 7. **Object-Oriented Programming (OOP)** – classes, objects, inheritance, encapsulation
 8. **Exception Handling** – errors, exceptions, and error-handling patterns
 9. **Testing & Debugging** – unit tests (`unittest`, `pytest`), debugging tools
