@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Best Movies About The Internet/Web - Form</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<header>
+		<h1>Best Movies About The &lt;Internet/Web&gt;</h1>
+		<nav id="mainmenu"><a href="index.html">Homepage</a> | <b>Form</b> </nav>
+		<div id="introduction">
+			<h2>Send your favourite movies</h2>
+			<p>Do you have favourite movie in this topic? If yes, please fill the following form!</p>
+		</div>
+	</header>
+	<main>
+		<form action="mailto:gaalbence@inf.elte.hu" method="post" enctype="text/plain">
+            <!-- form-->
+            <fieldset>
+                <!-- fieldset start -->
+                <legend>Datasheet of movie</legend>
+                <label for="title"><strong>Title</strong></label><br>
+				<input type="text" name="movietitle" id="title" size="60" maxlength="50"><br>
+                <label for="imdb"><strong>IMDb webaddress:</strong></label><br>
+				<input type="url" name="imbdurl" id="imdb" size="60" maxlength="50" value="https://www.imdb.com/"><br>
+                <label for="story"><strong>Story shortly</strong></label><br>
+				<textarea name="story" id="story" cols="60" rows="10" maxlength="800" placeholder="Please share your opinion about the movie!"></textarea>
+                <!-- fieldset end -->
+            </fieldset>
+            <fieldset>
+                <!-- fieldset start -->
+                <legend>Rating</legend>
+                <p>Your rating in a 1 to 5 scale<br>
+					<input type="radio" name="rating" id="o1" value="1">
+                    <label for="">1 - unwatchable</label>
+					<input type="radio" name="rating" id="o2" value="2">
+                    <label for="">2</label>
+					<input type="radio" name="rating" id="o3" value="3">
+                    <label for="">3</label>
+					<input type="radio" name="rating" id="o4" value="4">
+                    <label for="">4</label>
+					<input type="radio" name="rating" id="o5" value="5">
+                    <label for="">5 - must watch</label>
+                </p>
+                <!-- fieldset end -->
+            </fieldset>
+            <fieldset>
+                <!-- fieldset start -->
+                <legend>Personal info</legend>
+                <label for="user"><strong>Name</strong></label><br>
+				<input type="text" name="username" id="user" size="60" maxlength="50"><br>
+                <label for="email"><strong>E-mail address</strong></label><br>
+				<input type="text" name="emailaddress" id="email" size="60" maxlength="50"><br>
+				<input type="checkbox" name="subsciption" id="sub" value="Yes">
+                <label for="newsletter">I'd like to subscribe to a newsletter</label>
+                <!-- fieldset end -->
+            </fieldset>
+            <fieldset>
+                <!-- fieldset start -->
+                <legend>Send</legend>
+				<input type="submit" value="Send"> <!-- submit button-->
+                <input type="reset" value="Reset"> <!-- reset button -->
+                <!-- fieldset end -->
+            </fieldset>
+            <!-- form end-->
+        </form>
+		<p>These movies are already on my list:</p>
+		<nav>
+			<ol>
+				<li><a href="index.html#socialnetwork">The Social Network</a></li>
+				<li><a href="index.html#her">Her</a></li>
+				<li><a href="index.html#deepweb">Deep Web</a></li>
+			</ol>
+		</nav>
+	</main>
+	<footer>
+		<address>
+			<p>Author: John Smith (<a href="mailto:johnsmith@mailinator.com)">johnsmith@mailinator.com)</a><br>
+				H-1117 Budapest, Noname street 17</p>
+		</address>
+	</footer>
+</body>
+</html>
