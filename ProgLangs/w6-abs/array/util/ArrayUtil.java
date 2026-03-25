@@ -10,10 +10,4 @@ public class ArrayUtil {
         }
         return max;
     }
-
-    public static int max2(int[] arr){
-        int max = arr[0];
-
-        for ()
-    }
 }
