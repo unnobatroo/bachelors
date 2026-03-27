@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-02-22 szo 18:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Algorithmic Patterns</title>
+<meta name="author" content="Balázs Pintér" />
+<meta name="generator" content="Org Mode" />
+<style>
+body { background-color: #303030; color: #e5e5e5; }
+a {
+color: #809fff;
+text-decoration: none;
+}
+a:hover {
+color: #b3ccff;
+}
+a:visited {
+color: #cc99ff;
+}
+pre.src { background-color: #1e1e1e; color: #e5e5e5; }
+video {
+max-width: 800px;
+width: 100%;
+margin: 20px auto;
+display: block;
+background-color: #1e1e1e;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+@media (prefers-color-scheme: dark) {
+video {
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+}
+h2 { margin-top: 2em; }
+</style>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Algorithmic Patterns</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc34cba7">Summation</a>
+<ul>
+<li><a href="#org9e305af">Notation</a></li>
+<li><a href="#org5973ac9">Pseudocode</a></li>
+<li><a href="#orga6f7256">Example: Simple Addition</a></li>
+<li><a href="#orge0f9e14">Example: Product</a></li>
+<li><a href="#org9baa3a4">Example: Sum of Even Squares</a></li>
+<li><a href="#orgc17cd85">Example: Selecting Even Numbers</a></li>
+</ul>
+</li>
+<li><a href="#org2ef2337">Counting</a>
+<ul>
+<li><a href="#orgf87c554">Notation</a></li>
+<li><a href="#org96fd643">Pseudocode</a></li>
+<li><a href="#org5e2956f">Example: Counting Even Numbers</a></li>
+</ul>
+</li>
+<li><a href="#org026157a">Linear Search</a>
+<ul>
+<li><a href="#orgf0de9b1">Notation</a></li>
+<li><a href="#org2a7f8aa">Pseudocode</a></li>
+<li><a href="#org7b5ff28">Example: Looking for 9</a></li>
+</ul>
+</li>
+<li><a href="#orgba3c0d7">Maximum Selection</a>
+<ul>
+<li><a href="#org43b4d3a">Notation</a></li>
+<li><a href="#org61c276c">Pseudocode</a></li>
+<li><a href="#orgd73fd18">Example</a></li>
+</ul>
+</li>
+<li><a href="#org15c32a0">Conditional Maximum Search</a>
+<ul>
+<li><a href="#org1e336b4">Notation</a></li>
+<li><a href="#orge5da50d">Pseudocode</a></li>
+<li><a href="#org20cf11c">Example: Finding the Largest Even Number</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc34cba7" class="outline-2">
+<h2 id="orgc34cba7">Summation</h2>
+<div class="outline-text-2" id="text-orgc34cba7">
+</div>
+<div id="outline-container-org9e305af" class="outline-3">
+<h3 id="org9e305af">Notation</h3>
+<div class="outline-text-3" id="text-org9e305af">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">meaning</th>
+<th scope="col" class="org-left">default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">the function we transform the element with</td>
+<td class="org-left">e</td>
+</tr>
+
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">the condition predicate function</td>
+<td class="org-left">true for all e</td>
+</tr>
+
+<tr>
+<td class="org-left">op(a, b)</td>
+<td class="org-left">the operation</td>
+<td class="org-left">a + b</td>
+</tr>
+
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">the identity where a + identity = a</td>
+<td class="org-left">0</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">sum; the result</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">the &ldquo;traversable&rdquo;, or enumerable we iterate on</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">the current element</td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org5973ac9" class="outline-3">
+<h3 id="org5973ac9">Pseudocode</h3>
+<div class="outline-text-3" id="text-org5973ac9">
+<div class="org-src-container">
+<pre class="src src-python">s := identity
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t:
+    <span style="font-weight: bold;">if</span> cond(e):
+        s := op(f(e), s)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga6f7256" class="outline-3">
+<h3 id="orga6f7256">Example: Simple Addition</h3>
+<div class="outline-text-3" id="text-orga6f7256">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">true for all e</td>
+</tr>
+
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">e</td>
+</tr>
+
+<tr>
+<td class="org-left">op(a, b)</td>
+<td class="org-left">a + b</td>
+</tr>
+
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">0</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(t,
+          f(e) -&gt; e,
+          cond(e) -&gt; true,
+          op(a, b) -&gt; a + b,
+          identity -&gt; <span style="color: #8a3b3c; font-weight: bold;">0</span>)
+</pre>
+</div>
+
+<p>
+You don&rsquo;t need to specify the parts that have default value. Also, usually you
+do something with the result, like assign it to a variable:
+</p>
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(e)
+</pre>
+</div>
+
+<video controls>
+  <source src="SumArray.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div id="outline-container-orge0f9e14" class="outline-3">
+<h3 id="orge0f9e14">Example: Product</h3>
+<div class="outline-text-3" id="text-orge0f9e14">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">true for all e</td>
+</tr>
+
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">e</td>
+</tr>
+
+<tr>
+<td class="org-left">op(a, b)</td>
+<td class="org-left">a * b</td>
+</tr>
+
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">1</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(t,
+          f(e) -&gt; e,
+          cond(e) -&gt; true,
+          op(a, b) -&gt; a * b,
+          identity -&gt; <span style="color: #8a3b3c; font-weight: bold;">1</span>)
+</pre>
+</div>
+
+<p>
+You don&rsquo;t need to specify the parts that have default value:
+</p>
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(t,
+          op(a, b) -&gt; a * b,
+          identity -&gt; <span style="color: #8a3b3c; font-weight: bold;">1</span>)
+</pre>
+</div>
+
+<video controls>
+  <source src="ProductArray.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div id="outline-container-org9baa3a4" class="outline-3">
+<h3 id="org9baa3a4">Example: Sum of Even Squares</h3>
+<div class="outline-text-3" id="text-org9baa3a4">
+<p>
+Sum the squares of the even numbers.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">e % 2 = 0</td>
+</tr>
+
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">e<sup>2</sup></td>
+</tr>
+
+<tr>
+<td class="org-left">op(a, b)</td>
+<td class="org-left">a + b</td>
+</tr>
+
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">0</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(t,
+          f(e) -&gt; e^<span style="color: #8a3b3c; font-weight: bold;">2</span>,
+          cond(e) -&gt; e % <span style="color: #8a3b3c; font-weight: bold;">2</span> = <span style="color: #8a3b3c; font-weight: bold;">0</span>)
+</pre>
+</div>
+
+<video controls>
+  <source src="SumEvenSquares.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div id="outline-container-orgc17cd85" class="outline-3">
+<h3 id="orgc17cd85">Example: Selecting Even Numbers</h3>
+<div class="outline-text-3" id="text-orgc17cd85">
+<p>
+Selecting all the even numbers and adding it to a sequence. We&rsquo;re replacing
+addition with concatenation, so instead of having a sum of the even numbers,
+we&rsquo;re going to have a list of them. We&rsquo;re having f(e) -&gt; [e] because we can only
+concatenate sequences together, so we need one-element sequences.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">[e]</td>
+</tr>
+
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">e % 2 = 0</td>
+</tr>
+
+<tr>
+<td class="org-left">op(a, b)</td>
+<td class="org-left">concatenate(a,  b)</td>
+</tr>
+
+<tr>
+<td class="org-left">identity</td>
+<td class="org-left">empty sequence []</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+concatenate(a, b) can be written also as \(a ++ b\). For example \([1, 6] ++ [2, 4]
+= [1, 6, 2, 4]\).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">SUMMATION(t,
+          f(e) -&gt; [e]
+          cond(e) -&gt; e % <span style="color: #8a3b3c; font-weight: bold;">2</span> = <span style="color: #8a3b3c; font-weight: bold;">0</span>,
+          op(a, b) -&gt; a ++ b,
+          identity -&gt; [])
+</pre>
+</div>
+
+<video controls>
+  <source src="ReduceEvenConcatenation.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div id="outline-container-org2ef2337" class="outline-2">
+<h2 id="org2ef2337">Counting</h2>
+<div class="outline-text-2" id="text-org2ef2337">
+</div>
+<div id="outline-container-orgf87c554" class="outline-3">
+<h3 id="orgf87c554">Notation</h3>
+<div class="outline-text-3" id="text-orgf87c554">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">meaning</th>
+<th scope="col" class="org-left">default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">the condition predicate function</td>
+<td class="org-left">always specified</td>
+</tr>
+
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">count; the result</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">the &ldquo;traversable&rdquo;, or enumerable we iterate on</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">the current element</td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org96fd643" class="outline-3">
+<h3 id="org96fd643">Pseudocode</h3>
+<div class="outline-text-3" id="text-org96fd643">
+<div class="org-src-container">
+<pre class="src src-python">c := <span style="color: #8a3b3c; font-weight: bold;">0</span>
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t:
+    <span style="font-weight: bold;">if</span> cond(e):
+        c := c + <span style="color: #8a3b3c; font-weight: bold;">1</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5e2956f" class="outline-3">
+<h3 id="org5e2956f">Example: Counting Even Numbers</h3>
+<div class="outline-text-3" id="text-org5e2956f">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">e % 2 = 0</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">COUNTING(t, cond(e) -&gt; e % <span style="color: #8a3b3c; font-weight: bold;">2</span> = <span style="color: #8a3b3c; font-weight: bold;">0</span>)
+</pre>
+</div>
+
+<video controls>
+  <source src="CountEvenNumbers.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div id="outline-container-org026157a" class="outline-2">
+<h2 id="org026157a">Linear Search</h2>
+<div class="outline-text-2" id="text-org026157a">
+</div>
+<div id="outline-container-orgf0de9b1" class="outline-3">
+<h3 id="orgf0de9b1">Notation</h3>
+<div class="outline-text-3" id="text-orgf0de9b1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">meaning</th>
+<th scope="col" class="org-left">default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">what we are looking for, the condition</td>
+<td class="org-left">always specified</td>
+</tr>
+
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">boolean, true if we found the element</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">elem</td>
+<td class="org-left">the elment we found, null if not found</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">the &ldquo;traversable&rdquo;, or enumerable we iterate on</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">the current element</td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org2a7f8aa" class="outline-3">
+<h3 id="org2a7f8aa">Pseudocode</h3>
+<div class="outline-text-3" id="text-org2a7f8aa">
+<p>
+Using l:
+</p>
+<div class="org-src-container">
+<pre class="src src-python">l := false
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t:
+    <span style="font-weight: bold;">if</span> cond(e):
+        l := true
+        elem := e
+        <span style="font-weight: bold;">break</span>
+</pre>
+</div>
+
+<p>
+Using a nullable of optional type instead of l. Here, elem is null if we have
+not found what we were looking for.
+</p>
+<div class="org-src-container">
+<pre class="src src-python">elem := null
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t:
+    <span style="font-weight: bold;">if</span> cond(e):
+        elem := e
+        <span style="font-weight: bold;">break</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7b5ff28" class="outline-3">
+<h3 id="org7b5ff28">Example: Looking for 9</h3>
+<div class="outline-text-3" id="text-org7b5ff28">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">e = 9</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">SEARCH(t, cond(e) -&gt; e = <span style="color: #8a3b3c; font-weight: bold;">9</span>)
+</pre>
+</div>
+
+<video controls>
+  <source src="LinearSearch.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div id="outline-container-orgba3c0d7" class="outline-2">
+<h2 id="orgba3c0d7">Maximum Selection</h2>
+<div class="outline-text-2" id="text-orgba3c0d7">
+</div>
+<div id="outline-container-org43b4d3a" class="outline-3">
+<h3 id="org43b4d3a">Notation</h3>
+<div class="outline-text-3" id="text-org43b4d3a">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">meaning</th>
+<th scope="col" class="org-left">default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">the function we transform the element with</td>
+<td class="org-left">e</td>
+</tr>
+
+<tr>
+<td class="org-left">max</td>
+<td class="org-left">the maximum value</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">elem</td>
+<td class="org-left">the element with maximum value</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">the &ldquo;traversable&rdquo;, or enumerable we iterate on</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">the current element</td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org61c276c" class="outline-3">
+<h3 id="org61c276c">Pseudocode</h3>
+<div class="outline-text-3" id="text-org61c276c">
+<p>
+The precondition is that there is at least one element in \(t\). When implementing
+in Java, we should check this. We denote the part of the sequence that doesn&rsquo;t
+include the first element by t[1:]. We could also just use t and have one
+unnecessary comparison.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold;">max</span> := t[<span style="color: #8a3b3c; font-weight: bold;">0</span>]
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t[<span style="color: #8a3b3c; font-weight: bold;">1</span>:]:
+  <span style="font-weight: bold;">if</span> f(e) &gt; <span style="font-weight: bold;">max</span>:
+    <span style="font-weight: bold;">max</span> := f(e)
+    elem := e
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd73fd18" class="outline-3">
+<h3 id="orgd73fd18">Example</h3>
+<div class="outline-text-3" id="text-orgd73fd18">
+<div class="org-src-container">
+<pre class="src src-python">MAX(t, f(e) -&gt; e)
+</pre>
+</div>
+
+<video controls>
+  <source src="MaxSearch.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+<div id="outline-container-org15c32a0" class="outline-2">
+<h2 id="org15c32a0">Conditional Maximum Search</h2>
+<div class="outline-text-2" id="text-org15c32a0">
+</div>
+<div id="outline-container-org1e336b4" class="outline-3">
+<h3 id="org1e336b4">Notation</h3>
+<div class="outline-text-3" id="text-org1e336b4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">element</th>
+<th scope="col" class="org-left">meaning</th>
+<th scope="col" class="org-left">default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">f(e)</td>
+<td class="org-left">the function we transform the element with</td>
+<td class="org-left">e</td>
+</tr>
+
+<tr>
+<td class="org-left">cond(e)</td>
+<td class="org-left">we find the maximum of elements where cond is true</td>
+<td class="org-left">always specified</td>
+</tr>
+
+<tr>
+<td class="org-left">l</td>
+<td class="org-left">true if we found the maximum</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">max</td>
+<td class="org-left">the maximum value</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">elem</td>
+<td class="org-left">the element with maximum value</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">the &ldquo;traversable&rdquo;, or enumerable we iterate on</td>
+<td class="org-left">N/A</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">the current element</td>
+<td class="org-left">N/A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orge5da50d" class="outline-3">
+<h3 id="orge5da50d">Pseudocode</h3>
+<div class="outline-text-3" id="text-orge5da50d">
+<p>
+The value of l will be false until we find an element for which cond(e) is true.
+When we find the first such element, we set l to true, and (elem, max) to that
+element.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">l := false
+<span style="font-weight: bold;">for</span> e <span style="font-weight: bold;">in</span> t:
+  <span style="font-weight: bold;">if</span> cond(e):
+    <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">not</span> l:
+      l := true
+      elem := e
+      <span style="font-weight: bold;">max</span> := f(e)
+    <span style="font-weight: bold;">else</span> <span style="font-weight: bold;">if</span> <span style="font-weight: bold;">max</span> &lt; f(e):
+      elem := e
+      <span style="font-weight: bold;">max</span> := f(e)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org20cf11c" class="outline-3">
+<h3 id="org20cf11c">Example: Finding the Largest Even Number</h3>
+<div class="outline-text-3" id="text-org20cf11c">
+<div class="org-src-container">
+<pre class="src src-python">CONDMAX(t, f(e) -&gt; e, cond(e) -&gt; e % <span style="color: #8a3b3c; font-weight: bold;">2</span> = <span style="color: #8a3b3c; font-weight: bold;">0</span>)
+</pre>
+</div>
+
+<video controls>
+  <source src="ConditionalMaxSearch.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Balázs Pintér</p>
+<p class="date">Created: 2025-02-22 szo 18:56</p>
+</div>
+</body>
+</html>
