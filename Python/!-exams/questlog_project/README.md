@@ -20,6 +20,8 @@ The core of this application involves several key algorithms: a **Planning Analy
 - **Data Persistence:** Using the `json` module to serialize and deserialize complex Python objects into files.
 - **Error Handling:** Building a resilient application using `try...except` blocks to handle file errors, invalid user input, and other errors.
 
+---
+
 ## Detailed Functional Requirements
 
 ### 1. Execution Modes
@@ -73,6 +75,8 @@ The application must support the following command structure.
 - **Requirement:** The application must not crash and must provide user-friendly error messages.
 - **Acceptance Criteria:** Handles `FileNotFoundError`, `ValueError` for quantities, invalid commands, incorrect arguments, and logical errors (e.g., using an item that isn't in the inventory, completing a quest with insufficient items).
 
+---
+
 ## Implementation Tips & Guidance
 
 ### 1. Project Structure
@@ -107,6 +111,8 @@ Your application's "intelligence" lies in its algorithms.
 - **plan Algorithm:** This algorithm needs to determine which quests are fully completable. Your implementation should iterate through your collection of quests and, for each one, verify if the inventory's current stock meets all of its item requirements.
 - **gap Algorithm:** This algorithm should calculate the items missing for a specific quest. It will need to compare the quest's requirements against the inventory and identify any shortfalls (item missing or quantity insufficient).
 - **quest complete Algorithm:** This is a two-step process. First, it must verify that a quest is completable (you can reuse your plan logic for a single quest here). If it is, the second step is to consume the items by updating the inventory accordingly. If not, it should inform the user what is missing.
+
+---
 
 ## Example Testbed & Usage Scenarios
 
@@ -325,6 +331,8 @@ DROP potion 3
     > exit
     Inventory saved. Goodbye!
     ```
+
+---
 
 ## Scoring System (100 Points Total)
 
