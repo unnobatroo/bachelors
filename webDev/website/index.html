@@ -1,0 +1,207 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaloliddin Ismailov</title>
+</head>
+
+<body>
+    <h1 id="greeting"></h1>
+    <p>place for a video</p>
+
+    <h2>Here's what I've done so far:</h2>
+
+    <h2>Want to contact me? Leave your message down below so it arrives in my inbox:</h2>
+    <form>
+        <input type="text" name="usrname" id="usrname" placeholder="What can I call you?" maxlength="75" required><br>
+        <input type="email" name="usrmail" id="usrmail" placeholder="Whom should I reply?" maxlength="75" required><br>
+        <textarea name="usrmsg" id="usrmsg" placeholder="What's your message?" maxlength="5000" rows="5"
+            required></textarea><br>
+        <i>Wait! Considering to hire me? You might want to send <a href="">a resume of mine</a> to your HR.</i><br>
+        <label for="usrzoogler">
+            <input type="checkbox" name="usrzoogler" id="usrzoogler" required>
+            I agree I'm not a zoogler!
+        </label><br>
+
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>All locations accessed this page</h2>
+    <table border="1">
+        <caption>
+            <details>
+                <summary>Location access log (expand)</summary>
+                This table shows the latest page access time and IP-based location.
+            </details>
+        </caption>
+        <thead>
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Location</th>
+            </tr>
+        </thead>
+        <tbody id="locationLog">
+            <tr>
+                <td>Loading...</td>
+                <td>Loading...</td>
+            </tr>
+            <tr>
+                <td>Loading...</td>
+                <td>Loading...</td>
+            </tr>
+            <tr>
+                <td>Loading...</td>
+                <td>Loading...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const greeting = document.getElementById('greeting');
+        const tableBody = document.getElementById('locationLog');
+
+        const STORAGE_KEY = 'last5Visits';
+        const MAX_VISITS = 5;
+        const LOCATION_CACHE_KEY = 'cachedLocation';
+        const LOCATION_CACHE_TTL_MS = 10 * 60 * 1000;
+
+        // One formatter for all visit timestamps so format stays consistent.
+        const visitTimeFormatter = new Intl.DateTimeFormat('en-GB', {
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        function getGreeting(hour) {
+            if (hour >= 5 && hour < 12) return 'Good morning!';
+            if (hour >= 12 && hour < 18) return 'Good afternoon!';
+            if (hour >= 18 && hour < 22) return 'Good evening!';
+            return 'Good night!';
+        }
+
+        function formatTime(date) {
+            return visitTimeFormatter.format(date).replace(',', '');
+        }
+
+        // Read old visits from localStorage. If anything is broken there, just start fresh.
+        function readVisits() {
+            try {
+                const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                return Array.isArray(data) ? data : [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveVisits(visits) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+        }
+
+        // Keep location in session cache for a few minutes to avoid API spam on reload.
+        function readCachedLocation() {
+            try {
+                const cached = JSON.parse(sessionStorage.getItem(LOCATION_CACHE_KEY));
+                if (!cached) return null;
+
+                const isExpired = Date.now() - cached.savedAt > LOCATION_CACHE_TTL_MS;
+                return isExpired ? null : cached.value;
+            } catch {
+                return null;
+            }
+        }
+
+        function saveCachedLocation(value) {
+            const payload = { value, savedAt: Date.now() };
+            sessionStorage.setItem(LOCATION_CACHE_KEY, JSON.stringify(payload));
+        }
+
+        // Rebuild table body from scratch so UI always matches saved data.
+        function renderVisits(visits) {
+            tableBody.innerHTML = '';
+
+            visits.forEach((visit) => {
+                const tr = document.createElement('tr');
+
+                const timeCell = document.createElement('td');
+                timeCell.textContent = visit.time;
+
+                const locationCell = document.createElement('td');
+                locationCell.textContent = visit.location;
+
+                tr.appendChild(timeCell);
+                tr.appendChild(locationCell);
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // IP-based lookup (no scary browser permission prompt for the user).
+        async function getCurrentLocation() {
+            const cachedLocation = readCachedLocation();
+            if (cachedLocation) return cachedLocation;
+
+            // Try a few providers because free endpoints can rate-limit.
+            const providers = [
+                {
+                    url: 'https://ipapi.co/json/',
+                    map: (data) => ({ city: data.city, country: data.country_name })
+                },
+                {
+                    url: 'https://ipwho.is/',
+                    map: (data) => ({ city: data.city, country: data.country })
+                },
+                {
+                    url: 'https://ipinfo.io/json',
+                    map: (data) => ({ city: data.city, country: data.country })
+                }
+            ];
+
+            for (const provider of providers) {
+                try {
+                    const response = await fetch(provider.url);
+                    if (!response.ok) continue;
+
+                    const data = await response.json();
+                    const mapped = provider.map(data);
+                    const city = mapped.city || 'Unknown city';
+                    const country = mapped.country || 'Unknown country';
+
+                    if (city !== 'Unknown city' || country !== 'Unknown country') {
+                        const locationText = `${city}, ${country}`;
+                        saveCachedLocation(locationText);
+                        return locationText;
+                    }
+                } catch {
+                    // Ignore and try next provider.
+                }
+            }
+
+            return 'Location unavailable';
+        }
+
+        // Main flow: greet user, add this visit, keep only last 5, then render.
+        async function initPage() {
+            const now = new Date();
+            greeting.textContent = `${getGreeting(now.getHours())} I'm Jalol, welcome to my webpage.`;
+
+            const existingVisits = readVisits();
+            const currentLocation = await getCurrentLocation();
+            const updatedVisits = [
+                { time: formatTime(now), location: currentLocation },
+                ...existingVisits
+            ].slice(0, MAX_VISITS);
+
+            saveVisits(updatedVisits);
+            renderVisits(updatedVisits);
+        }
+
+        initPage();
+    </script>
+</body>
+
+</html>
