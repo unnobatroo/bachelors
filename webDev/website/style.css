@@ -1,0 +1,82 @@
+/* GLOBAL STYLES */
+.sidenav {
+    background: #dcdcdc;
+    border: 1px solid black;
+    padding: 15px;
+    width: 120px;
+    max-height: 1200px;
+    min-height: 600px;
+    flex-shrink: 0;
+}
+
+.sidenav a {
+    color: blue;
+    padding: 5px 10px;
+    display: block;
+}
+
+.sidenav a:visited {
+    color: purple;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.container {
+    display: flex;
+}
+
+.main {
+    flex-grow: 1;
+    padding: 0px 20px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    max-width: 240px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    max-width: 500px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+
+th {
+    text-align: left;
+    padding: 4px 10px;
+}
+
+td {
+    padding: 4px 10px;
+}
+
+/* 3. MOBILE LAYOUT */
+@media screen and (max-width: 740px) {
+    .container {
+        display: block;
+    }
+
+    .sidenav {
+        width: 100%;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .sidenav a {
+        display: inline-block;
+    }
+}

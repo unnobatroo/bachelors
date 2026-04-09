@@ -1,4 +1,3 @@
-package array.util;
 import check.*;
 import static check.Use.*;
 
