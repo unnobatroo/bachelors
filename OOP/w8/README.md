@@ -1,32 +1,45 @@
-### Java keywords
+## Inheritance and subclassing
 
-| Keyword | Category | What it does | Real-World Analogy      |
-| :--- | :--- | :--- |:------------------------|
-| `public` | Access | Visible to **everyone** in the project. | A public park.          |
-| `private` | Access | Visible **only** within the same class. | Your personal diary.    |
-| `protected` | Access | Visible to the package and **subclasses**. | A family heirloom.      |
-| `static` | Behavior | Belongs to the **class itself**, not an object. | The name of the school. |
-| `final` | Behavior | **Cannot be changed** (constant or un-inheritable). | A birth date.           |
+**Subclassing** is the act of creating a "child" class that inherits traits from a "parent" (superclass). This
+represents an **"is-a"** relationship.
+
+* **Superclass (parent):** The general category (e.g., `Animal`).
+* **Subclass (child):** The specific type (e.g., `Dog`).
+
+| Feature  | Abstract Class `extends`                              | Interface `implements`                           |
+|:---------|:------------------------------------------------------|:-------------------------------------------------|
+| Identity | High-level "Type", `Animal`.                          | A "Skill", `Swimmable`.                          |
+| State    | Can have variables (fields) like `int health`.        | Only constants, usually.                         |
+| Methods  | Can have fully written methods **AND** abstract ones. | Mostly abstract, though `default` methods exist. |
+| Quantity | You can only extend **one** class.                    | You can implement **many** interfaces.           |
 
 ```java
-public class BankAccount {
-    // PRIVATE: Only this class can touch the balance. 
-    // This prevents "hacking" or accidental bugs.
-    private double balance;
+// Abstract Class (The Core identity)
+abstract class Animal {
+    int age;
 
-    // STATIC & FINAL: Every account shares this interest rate, 
-    // and 'final' means it cannot be modified later.
-    public static final double INTEREST_RATE = 0.02;
+    void breathe() {
+        System.out.println("Inhaling...");
+    }
+}
 
-    // PUBLIC: Anyone can call this method to check their own funds.
-    public double getBalance() {
-        return this.balance;
+// Interfaces (The Skills)
+interface Pet {
+    void play();
+}
+
+interface Guard {
+    void alert();
+}
+
+// A class can do it all!
+class Labrador extends Animal implements Pet, Guard {
+    public void play() {
+        System.out.println("Chasing ball");
     }
 
-    // PROTECTED: Only this bank or specialized "Premium" 
-    // subclasses can apply internal fees.
-    protected void applyInternalFee(double fee) {
-        this.balance -= fee;
+    public void alert() {
+        System.out.println("Barking at mailman");
     }
 }
 ```
