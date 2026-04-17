@@ -2,17 +2,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Jaloliddin Ismailov</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="container">
-    <div class="sidenav"></div>
+<a class="skip-link" href="#content">Skip to content</a>
 
-    <div class="main">
+<div class="container">
+    <nav class="sidenav"></nav>
+
+    <main class="main" id="content">
         <h1 id="greeting"></h1>
         <p>place for a video</p>
 
@@ -20,27 +22,23 @@
 
         <ul>
             <li>hello world</li>
-            <li></li>
         </ul>
 
-        <h2>Want to contact me? Leave your message down below so it arrives in my inbox:</h2>
+        <h2>Want to contact me? Leave your message down below:</h2>
         <form>
-            <input type="text" name="usrname" id="usrname" placeholder="What can I call you?" maxlength="75" required
-                   size="50"><br>
-            <input type="email" name="usrmail" id="usrmail" placeholder="Whom should I reply?" maxlength="75" required
-                   size="50"><br>
-            <textarea name="usrmsg" id="usrmsg" placeholder="What's your message?" maxlength="5000" rows="5" cols="50"
-                      required></textarea><br>
-            <i>Wait! Considering to hire me? You might want to send <a href="">a resume of mine</a> to your HR.</i><br>
-            <label for="usrzoogler">
-                <input type="checkbox" name="usrzoogler" id="usrzoogler" required>
+            <input maxlength="75" name="usrname" placeholder="Name" required type="text"><br>
+            <input maxlength="75" name="usrmail" placeholder="Email" required type="email"><br>
+            <textarea maxlength="5000" name="usrmsg" placeholder="Message" required rows="5"></textarea><br>
+            <i>Wait! Considering hiring me? You might want to send <a href="">a résumé of mine</a> to your HR.</i><br>
+            <label>
+                <input name="usrzoogler" required type="checkbox">
                 I agree I'm not a zoogler!
             </label><br>
 
             <button type="submit">Send</button>
         </form>
 
-        <h2>All locations accessed this page</h2>
+        <h2>Recent Access Log</h2>
         <div class="table-container">
             <table>
                 <caption>
@@ -60,18 +58,10 @@
                     <td>Loading...</td>
                     <td>Loading...</td>
                 </tr>
-                <tr>
-                    <td>Loading...</td>
-                    <td>Loading...</td>
-                </tr>
-                <tr>
-                    <td>Loading...</td>
-                    <td>Loading...</td>
-                </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+    </main>
 </div>
 
 <script src="scripts.js"></script>
