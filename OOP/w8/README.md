@@ -1,45 +1,29 @@
-## Inheritance and subclassing
+# Design patterns
 
-**Subclassing** is the act of creating a "child" class that inherits traits from a "parent" (superclass). This
-represents an **"is-a"** relationship.
+### Singleton
 
-* **Superclass (parent):** The general category (e.g., `Animal`).
-* **Subclass (child):** The specific type (e.g., `Dog`).
+Used when a class should have at most one instance. In this project, it is used for tokens that don't hold unique state, like operators and parentheses, to reduce the memory footprint.
 
-| Feature  | Abstract Class `extends`                              | Interface `implements`                           |
-|:---------|:------------------------------------------------------|:-------------------------------------------------|
-| Identity | High-level "Type", `Animal`.                          | A "Skill", `Swimmable`.                          |
-| State    | Can have variables (fields) like `int health`.        | Only constants, usually.                         |
-| Methods  | Can have fully written methods **AND** abstract ones. | Mostly abstract, though `default` methods exist. |
-| Quantity | You can only extend **one** class.                    | You can implement **many** interfaces.           |
+- [polish/notation/README.md](polish/notation/README.md)
 
-```java
-// Abstract Class (The Core identity)
-abstract class Animal {
-    int age;
+### Strategy
 
-    void breathe() {
-        System.out.println("Inhaling...");
-    }
-}
+Defines a family of algorithms, encapsulates each one, and makes them interchangeable. The document applies this to tree traversals where different actions (like printing, summing, or searching) are implemented as "strategies" passed to a traversal method.
 
-// Interfaces (The Skills)
-interface Pet {
-    void play();
-}
+- [bintree/README.md](bintree/README.md)
 
-interface Guard {
-    void alert();
-}
+### Composite
 
-// A class can do it all!
-class Labrador extends Animal implements Pet, Guard {
-    public void play() {
-        System.out.println("Chasing ball");
-    }
+Intended for organising objects into tree structures to represent part-whole hierarchies. It allows clients to treat individual objects (leaves) and compositions of objects (subtrees) uniformly.
 
-    public void alert() {
-        System.out.println("Barking at mailman");
-    }
-}
-```
+- [filesystem/README.md](filesystem/README.md)
+
+### Other Example
+
+- [hospital/README.md](hospital/README.md)
+
+This package uses inheritance and linked objects, but it does not map cleanly to one of the three patterns above.
+
+## Classwork
+
+[Hospital package](hospital/) and also [08_design_demo.pdf](08_design_demo.pdf)

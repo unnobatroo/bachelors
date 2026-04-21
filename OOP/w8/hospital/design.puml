@@ -1,0 +1,125 @@
+@startuml Hospital
+skinparam DefaultFontName "JetBrains Mono"
+skinparam classAttributeIconSize 0
+left to right direction
+
+package hospital {
+    abstract class Employee {
+        # id: String
+        # name: String
+        # hospitals: List<Hospital>
+        --
+        + Employee(id: String, name: String)
+        + addHospital(hospital: Hospital): void
+        + getId(): String
+        + setId(id: String): void
+        + getName(): String
+        + setName(name: String): void
+        + getHospitals(): List<Hospital>
+    }
+
+    class Doctor {
+        - patients: List<Patient>
+        --
+        + Doctor(id: String, name: String)
+        + treat(patient: Patient): void
+        + discharge(patient: Patient): boolean
+        + getPatients(): List<Patient>
+    }
+
+    class Nurse {
+        + patients: ArrayList<Patient>
+        --
+        + Nurse(id: String, name: String)
+        + takeCare(patient: Patient): void
+        + leave(patient: Patient): boolean
+    }
+
+    class Staff {
+        # id: String
+        # name: String
+        --
+        + Staff(id: String, name: String)
+    }
+
+    class Patient {
+        - name: String
+        - doctor: Doctor
+        - nurses: List<Nurse>
+        --
+        + Patient(name: String)
+        + discharge(): boolean
+        + addNurse(n: Nurse): void
+        + removeNurse(n: Nurse): void
+        + getNurses(): List<Nurse>
+        + getDoctor(): Doctor
+        + setDoctor(doctor: Doctor): void
+        + getName(): String
+    }
+
+    class Hospital {
+        + employees: List<Employee>
+        + patients: List<Patient>
+        --
+        + Hospital()
+        + heal(patient: Patient): void
+        + employ(e: Employee): void
+        + assign(doctor: Doctor, patient: Patient): void
+        + assign(nurse: Nurse, patient: Patient): void
+        + discharge(patient: Patient): boolean
+    }
+
+    class Main {
+        + main(args: String[]): void
+    }
+}
+
+Employee <|-- Doctor
+Employee <|-- Nurse
+Employee <|-- Staff
+Hospital o-- "0..*" Employee : employs
+Hospital o-- "0..*" Patient : heals
+Doctor o-- "0..*" Patient : treats
+Nurse o-- "0..*" Patient : cares for
+Patient --> Doctor : assigned doctor
+Patient --> "0..*" Nurse : assigned nurses
+Main ..> Hospital
+Main ..> Doctor
+Main ..> Nurse
+Main ..> Staff
+Main ..> Patient
+
+note right of Hospital
+    The Hospital class coordinates object relationships.
+    It stores employees and patients, then delegates treatment,
+    care, and discharge to the concrete employee objects.
+end note
+
+note right of Employee
+    Abstract base class shared by all employees.
+    It holds common identity data and the list of hospitals.
+end note
+
+note right of Doctor
+    Doctors manage their own patient list and set the reverse
+    reference on Patient during treat().
+end note
+
+note right of Nurse
+    Nurses track the patients they care for and update the
+    patient-side nurse list through takeCare().
+end note
+
+note right of Patient
+    Patient keeps the inverse links to one Doctor and many Nurses.
+    discharge() removes the patient from both sides.
+end note
+
+note bottom of Hospital
+    Design style:
+    - inheritance for shared employee behavior
+    - polymorphism when Hospital accepts Doctor or Nurse-specific actions
+    - bidirectional associations to keep the model consistent
+end note
+
+@enduml

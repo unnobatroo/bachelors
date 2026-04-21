@@ -8,18 +8,24 @@ abstract class Weapon {
     protected int durability = 100;
     protected Condition condition = Condition.NEW;
 
-    public void performAttack(Monster target) {
+    public Weapon(String name, float basePower) {
+        this.name = name;
+        this.basePower = basePower;
+    }
 
+    public void performAttack(Monster target) {
+        target.setHealth(target.getHealth() - this.getEffectivePower());
     }
 
     public void reduceDurability(int amount) {
         durability -= amount;
-        if (durability < 0) durability = 0;
+        if (durability < 0)
+            durability = 0;
         condition = Condition.fromDurability(durability);
     }
 
     public float getEffectivePower() {
-
+        return basePower * condition.getPowerMultiplier();
     }
 
     public boolean isBroken() {

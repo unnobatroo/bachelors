@@ -14,7 +14,8 @@ public enum Condition {
     public static Condition fromDurability(int durability) {
         if (durability > 0 && durability <= 100) {
             for (Condition c : values()) {
-                if (durability >= c.minDurability) return c;
+                if (durability >= c.minDurability)
+                    return c;
             }
         }
         return BROKEN;

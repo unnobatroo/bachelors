@@ -1,0 +1,182 @@
+@startuml PolishNotation
+skinparam DefaultFontName "JetBrains Mono"
+skinparam classAttributeIconSize 0
+left to right direction
+
+package "polish.notation" {
+    abstract class Token {
+        + readToken(input: String): TokenResult
+        .. nested types ..
+        + IllegalElementException
+        + TokenResult
+    }
+
+    class TokenResult {
+        - token: Token
+        - remainingInput: String
+        + getToken(): Token
+        + getRemainingInput(): String
+    }
+
+    class IllegalElementException {
+        - ch: char
+        + IllegalElementException(c: char)
+        + what(): String
+    }
+
+    class Expression {
+        - input: String
+        - infixTokens: List<Token>
+        - postfixTokens: List<Token>
+        + Expression(input: String)
+        + evaluate(): int
+        + tokenizeInput(): void
+        + convertToPostfix(): void
+        + evaluateExpression(): int
+    }
+
+    abstract class Operator {
+        - op: char
+        # Operator(o: char)
+        + evaluate(leftValue: int, rightValue: int): int
+        + priority(): int
+    }
+
+    class OperatorAdd {
+        - instance: OperatorAdd
+        - OperatorAdd()
+        + getInstance(): OperatorAdd
+        + evaluate(leftValue: int, rightValue: int): int
+        + priority(): int
+    }
+
+    class OperatorSub {
+        - instance: OperatorSub
+        - OperatorSub()
+        + getInstance(): OperatorSub
+        + evaluate(leftValue: int, rightValue: int): int
+        + priority(): int
+    }
+
+    class OperatorMul {
+        - instance: OperatorMul
+        - OperatorMul()
+        + getInstance(): OperatorMul
+        + evaluate(leftValue: int, rightValue: int): int
+        + priority(): int
+    }
+
+    class OperatorDiv {
+        - instance: OperatorDiv
+        - OperatorDiv()
+        + getInstance(): OperatorDiv
+        + evaluate(leftValue: int, rightValue: int): int
+        + priority(): int
+    }
+
+    class Operand {
+        - val: int
+        + Operand(v: int)
+        + value(): int
+        + toString(): String
+    }
+
+    class LeftP {
+        - instance: LeftP
+        - LeftP()
+        + getInstance(): LeftP
+        + toString(): String
+    }
+
+    class RightP {
+        - instance: RightP
+        - RightP()
+        + getInstance(): RightP
+        + toString(): String
+    }
+
+    class ExpressionProcessingException {
+        + ExpressionProcessingException(message: String)
+    }
+}
+
+Token <|-- Operator
+Token <|-- Operand
+Token <|-- LeftP
+Token <|-- RightP
+Operator <|-- OperatorAdd
+Operator <|-- OperatorSub
+Operator <|-- OperatorMul
+Operator <|-- OperatorDiv
+Expression ..> Token : parses / stores
+Expression ..> Operator : evaluates
+Expression ..> ExpressionProcessingException : throws
+PolishNotation ..> Expression : creates and runs
+PolishNotation ..> ExpressionProcessingException : catches
+Token ..> TokenResult : returns
+Token ..> IllegalElementException : throws
+
+note right of Expression
+    Pipeline used by evaluate():
+    1. tokenizeInput()
+    2. convertToPostfix()
+    3. evaluateExpression()
+
+    The conversion is the shunting-yard algorithm:
+    operators are stacked by priority,
+    parentheses control grouping,
+    and the resulting postfix list is evaluated with a value stack.
+end note
+
+note right of Token
+    Static token factory.
+    readToken() consumes one token from the front of the input string
+    and returns the token plus the remaining substring.
+end note
+
+note right of Operator
+    Abstract behavior shared by arithmetic operators.
+    Concrete subclasses provide the symbol, priority, and evaluation rule.
+end note
+
+note right of OperatorAdd
+    Singleton token object.
+    Addition and subtraction share priority 1.
+end note
+
+note right of OperatorSub
+    Singleton token object.
+    Addition and subtraction share priority 1.
+end note
+
+note right of OperatorMul
+    Singleton token object.
+    Multiplication and division share priority 2.
+end note
+
+note right of OperatorDiv
+    Singleton token object.
+    Multiplication and division share priority 2.
+end note
+
+note right of LeftP
+    Singleton token object.
+    Parentheses do not carry state, so one shared instance is enough.
+end note
+
+note right of RightP
+    Singleton token object.
+    Parentheses do not carry state, so one shared instance is enough.
+end note
+
+note bottom of Token
+    Design pattern used here:
+    - Singleton for stateless token types
+    - Simple factory method through readToken()
+
+    Algorithmic pattern used by Expression:
+    - Shunting-yard for infix to postfix conversion
+    - Stack-based postfix evaluation
+end note
+
+@enduml
