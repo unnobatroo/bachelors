@@ -1,13 +1,6 @@
-### 📦 The Basics: Arrays vs. HashSets
+# Arrays vs. HashSets in Java
 
-| Feature | Array 📏 | HashSet ⛓️ |
-| :--- | :--- | :--- |
-| **What is it?** | A contiguous block of memory for elements of the same type. | A collection that uses a "hash table" to store unique elements. |
-| **Size** | **Fixed**: Once you create it, you can't change the length. | **Dynamic**: It grows automatically as you add items. |
-| **Ordering** | **Ordered**: Elements stay in the exact index (0, 1, 2...) you put them in. | **Unordered**: There is no guarantee of internal order. |
-| **Duplicates** | **Allowed**: You can have ten "A"s in a row. | **Forbidden**: Only unique elements are stored. |
-
-### 🧩 WTF is an Array?
+### What is an array?
 An **Array** is like a row of lockers in a hallway. Every locker is exactly the same size and they are numbered sequentially. Because they are right next to each other in memory, the computer can find `locker[500]` instantly just by calculating the distance from the start.
 
 **How it works:**
@@ -23,7 +16,7 @@ workers[1] = "Bob";
 // workers[3] = "Charlie"; // BOOM! ArrayIndexOutOfBoundsException
 ```
 
-### 🔑 WTF is a Hash?
+### What is a hash?
 To understand a **HashSet**, you have to understand **Hashing**. A **Hash Function** is like a "Digital Blender." You throw an object (like a String "Alice") into the blender, and it spits out a specific number (a "Hash Code").
 
 **The Magic Trick:**
@@ -46,9 +39,9 @@ set.add("Alice"); // This does nothing; Alice is already there!
 System.out.println(set.size()); // Prints: 1
 ```
 
-### 🛠️ When to use which?
-
-* **Use an Array** when you know exactly how many items you have, or when the **order** (who is first, who is second) is the most important thing.
-* **Use a HashSet** when you need to prevent duplicates or when you need to answer the question "Is this person on the list?" as fast as possible.
-
-Before we dive into the specific code for your `WorkerSchedule` logic, tell me: if you were building a system to store **Unique ID numbers** for 10,000 employees and you wanted to check if an ID was valid in a split second, which structure would you pick? 🧐
+| Feature | Array | HashSet |
+| :--- | :--- | :--- |
+| **What is it?** | A contiguous block of memory for elements of the same type. | A collection that uses a "hash table" to store unique elements. |
+| **Size** | **Fixed**: Once you create it, you can't change the length. | **Dynamic**: It grows automatically as you add items. |
+| **Ordering** | **Ordered**: Elements stay in the exact index (0, 1, 2...) you put them in. | **Unordered**: There is no guarantee of internal order. |
+| **Duplicates** | **Allowed**: You can have ten "A"s in a row. | **Forbidden**: Only unique elements are stored. |

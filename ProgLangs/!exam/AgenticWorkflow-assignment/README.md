@@ -18,6 +18,7 @@ The assignment is split into three parts:
   - For this part, you must create all the code on your own.
 - **AI-assisted task** — you may use AI tools, but must document how.
 - **Advanced task** — for those with stronger skills and for covering later course topics.
+
 ## Scenario
 
 You are implementing a tiny framework for an "agentic workflow".

@@ -1,4 +1,11 @@
 import org.junit.platform.suite.api.*;
+
+import agentic.workflow.AgentStructureTest;
+import agentic.workflow.WorkflowFormatExceptionStructureTest;
+import agentic.workflow.WorkflowStepStructureTest;
+import agentic.workflow.llm.SchemaTypeStructureTest;
+import agentic.workflow.llm.StructuredOutputStructureTest;
+
 import org.junit.jupiter.api.*;
 
 @SelectClasses({

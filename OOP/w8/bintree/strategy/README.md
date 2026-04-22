@@ -2,7 +2,7 @@
 
 This package builds a binary tree and runs different operations on it.
 
-- [UML](design.puml)
+![](BinTreeStrategy.svg)
 
 ### Design pattern: `Strategy`
 

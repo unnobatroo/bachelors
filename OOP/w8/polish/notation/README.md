@@ -2,7 +2,7 @@
 
 This package parses arithmetic expressions in infix form, converts them to postfix form, and evaluates the result.
 
-- [UML](design.puml)
+- [UML](PolishNotation.svg)
 
 ### Design pattern: `Singleton`
 

@@ -2,7 +2,7 @@
 
 This package models a small hospital workflow.
 
-- [UML](design.puml)
+- [UML](Hospital.svg)
 
 ### Design pattern: `Other example`
 

@@ -2,7 +2,7 @@
 
 This package models a file system tree.
 
-- [UML](design.puml)
+![](FileSystem.svg)
 
 ### Design pattern: `Composite`
 
