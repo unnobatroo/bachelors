@@ -23,5 +23,3 @@ Requirements:
 * validate all user inputs
 * handle possible errors properly
 * organize the program into separate modules
-
-

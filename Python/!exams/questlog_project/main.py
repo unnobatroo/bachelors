@@ -1,9 +1,17 @@
 import shlex
 import sys
+from enum import Enum
 
 from questlog import QuestLogManager
 
 PROMPT = "> "
+
+
+class AppMode(str, Enum):
+    """Top-level execution modes."""
+
+    MANAGE = "manage"
+    SINGLE_COMMAND = "single_command"
 
 
 def run_interactive(manager: QuestLogManager) -> int:
@@ -23,7 +31,7 @@ def run_interactive(manager: QuestLogManager) -> int:
             if cmd.lower() == "exit":
                 # Save and exit
                 try:
-                    manager._save_inventory()  # persist latest state
+                    manager.save_inventory()  # persist latest state
                 except Exception:
                     pass
                 print("Inventory saved. Goodbye!")
@@ -39,13 +47,20 @@ def run_interactive(manager: QuestLogManager) -> int:
     except KeyboardInterrupt:
         print("\nExiting...")
         try:
-            manager._save_inventory()
+            manager.save_inventory()
         except Exception:
             pass
     return 0
 
 
-def main():
+def _detect_mode(args: list[str]) -> AppMode:
+    """Determine whether to run interactive or single-command mode."""
+    if args and args[0].lower() == AppMode.MANAGE.value:
+        return AppMode.MANAGE
+    return AppMode.SINGLE_COMMAND
+
+
+def main() -> None:
     manager = QuestLogManager()
 
     args = sys.argv[1:]
@@ -53,15 +68,15 @@ def main():
         print("No command provided. See README for usage.")
         sys.exit(1)
 
-    # Mode selection
-    first = args[0].lower()
-    if first == "manage":
+    mode = _detect_mode(args)
+
+    if mode == AppMode.MANAGE:
         code = run_interactive(manager)
         sys.exit(code)
-    else:
-        # Single command mode: pass through to manager
-        exit_code = manager.execute(args)
-        sys.exit(exit_code)
+
+    # Single command mode: pass through to manager.
+    exit_code = manager.execute(args)
+    sys.exit(exit_code)
 
 
 if __name__ == "__main__":

@@ -1,16 +1,39 @@
 package quests;
 
+import guild.Adventurer;
+
+/**
+ * Enemy unit with health, strength, and armor.
+ */
 public class Monster {
     private String name;
     private float health;
     private float strength;
-    private float armour;
+    private float armor;
 
-    public Monster(String name, float health, float strength, float armour) {
+    public Monster(String name, float health, float strength, float armor) {
         this.name = name;
         this.health = health;
         this.strength = strength;
-        this.armour = armour;
+        this.armor = armor;
+    }
+
+    /**
+     * Applies damage and optionally bypasses armor.
+     */
+    public void takeDamage(float amount, boolean bypassArmor) {
+        float appliedDamage = bypassArmor ? amount : Math.max(0, amount - armor);
+        this.health = Math.max(0, this.health - appliedDamage);
+    }
+
+    /**
+     * Deals strength damage to an adventurer.
+     */
+    public void attack(Adventurer adventurer) {
+        if (health <= 0) {
+            return;
+        }
+        adventurer.takeDamage(strength);
     }
 
     public String getName() {
@@ -37,11 +60,11 @@ public class Monster {
         this.strength = strength;
     }
 
-    public float getArmour() {
-        return armour;
+    public float getArmor() {
+        return armor;
     }
 
-    public void setArmour(float armour) {
-        this.armour = armour;
+    public void setArmor(float armor) {
+        this.armor = armor;
     }
 }

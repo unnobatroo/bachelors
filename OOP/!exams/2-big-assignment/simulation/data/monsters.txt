@@ -1,0 +1,6 @@
+# name;health;strength;armor
+Goblin;30;4;1
+Wolf;35;5;1
+Orc;60;9;3
+Troll;90;12;5
+Necromancer;80;11;4

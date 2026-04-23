@@ -1,31 +1,20 @@
 # Design patterns
 
-Design patterns so far - these from w8, and here are today's patterns:
-
-### So far
+Design patterns so far:
 
 - [Singleton](../w8/polish/notation/README.md)
 - [Strategy](../w8/bintree/strategy/README.md)
 - [Composite](../w8/filesystem/README.md)
 
-## Today
-
-### Singleton
+### Today's pattern: Singleton
 
 Used for objects that should have only one shared instance. In this project, the terrain types and the reusable base-area helpers are singletons.
+
+## Creatures
 
 - [creatures/Grass.java](creatures/Grass.java)
 - [creatures/Sand.java](creatures/Sand.java)
 - [creatures/Swamp.java](creatures/Swamp.java)
-- [solids/CircleArea.java](solids/CircleArea.java)
-- [solids/SquareArea.java](solids/SquareArea.java)
-- [solids/TriangularArea.java](solids/TriangularArea.java)
-
-### Factory method
-
-The solid reader creates the correct concrete shape from input data instead of exposing that logic to the caller.
-
-- [solids/Solid.java](solids/Solid.java)
 
 ### Template method
 
@@ -44,6 +33,18 @@ Creatures and terrain cooperate through overloaded `change(...)` methods, so the
 - [creatures/Grass.java](creatures/Grass.java)
 - [creatures/Sand.java](creatures/Sand.java)
 - [creatures/Swamp.java](creatures/Swamp.java)
+
+## Solids
+
+- [solids/CircleArea.java](solids/CircleArea.java)
+- [solids/SquareArea.java](solids/SquareArea.java)
+- [solids/TriangularArea.java](solids/TriangularArea.java)
+
+### Factory method
+
+The solid reader creates the correct concrete shape from input data instead of exposing that logic to the caller.
+
+- [solids/Solid.java](solids/Solid.java)
 
 ### Inheritance hierarchy
 

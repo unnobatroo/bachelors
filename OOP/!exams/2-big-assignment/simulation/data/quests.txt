@@ -1,0 +1,4 @@
+# questName;difficulty;monster1,monster2,...
+Forest Sweep;1;Goblin,Wolf
+Mountain Pass;2;Orc,Troll
+Shadow Crypt;2;Necromancer,Goblin

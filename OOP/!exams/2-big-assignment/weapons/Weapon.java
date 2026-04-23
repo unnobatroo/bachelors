@@ -2,7 +2,10 @@ package weapons;
 
 import quests.Monster;
 
-abstract class Weapon {
+/**
+ * Base weapon abstraction with durability and condition handling.
+ */
+public abstract class Weapon {
     protected String name;
     protected float basePower;
     protected int durability = 100;
@@ -13,10 +16,14 @@ abstract class Weapon {
         this.basePower = basePower;
     }
 
-    public void performAttack(Monster target) {
-        target.setHealth(target.getHealth() - this.getEffectivePower());
-    }
+    /**
+     * Performs an attack against a monster target.
+     */
+    public abstract void performAttack(Monster target);
 
+    /**
+     * Reduces durability and updates condition.
+     */
     public void reduceDurability(int amount) {
         durability -= amount;
         if (durability < 0)
@@ -24,10 +31,20 @@ abstract class Weapon {
         condition = Condition.fromDurability(durability);
     }
 
+    /**
+     * Computes power after applying state multiplier and NEW bonus.
+     */
     public float getEffectivePower() {
-        return basePower * condition.getPowerMultiplier();
+        float multiplier = condition.getPowerMultiplier();
+        if (condition == Condition.NEW) {
+            multiplier *= 1.10f;
+        }
+        return basePower * multiplier;
     }
 
+    /**
+     * Checks whether the weapon can still be used.
+     */
     public boolean isBroken() {
         return condition == Condition.BROKEN;
     }
@@ -45,7 +62,8 @@ abstract class Weapon {
     }
 
     public void setDurability(int durability) {
-        this.durability = durability;
+        this.durability = Math.max(0, Math.min(100, durability));
+        this.condition = Condition.fromDurability(this.durability);
     }
 
     public Condition getCondition() {
