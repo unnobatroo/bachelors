@@ -1,18 +1,67 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <!-- UTF-8 character encoding for proper text handling -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog — Jaloliddin Ismailov</title>
+    <title>Blog – Website of Jaloliddin Ismailov</title>
     <link rel="stylesheet" href="style.css">
+    <link href="print.css" rel="stylesheet" media="print">
 </head>
 <body>
 <a href="#content" class="skip-link">Skip to content</a>
-<div class="container">
+
+<div class="page-wrapper">
+    <!-- Theme toggle buttons -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+    <button id="contrastToggle" class="contrast-toggle" aria-label="Toggle high contrast" title="High contrast mode">A+</button>
+
+    <div class="container">
     <nav class="sidenav"></nav>
     <main class="main" id="content">
-        <h1>Blog</h1>
-        <p>Nothing here yet. Check back later!</p>
+        <header>
+            <h1>Blog</h1>
+        </header>
+        <section class="blog-hero" aria-labelledby="blogHighlightsHeading">
+            <h2 id="blogHighlightsHeading">Highlights</h2>
+            <p>Short posts about art workflow, mapping, and front-end experiments.</p>
+        </section>
+
+        <section aria-labelledby="blogGalleryHeading" class="thumbnail-section">
+            <h2 id="blogGalleryHeading">Thumbnail Gallery</h2>
+            <p>Open each thumbnail to view the larger image.</p>
+            <div class="thumbnail-grid">
+                <figure>
+                    <a href="media/luna.png" target="_blank" rel="noopener">
+                        <img src="media/luna.png" alt="Thumbnail preview of Luna character study">
+                    </a>
+                    <figcaption>Luna concept artwork</figcaption>
+                </figure>
+                <figure>
+                    <a href="media/raincaller.png" target="_blank" rel="noopener">
+                        <img src="media/raincaller.png" alt="Thumbnail preview of Raincaller concept art">
+                    </a>
+                    <figcaption>Raincaller scene study</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <article>
+            <h2>Post: Design Notes</h2>
+            <p>I build each page as semantic HTML first, then layer CSS and interaction in small tested steps.</p>
+        </article>
+        <aside>
+            <h3>About these posts</h3>
+            <p>These are explorations of web design techniques and creative workflows.</p>
+        </aside>
     </main>
+    <footer>
+           <p>&copy; 2026 Jaloliddin Ismailov. All rights reserved.</p>
+           <p>External resources: <a href="https://developer.mozilla.org/" rel="noopener" target="_blank">MDN</a></p>
+    </footer>
+    </div>
 </div>
 <script src="scripts.js"></script>
 </body>

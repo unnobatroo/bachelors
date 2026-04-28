@@ -6,7 +6,7 @@
 
 > Note that while the topic of this assignment is AI, and some parts allow/require you to use AI, such assistance will be forbidden during the exam.
 
-## Theme
+### Theme
 
 You will build a small simulation of an AI agent workflow.
 
@@ -19,7 +19,7 @@ The assignment is split into three parts:
 - **AI-assisted task** — you may use AI tools, but must document how.
 - **Advanced task** — for those with stronger skills and for covering later course topics.
 
-## Scenario
+### Scenario
 
 You are implementing a tiny framework for an "agentic workflow".
 
@@ -48,11 +48,11 @@ For the JUnit testing part, create at least two agent descriptions in files call
 
 ### About specific details
 
-**StructuredOutput class:** This class represents the expected output of one workflow step.
+**`StructuredOutput` class:** This class represents the expected output of one workflow step.
 - store one or more schema types in an array or collection,
 - A step may have one schema type such as `INT`, or multiple schema types such as `[STRING, BOOLEAN]`.
 
-**WorkflowStep class:** Represents one step of the agent workflow.
+**`WorkflowStep` class:** Represents one step of the agent workflow.
 - name should be unique inside one agent,
 - prompt and systemPrompt must not be blank.
 - `simulateResponse()` does not call AI. It returns a simple placeholder string depending on the schema, for example:
@@ -61,7 +61,7 @@ For the JUnit testing part, create at least two agent descriptions in files call
   - `BOOLEAN` → `"true"`
   - `LIST_INT` → `"[1,2,3]"`
 
-**Agent class:** Represents the whole workflow.
+**`Agent` class:** Represents the whole workflow.
 - `loadAgent` loads an agent from a file,
 - validate the file format,
 - reject duplicate step names,

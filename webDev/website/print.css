@@ -1,0 +1,9 @@
+/* Print stylesheet: hide repeated UI, scale images, and optimize for paper */
+/* Remove navigation, header extras, and controls */
+.sidenav, .theme-toggle, .contrast-toggle, .skip-link, .sort-controls, .card-actions, .thumbnail-grid a { display: none !important; }
+footer { display: none !important; }
+header, main { width: 100%; }
+img { max-width: 100%; height: auto; }
+video { display: none !important; }
+body { background: #fff; color: #000; }
+.table-container table { border: 1px solid #000; }

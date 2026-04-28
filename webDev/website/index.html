@@ -1,67 +1,131 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <!-- UTF-8 character encoding for proper text handling -->
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Jaloliddin Ismailov</title>
+    <title>Home – Website of Jaloliddin Ismailov</title>
     <link href="style.css" rel="stylesheet">
+    <link href="print.css" rel="stylesheet" media="print">
 </head>
 
 <body>
 
 <a class="skip-link" href="#content">Skip to content</a>
 
-<div class="container">
+<div class="page-wrapper">
+    <!-- Theme toggle buttons -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+    <button id="contrastToggle" class="contrast-toggle" aria-label="Toggle high contrast" title="High contrast mode">A+</button>
+
+    <div class="container">
     <nav class="sidenav"></nav>
 
     <main class="main" id="content">
-        <h1 id="greeting"></h1>
-        <p>place for a video</p>
+        <header>
+            <h1 id="greeting"></h1>
+        </header>
+        <section aria-labelledby="introVideoHeading" class="video-block">
+            <h2 id="introVideoHeading">Intro Video</h2>
+            <details>
+                <summary>Open video presentation</summary>
+                <video controls preload="metadata" width="480" poster="media/luna.png">
+                    <source src="media/intro-presentation.mp4" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>
+                <p>This section is prepared for a 30+ second narrated video file.</p>
+                <details>
+                    <summary>Full text description of the video (open)</summary>
+                    <p>The video opens with an establishing shot of the workspace, followed by narration describing the project's goals. The speaker explains the design choices, shows step-by-step UI mockups, and demonstrates responsive behavior across devices. Visual highlights include project cards, image thumbnails, and a brief walkthrough of the theme toggle. Background music is low and the narration takes approximately 45 seconds, with captions and callouts appearing on-screen.</p>
+                </details>
+            </details>
+        </section>
 
         <h2>Here's what I've done so far:</h2>
 
-        <ul>
-            <li>hello world</li>
-        </ul>
+        <section aria-labelledby="projectsHeading" class="projects">
+            <h3 id="projectsHeading">Project Cards</h3>
+            <div aria-label="Sort project cards" class="sort-controls" role="group">
+                <button id="sortTitle" class="sort-btn sort-btn-active" type="button" data-sort-type="title">Title: A-Z</button>
+                <button id="sortDate" class="sort-btn" type="button" data-sort-type="date">Date: Newest</button>
+            </div>
+            <div aria-live="polite" class="card-grid" id="projectCards"></div>
+        </section>
 
-        <h2>Want to contact me? Leave your message down below:</h2>
-        <form>
-            <input maxlength="75" name="usrname" placeholder="Name" required type="text"><br>
-            <input maxlength="75" name="usrmail" placeholder="Email" required type="email"><br>
-            <textarea maxlength="5000" name="usrmsg" placeholder="Message" required rows="5"></textarea><br>
-            <i>Wait! Considering hiring me? You might want to send <a href="">a résumé of mine</a> to your HR.</i><br>
-            <label>
-                <input name="usrzoogler" required type="checkbox">
-                I agree I'm not a zoogler!
-            </label><br>
-
-            <button type="submit">Send</button>
+        <aside>
+            <h2>Want to contact me? Leave your message down below:</h2>
+            <p>Use this form to get in touch. I'll respond as soon as possible!</p>
+        </aside>
+        <form id="contactForm" method="post" action="#" novalidate>
+            <div>
+                <label for="name">Your name</label><br>
+                <input id="name" name="usrname" maxlength="75" placeholder="Name" required type="text" size="30">
+            </div>
+            <div>
+                <label for="email">Your email</label><br>
+                <input id="email" name="usrmail" maxlength="75" placeholder="Email" required type="email" size="30">
+            </div>
+            <div>
+                <label for="message">Message</label><br>
+                <textarea id="message" name="usrmsg" maxlength="5000" placeholder="Message" required rows="5" cols="40"></textarea>
+            </div>
+            <fieldset>
+                <legend>Preferred contact method</legend>
+                <label for="contact-email"><input id="contact-email" name="contactMethod" required type="radio" value="email"> Email</label>
+                <label for="contact-social"><input id="contact-social" name="contactMethod" type="radio" value="social"> Social media</label>
+            </fieldset>
+            <div>
+                <label for="agree"><input id="agree" name="usrzoogler" required type="checkbox"> I agree I'm not a zoogler!</label>
+            </div>
+            <div>
+                <button type="submit">Send</button>
+            </div>
+            <p class="form-note">Tip: you can also view my résumé at <a href="blog.html">Résumé</a>.</p>
         </form>
 
         <h2>Recent Access Log</h2>
         <div class="table-container">
-            <table>
-                <caption>
-                    <details>
-                        <summary>Location access log (expand)</summary>
-                        <p>This table shows the latest page access time and IP-based location.</p>
-                    </details>
-                </caption>
-                <thead>
-                <tr>
-                    <th scope="col">Time</th>
-                    <th scope="col">Location</th>
-                </tr>
-                </thead>
-                <tbody id="locationLog">
-                <tr>
-                    <td>Loading...</td>
-                    <td>Loading...</td>
-                </tr>
-                </tbody>
-            </table>
+            <details>
+                <summary>Location access log (expand)</summary>
+                <table>
+                    <caption>
+                        <details>
+                            <summary>Recent access summary</summary>
+                            This table shows the latest page access time and IP-based location captured via client-side geolocation lookups. It is updated locally in your browser and kept for privacy-conscious display only.
+                        </details>
+                    </caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Location</th>
+                    </tr>
+                    </thead>
+                    <tbody id="locationLog">
+                    <tr>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                    </tr>
+                    <tr>
+                        <td>Loading...</td>
+                        <td>Loading...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </details>
         </div>
     </main>
+    <footer>
+        <p>&copy; 2026 Jaloliddin Ismailov. All rights reserved.</p>
+        <p>External resources: <a href="https://developer.mozilla.org/" rel="noopener" target="_blank">MDN</a>, <a href="https://www.w3.org/" rel="noopener" target="_blank">W3C</a>, <a href="https://en.wikipedia.org/" rel="noopener" target="_blank">Wikipedia</a></p>
+    </footer>
+    </div>
 </div>
 
 <script src="scripts.js"></script>
