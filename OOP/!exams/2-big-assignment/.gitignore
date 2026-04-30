@@ -1,8 +1,0 @@
-# Build output
-/target/
-
-# Compiled classes accidentally produced in source folders
-*.class
-
-# OS/editor noise
-.DS_Store
