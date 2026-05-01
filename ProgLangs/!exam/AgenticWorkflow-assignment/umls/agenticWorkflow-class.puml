@@ -1,7 +1,4 @@
-@startuml
-
-title Agentic Workflow
-skinparam DefaultFontName "JetBrains Mono"
+@startuml agenticWorkflow-class
 left to right direction
 
 package "agentic.workflow.llm" {
@@ -63,12 +60,6 @@ package "agentic.workflow" {
     - {static} parseStep(reader : BufferedReader) : WorkflowStep <<throws IOException, WorkflowFormatException>>
   }
 
-  class WorkflowFileWriter {
-    + {static} writeTravelPlanner(filename : String) : void <<throws IOException>>
-    + {static} writeStudyCoach(filename : String) : void <<throws IOException>>
-    - {static} writeStep(writer : PrintWriter, name : String, prompt : String, systemPrompt : String, output : SchemaType) : void <<throws IOException>>
-  }
-
   note bottom of WorkflowStep
     public String simulateResponse() {
         SchemaType primary = structuredOutput.getSchemaTypes()[0];
@@ -93,59 +84,11 @@ package "agentic.workflow" {
         output=<schema type>
       ENDSTEP
   end note
-
-  note bottom of WorkflowFileWriter
-    public void addStep(WorkflowStep step) {
-        if (step == null) throw new IllegalArgumentException("step must not be null");
-        if (findStepByName(step.getName()) != null) {
-            throw new IllegalArgumentException("Duplicate step: " + step.getName());
-        }
-        steps.add(step);
-    }
-
-    **loadAgent / parseStep throw:**
-      - IllegalArgumentException for bad filename argument
-      - WorkflowFormatException for malformed content
-      - IOException for file read failures
-
-    **run() catches WorkflowFormatException:**
-      try {
-          stepOutput = currentExecutor.execute(step);
-      } catch (WorkflowFormatException e) {
-          stepOutput = "[ERROR] " + e.getMessage();
-      }
-  end note
-}
-
-package "agentic.workflow.execution" {
-  interface StepExecutor {
-    + execute(step : WorkflowStep) : Object
-  }
-
-  class StringStepExecutor {
-    + execute(step : WorkflowStep) : String
-  }
-
-  interface ValueFormatter {
-    + format(value : Object) : String
-  }
-
-  class MapStringStringFormatter {
-    + format(value : MapStringString) : String
-  }
-
-  class StepIdentityFormatter {
-    + format(value : WorkflowStep) : String
-  }
 }
 
 Agent "1" *-- "0..*" WorkflowStep : ordered steps
 WorkflowStep "1" --> "1" StructuredOutput : expects
 StructuredOutput "1" --> "1..*" SchemaType : defines
 Agent ..> WorkflowFormatException : throws and catches
-WorkflowFileWriter ..> SchemaType
-StringStepExecutor ..|> StepExecutor
-MapStringStringFormatter ..|> ValueFormatter
-StepIdentityFormatter ..|> ValueFormatter
 
 @enduml

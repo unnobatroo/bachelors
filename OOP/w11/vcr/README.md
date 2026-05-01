@@ -1,10 +1,10 @@
-# VCR Project - Reorganized Structure
+# VCR player
 
 This project implements a Video Cassette Recorder (VCR) state machine.
 
 ### Package
 
-```text
+```shell
 com.vcr
 ├── VCR.java                    # Main VCR machine (context)
 ├── state/
@@ -19,24 +19,11 @@ com.vcr
     └── VCRListener.java       # Event interface for components
 ```
 
-### State transitions
-
-```text
-[*] → Standby
-     ↓ (Power On)
-Operating → Idle (initially)
-     ↓ (Tape Inserted)
-   Active
-     ├ Head: OffTape → OnTape (on Engage_All)
-     ├ Motor: Stopped → Playing (on Engage_All)
-     └ Controller: Waiting → ProcessingPlay
-     ↓ (Stop/Eject)
-   Idle
-     ↓ (Power Off)
-Standby
-```
-
 ## Design pattern: Observer + state machine
+
+- [State UML](designs/vcr-state.svg)
+- [Class UML](designs/vcr-class.svg)
+- [Sequence UML](designs/vcr-sequence.svg)
 
 1. **VCR.java** - Context class managing:
    - Power state (STANDBY ↔ OPERATING)
@@ -56,27 +43,6 @@ Standby
    - VCRPowerState: Controls overall VCR power
    - OperatingState: Manages Idle/Active states when powered
    - Component-specific states: HeadState, MotorState, ControllerState
-
-### State UML
-
-<figure>
-  <img src="designs/vcr-state.svg" alt="VCR state diagram" width="640" style="border:1px solid #ddd; padding:8px; background:#fff;" />
-  <figcaption>State diagram — power and operating substates, parallel regions, and broadcasts.</figcaption>
-</figure>
-
-### Class UML
-
-<figure>
-  <img src="designs/vcr-class.svg" alt="VCR class diagram" width="640" style="border:1px solid #ddd; padding:8px; background:#fff;" />
-  <figcaption>Class diagram — components, interfaces, enums, and relationships.</figcaption>
-</figure>
-
-### Sequence
-
-<figure>
-  <img src="designs/vcr-sequence.svg" alt="VCR sequence diagram" width="880" style="border:1px solid #ddd; padding:8px; background:#fff;" />
-  <figcaption>Sequence diagram — typical user interactions and event broadcasting flow.</figcaption>
-</figure>
 
 ## Usage
 

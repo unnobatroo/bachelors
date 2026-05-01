@@ -1,7 +1,7 @@
 $$
 \text{assignments = }\frac{\text{small} + 2 * \text{large}}{3}
 $$
-
+---
 $$
 \text{final grade} = \frac{\text{design midterm} + \text{design endterm} + \text{coding endterm} + \text{comprehensive quiz + \text{assignments}}}{5}
 $$

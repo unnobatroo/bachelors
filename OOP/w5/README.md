@@ -2,9 +2,10 @@
 
 ### Dependency: "using"
 
-A dependency occurs when one class temporarily uses another. This is a short-term
-connection. Class A depends on Class B if an object of Class A receives an object of Class B as a
-method parameter or creates one locally to call its methods.
+Occurs when one class temporarily uses another. This is a short-term
+connection. Class A depends on Class B if an object of Class A receives an object of Class B as a method parameter or creates one locally to call its methods.
+
+![Dependency](uml/dependency.png)
 
 ```java
 class Teacher {
@@ -21,10 +22,9 @@ class Student {
 
 ### Association: "long-term"
 
-**Association** represents a lasting connection where objects continuously send messages to each other. It describes
-multiple relationships between objects. For example, a `Person` can write many `Books`,
-and a `Book` can have multiple authors. These often have "multiplicity" (like 1-to-many) and "navigability" (which
-object can find the other).
+Represents a lasting connection where objects continuously send messages to each other. It describes multiple relationships between objects. For example, a `Person` can write many `Books`, and a `Book` can have multiple authors. These often have "multiplicity" (like 1-to-many) and "navigability" (which object can find the other).
+
+![Association](uml/association.png)
 
 ```java
 class Author {
@@ -46,6 +46,8 @@ class Book {
 
 A weak "part-of" link. The part can exist without the whole.
 
+![Aggregation](uml/aggregation.png)
+
 ```java
 class Playground {
     private final Slide slide;
@@ -58,7 +60,9 @@ class Playground {
 
 ### Composition
 
-A strong "part-of" link. The part cannot exist without its whole
+A strong "part-of" link. The part cannot exist without its whole.
+
+![Composition](uml/composition.png)
 
 ```java
 class Book {
@@ -73,9 +77,9 @@ class Book {
 
 ### Inheritance: "is-a"
 
-Inheritance is used for generalisation - creating a parent, or specialisation - creating a
-child. A child class, or a subclass, inherits all public and protected fields and methods from its
-parent, base class.
+Used for generalisation - creating a parent, or specialisation - creating a child. A child class, or a subclass, inherits all public and protected fields and methods from its parent, base class.
+
+![Inheritance](uml/inheritance.png)
 
 ```java
 class Point {
@@ -96,4 +100,3 @@ class Sphere extends Point {
         this.radius = r;
     }
 }
-```
