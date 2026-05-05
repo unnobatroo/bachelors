@@ -3,127 +3,397 @@
    - Removes duplicate rules and repeated blocks
    - Uses CSS variables for easy theme changes
 */
-:root{
+:root {
   --bg: #ffffff;
   --muted: #f5f5f5;
   --text: #000;
   --muted-text: #666;
   --border: #000;
   --nav: #dcdcdc;
-  --link:#0066cc;
-  --visited:#4b2e83;
+  --link: #0066cc;
+  --visited: #4b2e83;
 }
-html[data-theme="dark"]{
-  --bg:#111;
-  --muted:#222;
-  --text:#fff;
-  --muted-text:#ccc;
-  --border:#444;
-  --nav:#222;
-  --link:#66b3ff;
+
+html[data-theme="dark"] {
+  --bg: #111;
+  --muted: #222;
+  --text: #fff;
+  --muted-text: #ccc;
+  --border: #444;
+  --nav: #222;
+  --link: #66b3ff;
 }
 
 /* High contrast large-font theme for accessibility */
-html[data-theme="high-contrast"]{
-  --bg:#000;
-  --muted:#000;
-  --text:#fff;
-  --muted-text:#fff;
-  --border:#fff;
-  --nav:#000;
-  --link:#ffff00;
-  --visited:#ff8800;
-  font-size:120%;
+html[data-theme="high-contrast"] {
+  --bg: #000;
+  --muted: #000;
+  --text: #fff;
+  --muted-text: #fff;
+  --border: #fff;
+  --nav: #000;
+  --link: #ffff00;
+  --visited: #ff8800;
+  font-size: 120%;
 }
 
 /* Page layout: keep footer pinned to bottom with minimal rules */
-html,body{height:100%;}
-body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;color:var(--text);background:var(--bg);display:flex;flex-direction:column;font-size:100%}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  font-size: 100%
+}
 
 /* Skip link visible on focus for keyboard users */
-.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-.skip-link:focus{position:fixed;left:10px;top:10px;width:auto;height:auto;padding:8px 12px;background:var(--link);color:#fff;z-index:2000}
-.page-wrapper{flex:1;display:flex;flex-direction:column;min-height:100vh;position:relative}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden
+}
+
+.skip-link:focus {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: var(--link);
+  color: #fff;
+  z-index: 2000
+}
+
+.page-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative
+}
 
 /* Toggle */
-.theme-toggle{position:absolute;top:20px;right:20px;z-index:1000;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--muted);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer
+}
 
 /* High-contrast toggle near theme toggle */
-.contrast-toggle{position:absolute;top:20px;right:80px;z-index:1000;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--muted);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.contrast-toggle {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer
+}
 
 /* App shell */
-.container{display:flex;flex:1}
-.sidenav{width:120px;background:var(--nav);border-right:1px solid var(--border);padding:12px;box-sizing:border-box}
-.sidenav a{display:block;color:var(--link);text-decoration:none;padding:6px 4px}
-.sidenav a[aria-current="page"]{font-weight:700;text-decoration:underline}
+.container {
+  display: flex;
+  flex: 1
+}
+
+.sidenav {
+  width: 120px;
+  background: var(--nav);
+  border-right: 1px solid var(--border);
+  padding: 12px;
+  box-sizing: border-box
+}
+
+.sidenav a {
+  display: block;
+  color: var(--link);
+  text-decoration: none;
+  padding: 6px 4px
+}
+
+.sidenav a[aria-current="page"] {
+  font-weight: 700;
+  text-decoration: underline
+}
+
+/* Make nav links keyboard-focusable and clearly visible */
+.sidenav a:focus {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  background: rgba(0,0,0,0.04);
+}
 
 /* Links: always underlined except nav (nav is exempt) */
-a{color:var(--link);text-decoration:underline}
-a:visited{color:var(--visited)}
+a {
+  color: var(--link);
+  text-decoration: underline
+}
 
-.main{flex:1;padding:18px}
+a:visited {
+  color: var(--visited)
+}
+
+.main {
+  flex: 1;
+  padding: 18px
+}
 
 /* Cards */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:32px}
-.card{background:var(--muted);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
-.card-image{width:100%;height:180px;object-fit:cover;background:var(--nav)}
-.card-header{padding:12px;border-bottom:1px solid var(--border)}
-.card-title{margin:0;font-weight:600}
-.card-content{padding:12px;display:flex;flex-direction:column;gap:12px}
-.card-body{color:var(--muted-text);flex:1}
-.card-actions{display:flex;gap:8px}
-.card-btn{flex:1;padding:8px 10px;background:var(--nav);border:1px solid var(--border);text-align:center;text-decoration:none;color:var(--text);border-radius:4px}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-bottom: 32px
+}
+
+.card {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: var(--nav)
+}
+
+.card-header {
+  padding: 12px;
+  border-bottom: 1px solid var(--border)
+}
+
+.card-title {
+  margin: 0;
+  font-weight: 600
+}
+
+.card-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px
+}
+
+.card-body {
+  color: var(--muted-text);
+  flex: 1
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px
+}
+
+.card-btn {
+  flex: 1;
+  padding: 8px 10px;
+  background: var(--nav);
+  border: 1px solid var(--border);
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: 4px
+}
 
 /* Sort controls */
-.sort-controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.sort-btn{padding:8px 12px;border:1px solid var(--border);background:var(--muted);cursor:pointer}
-.sort-btn-active{background:var(--link);color:#fff;border-color:var(--link)}
+.sort-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap
+}
+
+.sort-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  cursor: pointer
+}
+
+.sort-btn-active {
+  background: var(--link);
+  color: #fff;
+  border-color: var(--link)
+}
 
 /* Form basics */
-input,textarea{font:inherit;padding:6px;border:1px solid var(--border);background:var(--muted);color:var(--text)}
-button[type=submit]{padding:8px 12px;border:1px solid var(--border);background:var(--muted);cursor:pointer}
+input,
+textarea {
+  font: inherit;
+  padding: 6px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--text)
+}
+
+button[type=submit] {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  cursor: pointer
+}
 
 /* Table */
-table{border-collapse:collapse;width:100%;max-width:520px;background:var(--muted)}
-th,td{padding:6px;border:1px solid var(--border);color:var(--text)}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 520px;
+  background: var(--muted)
+}
+
+th,
+td {
+  padding: 6px;
+  border: 1px solid var(--border);
+  color: var(--text)
+}
 
 /* Footer */
-footer{border-top:1px solid var(--border);padding:16px;text-align:center;background:var(--nav);margin-top:auto}
+footer {
+  border-top: 1px solid var(--border);
+  padding: 16px;
+  text-align: center;
+  background: var(--nav);
+  margin-top: auto
+}
 
 /* Responsive */
 /* Small phones: single column */
-@media (max-width:599px){
-  .container{flex-direction:column}
-  .sidenav{width:100%;border-right:0;border-bottom:1px solid var(--border);display:flex;gap:8px}
-  .card-image{height:160px}
-  .theme-toggle{top:10px;right:10px}
+@media (max-width:599px) {
+  .container {
+    flex-direction: column
+  }
+
+  .sidenav {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px
+  }
+
+  .card-image {
+    height: 160px
+  }
+
+  .theme-toggle {
+    top: 10px;
+    right: 10px
+  }
 }
 
 /* Tablets: two-column layout */
-@media (min-width:600px) and (max-width:999px){
-  .container{flex-direction:row}
-  .sidenav{width:140px}
-  .card-grid{grid-template-columns:repeat(2,1fr)}
+@media (min-width:600px) and (max-width:999px) {
+  .container {
+    flex-direction: row
+  }
+
+  .sidenav {
+    width: 140px
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr)
+  }
 }
 
 /* Large screens: multi-column */
-@media (min-width:1000px){
-  .container{flex-direction:row}
-  .sidenav{width:180px}
-  .card-grid{grid-template-columns:repeat(3,1fr)}
+@media (min-width:1000px) {
+  .container {
+    flex-direction: row
+  }
+
+  .sidenav {
+    width: 180px
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr)
+  }
 }
 
 /* Blog hero background image - sized and overlayed for readability */
-.blog-hero{background-image:url('media/budapestpassport.png');background-size:cover;background-position:center;padding:28px;color:var(--text);position:relative}
-.blog-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25));pointer-events:none}
-.blog-hero > *{position:relative;z-index:1}
+.blog-hero {
+  background-image: url('media/budapestpassport.png');
+  background-size: cover;
+  background-position: center;
+  padding: 28px;
+  color: var(--text);
+  position: relative
+}
+
+.blog-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+  pointer-events: none
+}
+
+.blog-hero>* {
+  position: relative;
+  z-index: 1
+}
 
 /* Thumbnail grid images sized */
-.thumbnail-grid img{width:100%;height:120px;object-fit:cover;border:1px solid var(--border)}
+.thumbnail-grid img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid var(--border)
+}
 
 /* Print rules: hide nav, footer; scale images */
-@media print{
-  .sidenav, .theme-toggle, .contrast-toggle, footer, .skip-link{display:none}
-  img{max-width:100%;height:auto}
-  video{display:none}
+@media print {
+
+  .sidenav,
+  .theme-toggle,
+  .contrast-toggle,
+  footer,
+  .skip-link {
+    display: none
+  }
+
+  img {
+    max-width: 100%;
+    height: auto
+  }
+
+  video {
+    display: none
+  }
 }

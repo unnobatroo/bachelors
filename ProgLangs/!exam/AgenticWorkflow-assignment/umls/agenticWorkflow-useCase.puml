@@ -1,4 +1,4 @@
-@startuml AgenticWorkflow_UseCase
+@startuml agenticWorkflow-useCase
 left to right direction
 
 actor User
