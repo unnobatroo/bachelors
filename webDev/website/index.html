@@ -2,134 +2,471 @@
 <html lang="en">
 
 <head>
-    <!-- UTF-8 character encoding for proper text handling -->
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Home – Website of Jaloliddin Ismailov</title>
-    <link href="style.css" rel="stylesheet">
-    <link href="print.css" rel="stylesheet" media="print">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Jaloliddin Ismailov — Computer science student at ELTE, Budapest. Embedded systems, mapping systems, and climate-focused engineering." />
+  <title>Jaloliddin Ismailov — Portfolio</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23000000'/%3E%3Ctext x='2' y='13' font-size='12' fill='%23ffffff' font-weight='bold'%3EJI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
 
-<a class="skip-link" href="#content">Skip to content</a>
+  <!-- Skip to Main Content (Accessibility) -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-<div class="page-wrapper">
-    <!-- Theme toggle buttons -->
-    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light theme">
-        <span class="theme-icon">🌙</span>
-    </button>
-    <button id="contrastToggle" class="contrast-toggle" aria-label="Toggle high contrast" title="High contrast mode">A+</button>
+  <!-- ===================== SITE HEADER / NAV ===================== -->
+  <header>
+    <div class="site-header-inner">
+      <a href="./index.html" class="site-logo" aria-label="Jaloliddin Ismailov — Home">JI</a>
 
-    <div class="container">
-    <nav class="sidenav"></nav>
+      <!-- Mobile hamburger toggle -->
+      <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav" aria-expanded="false"
+        aria-label="Toggle navigation menu">
+        ☰
+      </button>
 
-    <main class="main" id="content">
-        <header>
-            <h1 id="greeting"></h1>
-        </header>
-        <section aria-labelledby="introVideoHeading" class="video-block">
-            <h2 id="introVideoHeading">Intro Video</h2>
-            <details>
-                <summary>Open video presentation</summary>
-                <video controls preload="metadata" width="480" poster="media/luna.png">
-                    <source src="media/intro-presentation.mp4" type="video/mp4">
-                    Your browser does not support the video element.
-                </video>
-                <p>This section is prepared for a 30+ second narrated video file.</p>
-                <details>
-                    <summary>Full text description of the video (open)</summary>
-                    <p>The video opens with an establishing shot of the workspace, followed by narration describing the project's goals. The speaker explains the design choices, shows step-by-step UI mockups, and demonstrates responsive behavior across devices. Visual highlights include project cards, image thumbnails, and a brief walkthrough of the theme toggle. Background music is low and the narration takes approximately 45 seconds, with captions and callouts appearing on-screen.</p>
-                </details>
-            </details>
-        </section>
+      <nav id="primary-nav" role="navigation" aria-label="Primary navigation">
+        <ul>
+          <li><a href="./index.html" class="active" aria-current="page">Work</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
 
-        <h2>Here's what I've done so far:</h2>
-
-        <section aria-labelledby="projectsHeading" class="projects">
-            <h3 id="projectsHeading">Project Cards</h3>
-            <div aria-label="Sort project cards" class="sort-controls" role="group">
-                <button id="sortTitle" class="sort-btn sort-btn-active" type="button" data-sort-type="title">Title: A-Z</button>
-                <button id="sortDate" class="sort-btn" type="button" data-sort-type="date">Date: Newest</button>
-            </div>
-            <div aria-live="polite" class="card-grid" id="projectCards"></div>
-        </section>
-
-        <aside>
-            <h2>Want to contact me? Leave your message down below:</h2>
-            <p>Use this form to get in touch. I'll respond as soon as possible!</p>
-        </aside>
-        <form id="contactForm" method="post" action="#" novalidate>
-            <div>
-                <label for="name">Your name</label><br>
-                <input id="name" name="usrname" maxlength="75" placeholder="Name" required type="text" size="30">
-            </div>
-            <div>
-                <label for="email">Your email</label><br>
-                <input id="email" name="usrmail" maxlength="75" placeholder="Email" required type="email" size="30">
-            </div>
-            <div>
-                <label for="message">Message</label><br>
-                <textarea id="message" name="usrmsg" maxlength="5000" placeholder="Message" required rows="5" cols="40"></textarea>
-            </div>
-            <fieldset>
-                <legend>Preferred contact method</legend>
-                <label for="contact-email"><input id="contact-email" name="contactMethod" required type="radio" value="email"> Email</label>
-                <label for="contact-phone"><input id="contact-phone" name="contactMethod" type="radio" value="phone"> Phone</label>
-                <label for="contact-social"><input id="contact-social" name="contactMethod" type="radio" value="social"> Social media</label>
-            </fieldset>
-            <div>
-                <label for="agree"><input id="agree" name="usrzoogler" required type="checkbox"> I agree I'm not a zoogler!</label>
-            </div>
-            <div>
-                <button type="submit">Send</button>
-            </div>
-            <p class="form-note">Tip: you can also view my résumé at <a href="blog.html">Résumé</a>.</p>
-        </form>
-
-        <h2>Recent Access Log</h2>
-        <div class="table-container">
-            <details>
-                <summary>Location access log (expand)</summary>
-                <table>
-                    <caption>
-                        <details>
-                            <summary>Recent access summary</summary>
-                            This table shows the latest page access time and IP-based location captured via client-side geolocation lookups. It is updated locally in your browser and kept for privacy-conscious display only.
-                        </details>
-                    </caption>
-                    <thead>
-                    <tr>
-                        <th scope="col">Time</th>
-                        <th scope="col">Location</th>
-                    </tr>
-                    </thead>
-                    <tbody id="locationLog">
-                    <tr>
-                        <td>Loading...</td>
-                        <td>Loading...</td>
-                    </tr>
-                    <tr>
-                        <td>Loading...</td>
-                        <td>Loading...</td>
-                    </tr>
-                    <tr>
-                        <td>Loading...</td>
-                        <td>Loading...</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </details>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2026 Jaloliddin Ismailov. All rights reserved.</p>
-        <p>External resources: <a href="https://developer.mozilla.org/" rel="noopener" target="_blank">MDN</a>, <a href="https://www.w3.org/" rel="noopener" target="_blank">W3C</a>, <a href="https://en.wikipedia.org/" rel="noopener" target="_blank">Wikipedia</a></p>
-    </footer>
+      <!-- Accessibility toolbar -->
+      <div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+        <button id="contrast-toggle" aria-pressed="false" title="Toggle high contrast mode">
+          ◑ Contrast
+        </button>
+        <button id="font-increase" title="Increase font size" aria-label="Increase font size">A+</button>
+        <button id="font-decrease" title="Decrease font size" aria-label="Decrease font size">A−</button>
+      </div>
     </div>
-</div>
+  </header>
 
-<script src="scripts.js"></script>
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Embedded systems · Mapping · Climate tech</span>
+      <h1 id="hero-heading">Hi — I'm<br>Jaloliddin Ismailov.</h1>
+      <p class="hero-subtitle">
+        Computer science student at ELTE in Budapest, building embedded and mapping projects that connect software to
+        the physical world and explore resilient infrastructure.
+      </p>
+      <a href="./about.html" class="btn-primary">About Me</a>
+
+      <div class="hero-image-wrap mt-xl">
+        <img
+          src="https://images.unsplash.com/photo-1772272935464-2e90d8218987?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
+          alt="A well-lit designer's workspace with a monitor showing UI design work, notebooks, and a carefully arranged desk"
+          width="1080" height="450" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <div class="page-wrapper">
+    <div class="content-layout">
+
+      <!-- MAIN -->
+      <main id="main-content" tabindex="-1">
+
+        <!-- === SELECTED WORK === -->
+        <section aria-labelledby="work-heading">
+          <span class="section-label">Selected Work</span>
+          <h2 id="work-heading">Recent Projects</h2>
+
+          <div class="work-grid" role="list">
+
+            <!-- Project 1 — BME Solar Boat Team -->
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="#" class="thumbnail-link" aria-label="BME Solar Boat Team embedded systems work"
+                  target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600"
+                    alt="ESP32 microcontroller embedded systems development for solar boat telemetry" width="600"
+                    height="338" loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>BME Solar Boat — Embedded Systems</h3>
+                <p>Safety-critical C application for ESP32, engineered 100% throttle signal reliability with FreeRTOS
+                  task management and Watchdog Timers. Managed ADC sensor telemetry at 50Hz.</p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">C/Embedded</li>
+                  <li class="tag">FreeRTOS</li>
+                  <li class="tag">Hardware</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- Project 2 — CASSINI Hackathon -->
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="#" class="thumbnail-link" aria-label="CASSINI EU Space for Water hackathon satellite project"
+                  target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600"
+                    alt="Satellite flood-risk monitoring system using ESA Sentinel-1 data" width="600" height="338"
+                    loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>CASSINI Hackathon — Flood Risk Mapping</h3>
+                <p>Award-winning team project automating SAR imagery analysis with Python backend. Integrated GIS
+                  libraries (GeoPandas, Rasterio) to visualise flood progression using ESA Sentinel-1 satellite data.
+                </p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">Python/GIS</li>
+                  <li class="tag">Satellite Data</li>
+                  <li class="tag">Climate Tech</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- Project 3 — CERN Research -->
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="#" class="thumbnail-link" aria-label="CERN LHCb muon track reconstruction research"
+                  target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="https://images.unsplash.com/photo-1642692602542-abde82b747ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600"
+                    alt="CERN particle physics experiment data analysis and reconstruction algorithms" width="600"
+                    height="338" loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>CERN LHCb — Research Fellow</h3>
+                <p>Enhanced muon track reconstruction precision by 13% applying Chi-squared statistical tests at HLT1
+                  stage. Optimised C++ dependency management in distributed Linux environment.</p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">C++/Physics</li>
+                  <li class="tag">Data Analysis</li>
+                  <li class="tag">Research</li>
+                </ul>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- === INTERESTS & TOOLS === -->
+        <section aria-labelledby="tools-heading">
+          <span class="section-label">Expertise</span>
+          <h2 id="tools-heading">Technical Skills &amp; Interests</h2>
+          <p>Deep focus on embedded systems, climate technology, and mapping systems — combining low-level C/C++
+            engineering with GIS, sensor integration, and real-world infrastructure.</p>
+
+          <details>
+            <summary>View detailed technical toolkit</summary>
+            <div class="details-inner">
+              <div class="table-wrap">
+                <table>
+                  <caption>Jaloliddin Ismailov — Technical Skills &amp; Tools</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Area</th>
+                      <th scope="col">Technologies</th>
+                      <th scope="col">Projects</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Embedded Systems</td>
+                      <td>C, C++, FreeRTOS, ESP32, CAN/TWAI, UART</td>
+                      <td>BME Solar Boat, Hardware prototypes</td>
+                    </tr>
+                    <tr>
+                      <td>Climate &amp; GIS</td>
+                      <td>Python, GeoPandas, Rasterio, Sentinel data</td>
+                      <td>CASSINI flood monitoring, satellite analysis</td>
+                    </tr>
+                    <tr>
+                      <td>Data Analysis</td>
+                      <td>C++, Python, Statistical methods, Linux</td>
+                      <td>CERN LHCb particle physics research</td>
+                    </tr>
+                    <tr>
+                      <td>Infrastructure</td>
+                      <td>Systems thinking, CAN protocols, Sensor networks</td>
+                      <td>Resilience-focused engineering, IoT concepts</td>
+                    </tr>
+                    <tr>
+                      <td>Development</td>
+                      <td>Git, Bash, Computer Networking, Java</td>
+                      <td>Cross-platform project management</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- === PERSONAL INTERESTS === -->
+        <section aria-labelledby="interests-heading">
+          <span class="section-label">Beyond Code</span>
+          <h2 id="interests-heading">Interests &amp; Influences</h2>
+          <p>Urban photography, maps, architecture, cities, music, books, and side projects that keep engineering
+            playful. Passionate about how design shapes human experience and infrastructure shapes communities.</p>
+
+          <details>
+            <summary>Explore influences and favorites</summary>
+            <div class="details-inner">
+              <div class="two-col-grid">
+                <div>
+                  <h4 class="h4-compact">Favourite Artists</h4>
+                  <p class="text-sm text-muted">
+                    Radiohead, Zemfira, Hozier, black midi, Kikagaku Moyo, Daniel Caesar, Kanye West, A Tribe Called
+                    Quest
+                  </p>
+                </div>
+                <div>
+                  <h4 class="h4-compact">Favourite Cities</h4>
+                  <p class="text-sm text-muted">
+                    Budapest, London, Tashkent, New York City
+                  </p>
+                </div>
+                <div>
+                  <h4 class="h4-compact">Colours &amp; Aesthetics</h4>
+                  <p class="text-sm text-muted">
+                    All shades of green, urban minimalism, transit maps, archival photography, field notebooks
+                  </p>
+                </div>
+                <div>
+                  <h4 class="h4-compact">Formative Works</h4>
+                  <p class="text-sm text-muted">
+                    <em>A Carpet Ride to Khiva</em> (Chris Aslan Alexander), <em>Entergalactic</em> (2022 film)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- === NOTES & REFLECTIONS === -->
+        <section aria-labelledby="notes-heading">
+          <span class="section-label">Philosophy</span>
+          <h2 id="notes-heading">Why This Matters</h2>
+          <p>
+            Technology is most interesting when it becomes tangible — when it connects software to the physical world,
+            makes invisible systems visible, and shapes how people experience infrastructure and place.
+          </p>
+          <p>
+            The most fulfilling projects are often not the most efficient career moves, but the ones that balance
+            technical depth with aesthetics, feel handcrafted rather than optimised, and remind me why I fell in love
+            with engineering in the first place.
+          </p>
+          <blockquote class="blockquote-note">
+            "Most of my ideas start while walking through cities. Side projects matter because they preserve creativity,
+            reduce burnout, and encourage experimentation."
+          </blockquote>
+        </section>
+
+        <!-- === PROJECT WORKFLOW & TOOLKIT === -->
+        <section aria-labelledby="workflow-heading">
+          <span class="section-label">Approach</span>
+          <h2 id="workflow-heading">Development Workflow & Toolkit</h2>
+
+          <div class="single-grid">
+            <div>
+              <h3 class="heading-compact">Project Workflow (Typical
+                Order)</h3>
+              <ol class="process-list">
+                <li><strong>Problem Definition</strong> — Understand requirements, constraints, and stakeholder needs
+                </li>
+                <li><strong>System Design</strong> — Architecture, hardware selection, protocol decisions</li>
+                <li><strong>Prototyping</strong> — Build proof-of-concept, test assumptions</li>
+                <li><strong>Development</strong> — Implement core functionality with rigorous testing</li>
+                <li><strong>Integration</strong> — Hardware-software integration, sensor calibration</li>
+                <li><strong>Testing & Validation</strong> — Field testing, reliability verification</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 class="heading-compact">Technical Stack Definition
+              </h3>
+              <dl class="def-list">
+                <dt>Embedded Systems</dt>
+                <dd>C/C++ with FreeRTOS for microcontroller projects, ESP32, ARM Cortex architectures</dd>
+
+                <dt>Mapping & GIS</dt>
+                <dd>Python libraries (GeoPandas, Rasterio), satellite imagery processing, coordinate systems</dd>
+
+                <dt>Development Tools</dt>
+                <dd>VSCode, Git/GitHub, GCC toolchain, Linux environments, Bash scripting</dd>
+
+                <dt>Data Analysis</dt>
+                <dd>Statistical methods, C++ for performance-critical work, Python for rapid prototyping</dd>
+
+                <dt>Communication</dt>
+                <dd>CAN/UART protocols, real-time data streaming, sensor networks</dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+
+
+        <!-- ASIDE / SIDEBAR -->
+        <aside aria-label="Quick info sidebar">
+          <h3>Quick Info</h3>
+          <ul>
+            <li>
+              <strong>Location</strong>
+              Budapest, Hungary
+            </li>
+            <li>
+              <strong>Education</strong>
+              ELTE (BSc Computer Science)
+            </li>
+            <li>
+              <strong>Focus</strong>
+              Embedded · Mapping · Climate Tech
+            </li>
+            <li>
+              <strong>Current</strong>
+              BME Solar Boat Team
+            </li>
+            <li>
+              <strong>Skills</strong>
+              C, C++, Python, GIS, FreeRTOS
+            </li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3>Get In Touch</h3>
+          <p class="muted-note">Interested in embedded systems, climate tech, or mapping projects? Let's talk.</p>
+          <a href="./contact.html" class="btn-primary btn-sm">Contact Me</a>
+        </aside>
+
+    </div><!-- .content-layout -->
+  </div><!-- .page-wrapper -->
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3>Jaloliddin Ismailov</h3>
+        <p>Computer science student at ELTE in Budapest. Building embedded systems, mapping projects, and
+          climate-focused engineering that connects software to the physical world.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <ul class="list-vertical">
+          <li><a href="./index.html">Work</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Connect</h3>
+        <ul class="list-vertical-muted">
+          <li><a href="mailto:unnobatroo@icloud.com">unnobatroo@icloud.com</a></li>
+          <li><a href="https://github.com/unnobatroo" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+          <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Jaloliddin Ismailov. All rights reserved.</p>
+      <p>Built with semantic HTML, accessible CSS, and purpose.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // ─────────────────────────────────────────────
+    // 1. High-Contrast Mode Toggle
+    // ─────────────────────────────────────────────
+    (function () {
+      var btn = document.getElementById('contrast-toggle');
+      var body = document.body;
+      var storageKey = 'ac-high-contrast';
+
+      // Restore preference
+      if (localStorage.getItem(storageKey) === 'true') {
+        body.classList.add('high-contrast');
+        btn.setAttribute('aria-pressed', 'true');
+        btn.textContent = '◑ Normal';
+      }
+
+      btn.addEventListener('click', function () {
+        var isOn = body.classList.toggle('high-contrast');
+        btn.setAttribute('aria-pressed', String(isOn));
+        btn.textContent = isOn ? '◑ Normal' : '◑ Contrast';
+        localStorage.setItem(storageKey, String(isOn));
+      });
+    }());
+
+    // ─────────────────────────────────────────────
+    // 2. Font Size Toggle (Increase / Decrease)
+    // ─────────────────────────────────────────────
+    (function () {
+      var increaseBtn = document.getElementById('font-increase');
+      var decreaseBtn = document.getElementById('font-decrease');
+      var currentSize = parseFloat(localStorage.getItem('ac-font-size') || '100');
+      var MIN = 80;
+      var MAX = 140;
+      var STEP = 10;
+
+      function applySize(size) {
+        document.documentElement.style.fontSize = size + '%';
+        localStorage.setItem('ac-font-size', String(size));
+        increaseBtn.disabled = size >= MAX;
+        decreaseBtn.disabled = size <= MIN;
+      }
+
+      // Restore saved preference
+      applySize(currentSize);
+
+      increaseBtn.addEventListener('click', function () {
+        if (currentSize < MAX) {
+          currentSize += STEP;
+          applySize(currentSize);
+        }
+      });
+
+      decreaseBtn.addEventListener('click', function () {
+        if (currentSize > MIN) {
+          currentSize -= STEP;
+          applySize(currentSize);
+        }
+      });
+    }());
+
+    // ─────────────────────────────────────────────
+    // 3. Mobile Navigation Toggle
+    // ─────────────────────────────────────────────
+    (function () {
+      var toggle = document.getElementById('nav-toggle');
+      var nav = document.getElementById('primary-nav');
+
+      if (toggle && nav) {
+        toggle.addEventListener('click', function () {
+          var isOpen = nav.classList.toggle('nav-open');
+          toggle.setAttribute('aria-expanded', String(isOpen));
+          toggle.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // Close nav when a link is clicked (mobile)
+        nav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            nav.classList.remove('nav-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.textContent = '☰';
+          });
+        });
+      }
+    }());
+  </script>
+
 </body>
 
 </html>
