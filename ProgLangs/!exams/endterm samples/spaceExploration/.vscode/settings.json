@@ -1,0 +1,11 @@
+{
+    "java.project.sourcePaths": [
+        ".",
+        "structuretests",
+        "suites"
+    ],
+    "java.project.referencedLibraries": [
+        "checkthat.jar",
+        "junit5all.jar"
+    ]
+}
