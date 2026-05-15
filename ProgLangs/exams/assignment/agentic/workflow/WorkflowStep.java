@@ -38,6 +38,13 @@ public class WorkflowStep {
         this.structuredOutput = structuredOutput;
     }
 
+    private static String requireText(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(message);
+        }
+        return value;
+    }
+
     /**
      * Returns the workflow step name.
      *
@@ -53,10 +60,7 @@ public class WorkflowStep {
      * @param name the new step name
      */
     public void setName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name must not be null or blank");
-        }
-        this.name = name;
+        this.name = requireText(name, "name must not be null or blank");
     }
 
     /**
@@ -74,10 +78,7 @@ public class WorkflowStep {
      * @param prompt the new prompt text
      */
     public void setPrompt(String prompt) {
-        if (prompt == null || prompt.isBlank()) {
-            throw new IllegalArgumentException("prompt must not be null or blank");
-        }
-        this.prompt = prompt;
+        this.prompt = requireText(prompt, "prompt must not be null or blank");
     }
 
     /**
@@ -95,10 +96,7 @@ public class WorkflowStep {
      * @param systemPrompt the new system prompt text
      */
     public void setSystemPrompt(String systemPrompt) {
-        if (systemPrompt == null || systemPrompt.isBlank()) {
-            throw new IllegalArgumentException("systemPrompt must not be null or blank");
-        }
-        this.systemPrompt = systemPrompt;
+        this.systemPrompt = requireText(systemPrompt, "systemPrompt must not be null or blank");
     }
 
     /**
@@ -129,7 +127,7 @@ public class WorkflowStep {
      *         {@code false}
      */
     public boolean expectsStructuredOutput() {
-        return structuredOutput != null && structuredOutput.size() > 0;
+        return structuredOutput.size() > 0;
     }
 
     /**
@@ -139,12 +137,11 @@ public class WorkflowStep {
      *         available
      */
     public String simulateResponse() {
-        if (structuredOutput == null || structuredOutput.size() == 0)
+        if (!expectsStructuredOutput()) {
             return "";
+        }
 
-        SchemaType primary = structuredOutput.getSchemaTypes()[0];
-
-        switch (primary) {
+        switch (structuredOutput.getSchemaTypes()[0]) {
             case INT:
                 return "0";
             case STRING:

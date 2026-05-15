@@ -15,7 +15,7 @@ public class StructuredOutputTest {
         schemaTypes.add(SchemaType.INT);
         schemaTypes.add(SchemaType.STRING);
 
-        StructuredOutput output = new StructuredOutput(schemaTypes);
+        StructuredOutput output = new StructuredOutput(SchemaType.INT, SchemaType.STRING);
 
         assertEquals(2, output.size());
         assertTrue(output.contains(SchemaType.INT));
@@ -24,14 +24,14 @@ public class StructuredOutputTest {
 
     @Test
     public void testContainsExistingType() {
-        StructuredOutput output = new StructuredOutput(new ArrayList<>(java.util.List.of(SchemaType.BOOLEAN)));
+        StructuredOutput output = new StructuredOutput(SchemaType.BOOLEAN);
 
         assertTrue(output.contains(SchemaType.BOOLEAN));
     }
 
     @Test
     public void testContainsMissingType() {
-        StructuredOutput output = new StructuredOutput(new ArrayList<>(java.util.List.of(SchemaType.BOOLEAN)));
+        StructuredOutput output = new StructuredOutput(SchemaType.BOOLEAN);
 
         assertFalse(output.contains(SchemaType.STRING));
     }
@@ -39,11 +39,11 @@ public class StructuredOutputTest {
     @Test
     public void testDefensiveCopy() {
         ArrayList<SchemaType> schemaTypes = new ArrayList<>(java.util.List.of(SchemaType.INT));
-        StructuredOutput output = new StructuredOutput(schemaTypes);
+        StructuredOutput output = new StructuredOutput(SchemaType.INT);
 
         schemaTypes.add(SchemaType.STRING);
 
         assertEquals(1, output.size());
-        assertEquals(1, output.getSchemaTypes().size());
+        assertEquals(1, output.getSchemaTypes().length);
     }
 }

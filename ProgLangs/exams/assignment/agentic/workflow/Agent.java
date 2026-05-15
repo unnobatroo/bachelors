@@ -34,7 +34,7 @@ public class Agent {
     }
 
     public List<WorkflowStep> getSteps() {
-        return Collections.unmodifiableList(new ArrayList<>(steps));
+        return Collections.unmodifiableList(steps);
     }
 
     public void setName(String name) throws IllegalArgumentException {
@@ -57,13 +57,9 @@ public class Agent {
             throw new IllegalArgumentException(
                     "the step must not be `null`, and another step with the same name must not already exist.");
         }
-
-        String newName = step.getName();
-        for (WorkflowStep s : steps) {
-            if (s.getName().equals(newName)) {
-                throw new IllegalArgumentException(
-                        "the step must not be `null`, and another step with the same name must not already exist.");
-            }
+        if (findStepByName(step.getName()) != null) {
+            throw new IllegalArgumentException(
+                    "the step must not be `null`, and another step with the same name must not already exist.");
         }
         steps.add(step);
     }
@@ -99,9 +95,9 @@ public class Agent {
      */
     public void run() {
         StepExecutor<String> executor = new SimulatedStepExecutor();
-        for (WorkflowStep s : steps) {
-            System.out.println(s.getName());
-            System.out.println(executor.execute(s));
+        for (WorkflowStep step : steps) {
+            System.out.println(step.getName());
+            System.out.println(executor.execute(step));
         }
     }
 
@@ -118,35 +114,24 @@ public class Agent {
      * @throws IOException              if the file cannot be read
      */
     public static Agent loadAgent(String filename)
-
             throws IllegalArgumentException, WorkflowFormatException, IOException {
         if (filename == null || filename.isBlank()) {
             throw new IllegalArgumentException("the filename must not be `null`, empty, or blank.");
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            String agentName = null;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.isBlank()) {
-                    continue;
-                }
-
-                String trimmedLine = line.trim();
-                if (!trimmedLine.startsWith("AGENT:")) {
-                    throw new WorkflowFormatException("the first non-empty line must start with `AGENT:`.");
-                }
-
-                agentName = trimmedLine.substring("AGENT:".length()).trim();
-                if (agentName.isBlank()) {
-                    throw new WorkflowFormatException("the agent name must not be blank.");
-                }
-                break;
+            String header = nextContentLine(reader);
+            if (header == null) {
+                throw new WorkflowFormatException("the workflow file must contain an agent header.");
             }
 
-            if (agentName == null) {
-                throw new WorkflowFormatException("the workflow file must contain an agent header.");
+            if (!header.startsWith("AGENT:")) {
+                throw new WorkflowFormatException("the first non-empty line must start with `AGENT:`.");
+            }
+
+            String agentName = header.substring("AGENT:".length()).trim();
+            if (agentName.isBlank()) {
+                throw new WorkflowFormatException("the agent name must not be blank.");
             }
 
             Agent agent = new Agent(agentName);
@@ -162,38 +147,23 @@ public class Agent {
     }
 
     private static WorkflowStep parseStep(BufferedReader reader) throws IOException, WorkflowFormatException {
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            if (line.isBlank()) {
-                continue;
-            }
-            if (!line.trim().equals("STEP")) {
-                throw new WorkflowFormatException("each step must begin with `STEP`.");
-            }
-            break;
-        }
-
+        String line = nextContentLine(reader);
         if (line == null) {
             return null;
+        }
+
+        if (!"STEP".equals(line)) {
+            throw new WorkflowFormatException("each step must begin with `STEP`.");
         }
 
         String name = null;
         String prompt = null;
         String systemPrompt = null;
         SchemaType outputType = null;
-        boolean nameSeen = false;
-        boolean promptSeen = false;
-        boolean systemPromptSeen = false;
-        boolean outputSeen = false;
 
-        while ((line = reader.readLine()) != null) {
-            if (line.isBlank()) {
-                continue;
-            }
-
-            if (line.trim().equals("ENDSTEP")) {
-                if (!nameSeen || !promptSeen || !systemPromptSeen || !outputSeen) {
+        while ((line = nextContentLine(reader)) != null) {
+            if ("ENDSTEP".equals(line)) {
+                if (name == null || prompt == null || systemPrompt == null || outputType == null) {
                     throw new WorkflowFormatException("a step is missing one or more required properties.");
                 }
 
@@ -213,33 +183,29 @@ public class Agent {
 
             switch (key) {
                 case "name":
-                    if (nameSeen) {
+                    if (name != null) {
                         throw new WorkflowFormatException("each step property must appear exactly once.");
                     }
                     name = value;
-                    nameSeen = true;
                     break;
                 case "prompt":
-                    if (promptSeen) {
+                    if (prompt != null) {
                         throw new WorkflowFormatException("each step property must appear exactly once.");
                     }
                     prompt = value;
-                    promptSeen = true;
                     break;
                 case "systemPrompt":
-                    if (systemPromptSeen) {
+                    if (systemPrompt != null) {
                         throw new WorkflowFormatException("each step property must appear exactly once.");
                     }
                     systemPrompt = value;
-                    systemPromptSeen = true;
                     break;
                 case "output":
-                    if (outputSeen) {
+                    if (outputType != null) {
                         throw new WorkflowFormatException("each step property must appear exactly once.");
                     }
                     try {
                         outputType = SchemaType.valueOf(value);
-                        outputSeen = true;
                     } catch (IllegalArgumentException exception) {
                         throw new WorkflowFormatException("unknown schema type: " + value, exception);
                     }
@@ -250,6 +216,16 @@ public class Agent {
         }
 
         throw new WorkflowFormatException("a step must end with `ENDSTEP`.");
+    }
+
+    private static String nextContentLine(BufferedReader reader) throws IOException {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (!line.isBlank()) {
+                return line.trim();
+            }
+        }
+        return null;
     }
 
     @Override

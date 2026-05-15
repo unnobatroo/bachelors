@@ -47,7 +47,12 @@ public class StructuredOutput {
      * @return {@code true} if the schema type is present, otherwise {@code false}
      */
     public boolean contains(SchemaType schemaType) {
-        return Arrays.asList(schemaTypes).contains(schemaType);
+        for (SchemaType type : schemaTypes) {
+            if (type == schemaType) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

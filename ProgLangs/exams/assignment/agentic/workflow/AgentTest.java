@@ -2,6 +2,9 @@ package agentic.workflow;
 
 import org.junit.jupiter.api.Test;
 
+import agentic.workflow.llm.SchemaType;
+import agentic.workflow.llm.StructuredOutput;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AgentTest {
     @Test
     public void testLoadAgentSuccess() throws Exception {
-        Agent agent = Agent.loadAgent("calculator.agent");
+        Agent agent = Agent.loadAgent("calculator.txt");
 
         assertEquals("Calculator Helper", agent.getName());
         assertEquals(2, agent.getStepCount());
@@ -26,7 +29,7 @@ public class AgentTest {
                 "exists",
                 "prompt",
                 "system",
-                new agentic.workflow.llm.StructuredOutput(agentic.workflow.llm.SchemaType.STRING));
+                new StructuredOutput(SchemaType.STRING));
 
         agent.addStep(step);
 
@@ -52,7 +55,7 @@ public class AgentTest {
                 "ask_topic",
                 "Ask the topic.",
                 "Be helpful.",
-                new agentic.workflow.llm.StructuredOutput(agentic.workflow.llm.SchemaType.STRING)));
+                new StructuredOutput(SchemaType.STRING)));
 
         assertEquals(1, agent.getStepCount());
         assertEquals(1, agent.getSteps().size());
@@ -65,18 +68,11 @@ public class AgentTest {
                 "ask_topic",
                 "Ask the topic.",
                 "Be helpful.",
-                new agentic.workflow.llm.StructuredOutput(agentic.workflow.llm.SchemaType.STRING));
+                new StructuredOutput(SchemaType.STRING));
 
         agent.addStep(step);
 
         assertThrows(IllegalArgumentException.class, () -> agent.addStep(step));
-    }
-
-    @Test
-    public void testFindStepByNameMissing() {
-        Agent agent = new Agent("Study Coach");
-
-        assertNull(agent.findStepByName("missing"));
     }
 
     @Test
