@@ -7,12 +7,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Agent {
     private String name;
-    final private List<WorkflowStep> steps;
+    private final List<WorkflowStep> steps;
 
     /**
      * Creates an agent with the given validated name and initially no steps.
@@ -33,7 +34,7 @@ public class Agent {
     }
 
     public List<WorkflowStep> getSteps() {
-        return new ArrayList<>(steps);
+        return Collections.unmodifiableList(new ArrayList<>(steps));
     }
 
     public void setName(String name) throws IllegalArgumentException {
@@ -113,12 +114,11 @@ public class Agent {
      * @param filename the workflow file to read
      * @return the loaded agent
      * @throws IllegalArgumentException if the filename is null, empty, or blank
-     * @throws WorkflowFormatException    if the file content is malformed
-     * @throws IOException                                        if the file cannot be read
+     * @throws WorkflowFormatException  if the file content is malformed
+     * @throws IOException              if the file cannot be read
      */
     public static Agent loadAgent(String filename)
-            
-            
+
             throws IllegalArgumentException, WorkflowFormatException, IOException {
         if (filename == null || filename.isBlank()) {
             throw new IllegalArgumentException("the filename must not be `null`, empty, or blank.");
@@ -133,11 +133,12 @@ public class Agent {
                     continue;
                 }
 
-                if (!line.startsWith("AGENT:")) {
+                String trimmedLine = line.trim();
+                if (!trimmedLine.startsWith("AGENT:")) {
                     throw new WorkflowFormatException("the first non-empty line must start with `AGENT:`.");
                 }
 
-                agentName = line.substring("AGENT:".length()).trim();
+                agentName = trimmedLine.substring("AGENT:".length()).trim();
                 if (agentName.isBlank()) {
                     throw new WorkflowFormatException("the agent name must not be blank.");
                 }
@@ -181,6 +182,10 @@ public class Agent {
         String prompt = null;
         String systemPrompt = null;
         SchemaType outputType = null;
+        boolean nameSeen = false;
+        boolean promptSeen = false;
+        boolean systemPromptSeen = false;
+        boolean outputSeen = false;
 
         while ((line = reader.readLine()) != null) {
             if (line.isBlank()) {
@@ -188,13 +193,11 @@ public class Agent {
             }
 
             if (line.trim().equals("ENDSTEP")) {
-                if (name == null || prompt == null || systemPrompt == null || outputType == null) {
+                if (!nameSeen || !promptSeen || !systemPromptSeen || !outputSeen) {
                     throw new WorkflowFormatException("a step is missing one or more required properties.");
                 }
 
-                ArrayList<SchemaType> schemaTypes = new ArrayList<>();
-                schemaTypes.add(outputType);
-                return new WorkflowStep(name, prompt, systemPrompt, new StructuredOutput(schemaTypes));
+                return new WorkflowStep(name, prompt, systemPrompt, new StructuredOutput(outputType));
             }
 
             int separator = line.indexOf('=');
@@ -210,17 +213,33 @@ public class Agent {
 
             switch (key) {
                 case "name":
+                    if (nameSeen) {
+                        throw new WorkflowFormatException("each step property must appear exactly once.");
+                    }
                     name = value;
+                    nameSeen = true;
                     break;
                 case "prompt":
+                    if (promptSeen) {
+                        throw new WorkflowFormatException("each step property must appear exactly once.");
+                    }
                     prompt = value;
+                    promptSeen = true;
                     break;
                 case "systemPrompt":
+                    if (systemPromptSeen) {
+                        throw new WorkflowFormatException("each step property must appear exactly once.");
+                    }
                     systemPrompt = value;
+                    systemPromptSeen = true;
                     break;
                 case "output":
+                    if (outputSeen) {
+                        throw new WorkflowFormatException("each step property must appear exactly once.");
+                    }
                     try {
                         outputType = SchemaType.valueOf(value);
+                        outputSeen = true;
                     } catch (IllegalArgumentException exception) {
                         throw new WorkflowFormatException("unknown schema type: " + value, exception);
                     }

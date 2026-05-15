@@ -11,4 +11,5 @@ GitHub Copilot in VS Code.
 - Agents' descriptions and their prompts.
 
 ### Changes:
-- None.
+- New files,
+- JavaDocs.

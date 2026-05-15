@@ -1,25 +1,24 @@
 package agentic.workflow.llm;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Describes the structured output schema expected from a workflow step.
  */
 public class StructuredOutput {
-    private final ArrayList<SchemaType> schemaTypes;
+    private final SchemaType[] schemaTypes;
 
     /**
      * Creates a structured output definition from one or more schema types.
      *
      * @param schemaTypes the allowed schema types for this output
      */
-    public StructuredOutput(ArrayList<SchemaType> schemaTypes) {
+    public StructuredOutput(SchemaType... schemaTypes) {
         if (schemaTypes == null) {
             throw new NullPointerException("schema types themselves must not contain `null`.");
         }
 
-        if (schemaTypes.isEmpty()) {
+        if (schemaTypes.length == 0) {
             throw new IllegalArgumentException("at least one schema type must be provided.");
         }
 
@@ -29,7 +28,7 @@ public class StructuredOutput {
             }
         }
 
-        this.schemaTypes = new ArrayList<>(schemaTypes);
+        this.schemaTypes = schemaTypes.clone();
     }
 
     /**
@@ -37,8 +36,8 @@ public class StructuredOutput {
      *
      * @return the schema types for this structured output
      */
-    public ArrayList<SchemaType> getSchemaTypes() {
-        return new ArrayList<>(schemaTypes);
+    public SchemaType[] getSchemaTypes() {
+        return schemaTypes.clone();
     }
 
     /**
@@ -48,7 +47,7 @@ public class StructuredOutput {
      * @return {@code true} if the schema type is present, otherwise {@code false}
      */
     public boolean contains(SchemaType schemaType) {
-        return schemaTypes.contains(schemaType);
+        return Arrays.asList(schemaTypes).contains(schemaType);
     }
 
     /**
@@ -57,12 +56,12 @@ public class StructuredOutput {
      * @return the number of schema types
      */
     public int size() {
-        return schemaTypes.size();
+        return schemaTypes.length;
     }
 
     @Override
     public String toString() {
-        return "StructuredOutput{schemaTypes=" + schemaTypes + "}";
+        return "StructuredOutput{schemaTypes=" + Arrays.toString(schemaTypes) + "}";
     }
 
     @Override
@@ -74,11 +73,11 @@ public class StructuredOutput {
             return false;
         }
         StructuredOutput that = (StructuredOutput) other;
-        return Objects.equals(schemaTypes, that.schemaTypes);
+        return Arrays.equals(schemaTypes, that.schemaTypes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(schemaTypes);
+        return Arrays.hashCode(schemaTypes);
     }
 }

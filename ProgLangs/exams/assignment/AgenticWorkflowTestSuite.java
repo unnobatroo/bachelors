@@ -16,7 +16,7 @@ import org.junit.jupiter.api.*;
     @Suite(failIfNoTests=false) @Tag("structural") public static class StructuralTests {}
 
     @SelectClasses({
-        agentic.workflow.StructuredOutputTest.class,
+        agentic.workflow.llm.StructuredOutputTest.class,
         agentic.workflow.WorkflowStepTest.class,
         agentic.workflow.WorkflowFormatExceptionTest.class,
         agentic.workflow.AgentTest.class,

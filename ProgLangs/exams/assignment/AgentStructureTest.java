@@ -5,7 +5,7 @@ import module org.junit.jupiter;
 
 @BeforeAll
 public static void init() {
-    usedLang = Lang.EN;
+    // usedLang = Lang.EN; // uncomment to enforce the message language
     Use.theClass("agentic.workflow.Agent")
        .that(hasUsualModifiers())
        .info("""

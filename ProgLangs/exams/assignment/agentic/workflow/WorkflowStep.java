@@ -142,7 +142,7 @@ public class WorkflowStep {
         if (structuredOutput == null || structuredOutput.size() == 0)
             return "";
 
-        SchemaType primary = structuredOutput.getSchemaTypes().get(0);
+        SchemaType primary = structuredOutput.getSchemaTypes()[0];
 
         switch (primary) {
             case INT:

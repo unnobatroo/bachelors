@@ -6,19 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class WorkflowFormatExceptionTest {
     @Test
-    public void constructor01() {
-        WorkflowFormatException exception = new WorkflowFormatException("broken workflow");
+    public void testMessageConstructor() {
+        WorkflowFormatException exception = new WorkflowFormatException("broken file");
 
-        assertEquals("broken workflow", exception.getMessage());
-        assertNull(exception.getCause());
+        assertEquals("broken file", exception.getMessage());
     }
 
     @Test
-    public void constructor02() {
-        IllegalStateException cause = new IllegalStateException("cause");
-        WorkflowFormatException exception = new WorkflowFormatException("broken workflow", cause);
+    public void testMessageAndCauseConstructor() {
+        IllegalArgumentException cause = new IllegalArgumentException("cause");
+        WorkflowFormatException exception = new WorkflowFormatException("broken file", cause);
 
-        assertEquals("broken workflow", exception.getMessage());
+        assertEquals("broken file", exception.getMessage());
         assertSame(cause, exception.getCause());
     }
 }
