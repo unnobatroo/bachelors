@@ -1,0 +1,65 @@
+@startuml diagram
+skinparam DefaultFontName "JetBrains Mono"
+
+package "order" {
+  class Order {
+    - totalCost: int
+    - isClosed: boolean
+    + processOrder(strategy: PayStrategy): void
+    + setTotalCost(cost: int): void
+    + getTotalCost(): int
+    + isClosed(): boolean
+    + setClosed(): void
+  }
+}
+
+package "strategies" {
+  interface PayStrategy {
+    + pay(paymentAmount: int): boolean
+    + collectPaymentDetails(): void
+  }
+
+  class PayByCreditCard {
+    - READER: BufferedReader
+    - card: CreditCard
+    + collectPaymentDetails(): void
+    + pay(paymentAmount: int): boolean
+  }
+
+  class PayByPayPal {
+    - DATA_BASE: Map<String,String>
+    - READER: BufferedReader
+    - email: String
+    - password: String
+    - signedIn: boolean
+    + collectPaymentDetails(): void
+    + pay(paymentAmount: int): boolean
+  }
+
+  class CreditCard {
+    - amount: int
+    - number: String
+    - date: String
+    - cvv: String
+    + setAmount(amount: int): void
+    + getAmount(): int
+  }
+}
+
+class Demo {
+  - priceOnProducts: Map<Integer,Integer>
+  - reader: BufferedReader
+  - order: Order
+  - strategy: PayStrategy
+  + main(args: String[]): void
+}
+
+' Beziehungen
+Demo --> Order : uses
+Demo --> PayStrategy : holds reference to
+Order ..> PayStrategy : depends on
+PayByCreditCard ..|> PayStrategy
+PayByPayPal ..|> PayStrategy
+PayByCreditCard *-- CreditCard
+
+@enduml
