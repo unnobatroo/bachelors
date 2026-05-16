@@ -1,6 +1,5 @@
 package agentic.workflow;
 
-import agentic.workflow.llm.SchemaType;
 import agentic.workflow.llm.StructuredOutput;
 
 import java.util.Objects;
@@ -124,7 +123,7 @@ public class WorkflowStep {
      * Returns whether this step expects a structured output.
      *
      * @return {@code true} if at least one schema type is declared, otherwise
-     *         {@code false}
+     * {@code false}
      */
     public boolean expectsStructuredOutput() {
         return structuredOutput.size() > 0;
@@ -134,14 +133,14 @@ public class WorkflowStep {
      * Produces a simple example response for the first declared schema type.
      *
      * @return a simulated response text, or an empty string when no schema is
-     *         available
+     * available
      */
     public String simulateResponse() {
         if (!expectsStructuredOutput()) {
             return "";
         }
 
-        switch (structuredOutput.getSchemaTypes()[0]) {
+        switch (structuredOutput.schemaTypes()[0]) {
             case INT:
                 return "0";
             case STRING:
@@ -170,10 +169,9 @@ public class WorkflowStep {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof WorkflowStep)) {
+        if (!(other instanceof WorkflowStep step)) {
             return false;
         }
-        WorkflowStep step = (WorkflowStep) other;
         return Objects.equals(name, step.name)
                 && Objects.equals(prompt, step.prompt)
                 && Objects.equals(systemPrompt, step.systemPrompt)

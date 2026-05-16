@@ -1,9 +1,8 @@
 package agentic.workflow;
 
-import org.junit.jupiter.api.Test;
-
 import agentic.workflow.llm.SchemaType;
 import agentic.workflow.llm.StructuredOutput;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;

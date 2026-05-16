@@ -36,7 +36,7 @@ public class StructuredOutputTest {
         schemaTypes[0] = SchemaType.STRING;
 
         assertEquals(1, output.size());
-        assertEquals(1, output.getSchemaTypes().length);
-        assertEquals(SchemaType.INT, output.getSchemaTypes()[0]);
+        assertEquals(1, output.schemaTypes().length);
+        assertEquals(SchemaType.INT, output.schemaTypes()[0]);
     }
 }

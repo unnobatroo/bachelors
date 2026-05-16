@@ -44,6 +44,6 @@ public class StructuredOutputTest {
         schemaTypes.add(SchemaType.STRING);
 
         assertEquals(1, output.size());
-        assertEquals(1, output.getSchemaTypes().length);
+        assertEquals(1, output.schemaTypes().length);
     }
 }

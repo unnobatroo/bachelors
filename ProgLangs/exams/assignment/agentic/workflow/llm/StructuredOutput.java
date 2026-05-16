@@ -5,9 +5,7 @@ import java.util.Arrays;
 /**
  * Describes the structured output schema expected from a workflow step.
  */
-public class StructuredOutput {
-    private final SchemaType[] schemaTypes;
-
+public record StructuredOutput(SchemaType... schemaTypes) {
     /**
      * Creates a structured output definition from one or more schema types.
      *
@@ -36,7 +34,8 @@ public class StructuredOutput {
      *
      * @return the schema types for this structured output
      */
-    public SchemaType[] getSchemaTypes() {
+    @Override
+    public SchemaType[] schemaTypes() {
         return schemaTypes.clone();
     }
 
@@ -74,10 +73,9 @@ public class StructuredOutput {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof StructuredOutput)) {
+        if (!(other instanceof StructuredOutput that)) {
             return false;
         }
-        StructuredOutput that = (StructuredOutput) other;
         return Arrays.equals(schemaTypes, that.schemaTypes);
     }
 

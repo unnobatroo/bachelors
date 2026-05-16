@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Agent {
-    private String name;
     private final List<WorkflowStep> steps;
+    private String name;
 
     /**
      * Creates an agent with the given validated name and initially no steps.
@@ -27,78 +27,6 @@ public class Agent {
         }
         this.name = name;
         this.steps = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<WorkflowStep> getSteps() {
-        return Collections.unmodifiableList(steps);
-    }
-
-    public void setName(String name) throws IllegalArgumentException {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("the name must not be `null`, empty, or blank.");
-        }
-        this.name = name;
-    }
-
-    /**
-     * Adds a new step to the end of the workflow.
-     * Step names must be unique within one agent.
-     *
-     * @param step the step to add
-     * @throws IllegalArgumentException if the step is null or a step with the same
-     *                                  name already exists
-     */
-    public void addStep(WorkflowStep step) throws IllegalArgumentException {
-        if (step == null) {
-            throw new IllegalArgumentException(
-                    "the step must not be `null`, and another step with the same name must not already exist.");
-        }
-        if (findStepByName(step.getName()) != null) {
-            throw new IllegalArgumentException(
-                    "the step must not be `null`, and another step with the same name must not already exist.");
-        }
-        steps.add(step);
-    }
-
-    public int getStepCount() {
-        return steps.size();
-    }
-
-    /**
-     * Searches for a step by name.
-     * The comparison uses the trimmed search text and exact string equality.
-     *
-     * @param stepName the name to search for
-     * @return the matching step, or null if no such step exists
-     * @throws IllegalArgumentException if the step name is null, empty, or blank
-     */
-    public WorkflowStep findStepByName(String stepName) throws IllegalArgumentException {
-        if (stepName == null || stepName.isBlank()) {
-            throw new IllegalArgumentException("the step name must not be `null`, empty, or blank.");
-        }
-        String name = stepName.trim();
-        for (WorkflowStep s : steps) {
-            if (s.getName().equals(name)) {
-                return s;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Simulates running the full agent by printing each step name and a sample
-     * response.
-     */
-    public void run() {
-        StepExecutor<String> executor = new SimulatedStepExecutor();
-        for (WorkflowStep step : steps) {
-            System.out.println(step.getName());
-            System.out.println(executor.execute(step));
-        }
     }
 
     /**
@@ -228,6 +156,78 @@ public class Agent {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("the name must not be `null`, empty, or blank.");
+        }
+        this.name = name;
+    }
+
+    public List<WorkflowStep> getSteps() {
+        return Collections.unmodifiableList(steps);
+    }
+
+    /**
+     * Adds a new step to the end of the workflow.
+     * Step names must be unique within one agent.
+     *
+     * @param step the step to add
+     * @throws IllegalArgumentException if the step is null or a step with the same
+     *                                  name already exists
+     */
+    public void addStep(WorkflowStep step) throws IllegalArgumentException {
+        if (step == null) {
+            throw new IllegalArgumentException(
+                    "the step must not be `null`, and another step with the same name must not already exist.");
+        }
+        if (findStepByName(step.getName()) != null) {
+            throw new IllegalArgumentException(
+                    "the step must not be `null`, and another step with the same name must not already exist.");
+        }
+        steps.add(step);
+    }
+
+    public int getStepCount() {
+        return steps.size();
+    }
+
+    /**
+     * Searches for a step by name.
+     * The comparison uses the trimmed search text and exact string equality.
+     *
+     * @param stepName the name to search for
+     * @return the matching step, or null if no such step exists
+     * @throws IllegalArgumentException if the step name is null, empty, or blank
+     */
+    public WorkflowStep findStepByName(String stepName) throws IllegalArgumentException {
+        if (stepName == null || stepName.isBlank()) {
+            throw new IllegalArgumentException("the step name must not be `null`, empty, or blank.");
+        }
+        String name = stepName.trim();
+        for (WorkflowStep s : steps) {
+            if (s.getName().equals(name)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Simulates running the full agent by printing each step name and a sample
+     * response.
+     */
+    public void run() {
+        StepExecutor<String> executor = new SimulatedStepExecutor();
+        for (WorkflowStep step : steps) {
+            System.out.println(step.getName());
+            System.out.println(executor.execute(step));
+        }
+    }
+
     @Override
     public String toString() {
         return "Agent{name='" + name + "', steps=" + steps + "}";
@@ -238,10 +238,9 @@ public class Agent {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Agent)) {
+        if (!(other instanceof Agent agent)) {
             return false;
         }
-        Agent agent = (Agent) other;
         return Objects.equals(name, agent.name) && Objects.equals(steps, agent.steps);
     }
 
