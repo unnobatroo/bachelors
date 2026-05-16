@@ -1,0 +1,26 @@
+@startuml AgenticWorkflow-sequence
+actor User
+participant "Agent" as Agent
+participant "WorkflowStep" as Step
+participant "StructuredOutput" as Output
+
+User -> Agent: run()
+activate Agent
+
+loop for each step
+    Agent -> Step: getPrompt()
+    Step --> Agent: prompt
+    
+    Agent -> Step: expectsStructuredOutput()
+    Step --> Agent: boolean
+    
+    Agent -> Step: getStructuredOutput()
+    Step --> Agent: StructuredOutput
+
+    Agent -> Output: getSchemaTypes()
+    Output --> Agent: SchemaType[]
+end
+
+Agent --> User: workflow complete
+deactivate Agent
+@enduml
