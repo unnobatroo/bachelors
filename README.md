@@ -2,15 +2,12 @@
 
 This one was easy, much due to my fail of BasMaths as I didn't get courses that prerequisited it. Highlights of this semesters are the followings:
 
-1. [Agentic AI Workflow assignment for ProgLangs.](progLangs/!exam/AgenticWorkflow-assignment)
-2. [Guild assignment for OOP class with its system design.](OOP/!exams/2-big-assignment)
-3. [QuestLog assignment for Python class.](python/!exams/questlog_project)
+1. [Agentic AI Workflow assignment for Programming Languages.](progLangs/!exam/AgenticWorkflow-assignment)
+2. [Full-scale API with ships & ports for Python class.](python/!exams/poseidon_project)
 
 ## Regrets
 
-Still can't get an internship. I can't understand what might be wrong about my background nor resume. Try to calm myself down by saying it's all because of the market, but still.
-
-Another thing is that I wish I were more straightforward with my dreams and hopes. And yeah, living for an academic year with no friends is not entirely my fault, though I do feel responsibility for not hanging out more.
+Not really any regrets to be honest. I tried to be super active, that really paid out. And other than that - learnt a little about OOP and design patterns.
 
 ## Surprises
 
@@ -18,3 +15,4 @@ Another thing is that I wish I were more straightforward with my dreams and hope
 
 ## What now?
 
+Google Summer of Code for the summer. And Solar Boat Team competition in lake Balaton. Also - focus on getting as much credits as possible whi;e keeping my direction the same. Meaning more academics, with keeping my focus on getting Goethe Zertifikat C1.
