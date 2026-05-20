@@ -60,7 +60,7 @@ When the game is started (main program of the `Game` class), the `Game` class is
 	- For each suit: one of each number card (with values `1-9`).
 	- For each suit: two of each special card.
 	- Shuffle the deck: `Collections.shuffle(deck)`.
-	- If the game is non-interactive, shuffle the deck so that it always sets up the same way: `Collections.shuffle(deck, new java.util.Random(12345))`.
+	- If the game is non-interactive, shuffle the deck so that it always sets up the same way: `Collections.shuffle(deck, new java.uno.util.Random(12345))`.
 - The constructor should set the players (`initPlayers`).
 	- The player cards should be drawn from the deck using the `drawCards` method.
 - The active card (`currentCard`) should be drawn from the deck.

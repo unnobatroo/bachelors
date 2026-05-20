@@ -22,7 +22,7 @@ public class PlayerStructureTest {
 
     @Test
     public void fieldHand() {
-        it.hasField("hand: List of uno.util.Card")
+        it.hasField("hand: List of uno.uno.util.Card")
             .thatIs(INSTANCE_LEVEL, MODIFIABLE, VISIBLE_TO_NONE)
             .thatHas(GETTER)
             .thatHasNo(SETTER);
@@ -37,13 +37,13 @@ public class PlayerStructureTest {
 
     @Test
     public void constructor() {
-        it.hasConstructor(withArgs("String", "List of uno.util.Card", "Game"))
+        it.hasConstructor(withArgs("String", "List of uno.uno.util.Card", "Game"))
             .thatIs(VISIBLE_TO_ALL);
     }
 
     @Test
     public void methodAddToHand() {
-        it.hasMethod("addToHand", withParams("List of uno.util.Card"))
+        it.hasMethod("addToHand", withParams("List of uno.uno.util.Card"))
             .thatIs(FULLY_IMPLEMENTED, INSTANCE_LEVEL, VISIBLE_TO_ALL)
             .thatReturnsNothing();
     }

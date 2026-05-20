@@ -12,7 +12,7 @@ public class GameStructureTest {
 
     @Test
     public void fieldDeck() {
-        it.hasField("deck: LinkedList of uno.util.Card")
+        it.hasField("deck: LinkedList of uno.uno.util.Card")
             .thatIs(INSTANCE_LEVEL, MODIFIABLE, VISIBLE_TO_PACKAGE)
             .thatHasNo(GETTER, SETTER);
     }
@@ -27,7 +27,7 @@ public class GameStructureTest {
 
     @Test
     public void fieldCurrentCard() {
-        it.hasField("currentCard: uno.util.Card")
+        it.hasField("currentCard: uno.uno.util.Card")
             .thatIs(INSTANCE_LEVEL, MODIFIABLE, VISIBLE_TO_PACKAGE)
             .thatHasNo(GETTER, SETTER);
     }
@@ -55,14 +55,14 @@ public class GameStructureTest {
 
     @Test
     public void fieldInputSource() {
-        it.hasField("inputSource: uno.util.InputSource")
+        it.hasField("inputSource: uno.uno.util.InputSource")
             .thatIs(INSTANCE_LEVEL, MODIFIABLE, VISIBLE_TO_PACKAGE)
             .thatHasNo(GETTER, SETTER);
     }
 
     @Test
     public void constructor() {
-        it.hasConstructor(withArgs("int", "uno.util.InputSource", "vararg of String"))
+        it.hasConstructor(withArgs("int", "uno.uno.util.InputSource", "vararg of String"))
             .thatIs(VISIBLE_TO_ALL);
     }
 
