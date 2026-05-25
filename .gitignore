@@ -4,11 +4,24 @@
 # IDEs and Editors
 **/.idea/
 **/.vscode/
+*.iml
+
+# Notebook and Python cache files
+**/.ipynb_checkpoints/
+**/.mypy_cache/
+**/.pytest_cache/
+**/.ruff_cache/
+**/.coverage
+**/htmlcov/
 
 # Java compilation and build tools
 *.class
 **/target/
 **/out/
+**/build/
+
+# Misc local files
+*.log
 
 # Python virtual environments
 .venv/

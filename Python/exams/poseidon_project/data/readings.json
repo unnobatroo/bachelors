@@ -1,0 +1,12 @@
+[
+  {
+    "vessel_id": "vessel_rotterdam_001",
+    "readings": {
+      "speed_knots": 18.4,
+      "draft_m": 11.2,
+      "heading_deg": 274.0,
+      "fuel_rate_lph": 310.0
+    },
+    "timestamp": "2026-05-25T13:45:01.606683+00:00"
+  }
+]
