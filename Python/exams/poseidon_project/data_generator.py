@@ -1,4 +1,3 @@
-
 # script to generate one-year hourly historical csv for vessels
 from __future__ import annotations
 

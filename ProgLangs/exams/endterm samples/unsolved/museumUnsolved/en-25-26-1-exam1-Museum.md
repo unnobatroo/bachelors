@@ -1,8 +1,3 @@
----
-title: Programming languages Java exam, 2025/2026-1
-...
-
-
 # Conditions for the final exam
 
 No aids or software tools (e.g. brought in) other than those provided by the instructors may be used during the final.
@@ -23,13 +18,9 @@ No aids or software tools (e.g. brought in) other than those provided by the ins
 - ❌💣 Preparing software or hardware for cheating purposes.
 - 🚾 Restroom use must be reported to the supervising instructors and only one person may be in the restroom at a time.
 
----
-
 # Museum (50 points)
 
 The task is to create a simplified museum simulation program, with the help of the following subtasks.
-
----
 
 ## 1. Base Components: RelicType, Relic (14 points)
 

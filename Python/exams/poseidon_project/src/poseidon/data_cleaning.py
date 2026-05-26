@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
-
 import pandas as pd
+from typing import Any
 
 
 class DataCleaner:
@@ -60,7 +59,7 @@ class DataCleaner:
             & (cleaned["draft_m"] >= 0)
             & (cleaned["fuel_rate_lph"] >= 0)
             & cleaned["heading_deg"].between(0, 359.999999)
-        ]
+            ]
 
         # parse timestamps once and drop parse failures
         cleaned = cleaned.assign(
@@ -97,10 +96,10 @@ class DataCleaner:
 
     @staticmethod
     def distribution_by_flag(
-        df: pd.DataFrame,
-        thresholds: dict[str, float],
-        year: int,
-        month: int,
+            df: pd.DataFrame,
+            thresholds: dict[str, float],
+            year: int,
+            month: int,
     ) -> pd.DataFrame:
         if month < 1 or month > 12:
             raise ValueError("Invalid month")
@@ -122,7 +121,7 @@ class DataCleaner:
         )
 
         grouped["percentage"] = (
-            grouped["reports"] / grouped.groupby("flag_state")["reports"].transform("sum") * 100
+                grouped["reports"] / grouped.groupby("flag_state")["reports"].transform("sum") * 100
         )
 
         return grouped.sort_values(["flag_state", "risk_band"]).reset_index(drop=True)

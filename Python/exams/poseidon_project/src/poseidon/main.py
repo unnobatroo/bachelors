@@ -3,13 +3,12 @@ from __future__ import annotations
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from pathlib import Path
-from typing import Annotated
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi import Path as PathParam
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, JSONResponse
+from pathlib import Path
+from typing import Annotated
 
 from poseidon.config_loader import load_server_config, load_vessels
 from poseidon.dependencies import (
@@ -65,7 +64,7 @@ app = FastAPI(title="Project Poseidon", version="1.0.0", lifespan=lifespan)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(
-    request: Request, exc: RequestValidationError
+        request: Request, exc: RequestValidationError
 ) -> JSONResponse:
     # special-case validation errors for distribution month parameter
     if request.url.path.startswith("/distribution/"):
@@ -132,8 +131,8 @@ def status(manager: VesselManagerDep) -> StatusResponse:
 
 @app.get("/history/{vessel_id}", response_class=HTMLResponse)
 def history(
-    vessel_id: Annotated[str, PathParam(min_length=1)],
-    manager: VesselManagerDep,
+        vessel_id: Annotated[str, PathParam(min_length=1)],
+        manager: VesselManagerDep,
 ) -> HTMLResponse:
     try:
         df = manager.vessel_history(vessel_id)
@@ -147,9 +146,9 @@ def history(
 
 @app.get("/distribution/{year}/{month}", response_class=HTMLResponse)
 def distribution(
-    year: Annotated[int, PathParam(ge=2020, le=2100)],
-    month: Annotated[int, PathParam(ge=1, le=12)],
-    manager: VesselManagerDep,
+        year: Annotated[int, PathParam(ge=2020, le=2100)],
+        month: Annotated[int, PathParam(ge=1, le=12)],
+        manager: VesselManagerDep,
 ) -> HTMLResponse:
     try:
         df = manager.distribution(year=year, month=month)

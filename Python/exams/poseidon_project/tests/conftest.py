@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import pandas as pd
 import pytest
 from fastapi.testclient import TestClient
+from pathlib import Path
 
 from poseidon.main import app, get_vessel_manager
 from poseidon.vessel_manager import VesselManager

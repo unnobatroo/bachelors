@@ -1,9 +1,8 @@
 from __future__ import annotations
 
+import pandas as pd
 from datetime import UTC, datetime
 from pathlib import Path
-
-import pandas as pd
 
 from poseidon.persistence import PersistenceService
 from poseidon.vessel import VesselReading

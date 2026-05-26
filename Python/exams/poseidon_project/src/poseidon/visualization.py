@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import Any
-
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from typing import Any
 
 
 def create_map_figure(
-    df: pd.DataFrame,
-    map_config: dict[str, Any],
+        df: pd.DataFrame,
+        map_config: dict[str, Any],
 ) -> go.Figure:
     # colour palette used for risk bands
     color_map = {

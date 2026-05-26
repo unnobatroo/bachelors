@@ -2,7 +2,9 @@
 
 Enterprise-grade backend for maritime vessel traffic monitoring.
 
-Project Poseidon ingests AIS-like telemetry from authorised vessels and provides a real-time fleet risk map, system health tracking, and historical time-series views. Built with modern Python tooling, it serves as a robust API and visualisation layer for maritime operations teams, traffic coordinators, and safety analysts.
+Project Poseidon ingests AIS-like telemetry from authorised vessels and provides a real-time fleet risk map, system
+health tracking, and historical time-series views. Built with modern Python tooling, it serves as a robust API and
+visualisation layer for maritime operations teams, traffic coordinators, and safety analysts.
 
 * **Core:** Python 3.13+, FastAPI, Uvicorn, Pydantic v2
 * **Data Handling:** pandas, pyarrow
@@ -20,7 +22,8 @@ Project Poseidon ingests AIS-like telemetry from authorised vessels and provides
 
 ## Architecture
 
-At startup, the application loads configuration and authorised vessel data, initialises a `PersistenceService` and `VesselManager`, and loads cleaned historical data into memory.
+At startup, the application loads configuration and authorised vessel data, initialises a `PersistenceService` and
+`VesselManager`, and loads cleaned historical data into memory.
 
 ```mermaid
 stateDiagram-v2
@@ -39,7 +42,10 @@ stateDiagram-v2
   note right of Persisting: PersistenceService writes storage (pyarrow/parquet)
 ```
 
-When a telemetry report is submitted via `POST /report`, the payload is strictly validated against a Pydantic model (`IngestRequest`). The `VesselManager` then checks if the vessel is authorised, applies vectorised data cleaning rules via pandas, and persists the reading. The visual endpoints return standalone HTML documents with embedded Plotly charts for immediate interactivity without requiring a separate frontend.
+When a telemetry report is submitted via `POST /report`, the payload is strictly validated against a Pydantic model (
+`IngestRequest`). The `VesselManager` then checks if the vessel is authorised, applies vectorised data cleaning rules
+via pandas, and persists the reading. The visual endpoints return standalone HTML documents with embedded Plotly charts
+for immediate interactivity without requiring a separate frontend.
 
 ```mermaid
 sequenceDiagram
@@ -75,7 +81,8 @@ uv sync
 
 ### 2. Generate historical data
 
-Before running the server, generate the base historical telemetry data (131,400 rows spanning one year for 15 vessels). This step enforces realistic bounds for speed, draft, heading, and fuel.
+Before running the server, generate the base historical telemetry data (131,400 rows spanning one year for 15 vessels).
+This step enforces realistic bounds for speed, draft, heading, and fuel.
 
 ```bash
 uv run python data_generator.py
@@ -98,7 +105,8 @@ The server will be available at `http://0.0.0.0:8000/`.
 
 ## API endpoints and usage
 
-Once the server is running, you can explore the endpoints in your browser or via the terminal. Validation is handled at the API boundary (Pydantic DTOs), keeping domain objects framework-independent.
+Once the server is running, you can explore the endpoints in your browser or via the terminal. Validation is handled at
+the API boundary (Pydantic DTOs), keeping domain objects framework-independent.
 
 ### Core
 
@@ -145,15 +153,21 @@ uv run mypy src
 
 ### How the server handles a request
 
-When you send data (a JSON payload) to `/report`, FastAPI routes it to a function that expects an `IngestRequest`. Pydantic checks if the data matches this structure (e.g., ensuring `speed_knots` is a number). If it's incorrect, it immediately returns an error. If correct, the `VesselManager` cleans the data, checks if the vessel is allowed in our system, and saves it using the `PersistenceService`.
+When you send data (a JSON payload) to `/report`, FastAPI routes it to a function that expects an `IngestRequest`.
+Pydantic checks if the data matches this structure (e.g., ensuring `speed_knots` is a number). If it's incorrect, it
+immediately returns an error. If correct, the `VesselManager` cleans the data, checks if the vessel is allowed in our
+system, and saves it using the `PersistenceService`.
 
 ## Lessons learnt
 
 Building this system presented several valuable engineering challenges:
 
-* Historical telemetry is often noisy. Designing vectorised, defensible cleaning rules in `data_cleaning.py` and deciding what to drop versus what to fix took careful consideration.
-* Pydantic v2 is incredibly safe, but it requires precise DTO (Data Transfer Object) design to avoid friction when real-world inputs are slightly off-spec.
-* Ensuring cross-platform compatibility with `pyarrow` on Python 3.13 emphasised the importance of rigorous dependency management with `uv`.
+* Historical telemetry is often noisy. Designing vectorised, defensible cleaning rules in `data_cleaning.py` and
+  deciding what to drop versus what to fix took careful consideration.
+* Pydantic v2 is incredibly safe, but it requires precise DTO (Data Transfer Object) design to avoid friction when
+  real-world inputs are slightly off-spec.
+* Ensuring cross-platform compatibility with `pyarrow` on Python 3.13 emphasised the importance of rigorous dependency
+  management with `uv`.
 
 ## Future changes
 

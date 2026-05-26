@@ -1,0 +1,191 @@
+@startuml class
+
+skinparam defaultFontName "JetBrains Mono"
+
+class HighwaySystem {
+    - {static} name: String
+    - {static} tollSegments: List<TollSegment>
+    - {static} regVehicles: HashMap<Vehicle, LocalDateTime>
+    - {static} pricingStrategy: PricingStrategy
+
+    + getName(): String
+    + setName(name: String): void
+    + {static} addVehicle(vehicle: Vehicle): void
+    + {static} getPricingStrategy(): PricingStrategy
+    + {static} setPricingStrategy(pricingStrategy: PricingStrategy): void
+    + {static} getMostProfitableSegment(): TollSegment
+    + HighwaySystem(name: String)
+    + HighwaySystem(name: String, pricingStrategy: PricingStrategy)
+}
+
+note right of HighwaySystem::getMostProfitableSegment
+    return tollSegments.stream()
+                .max(Comparator.comparingDouble(seg -> seg.getTotalRevenue(pricingStrategy)))
+                .orElse(null);
+end note
+
+class TollSegment {
+    - name: String
+    - tripRecords: List<TripRecord>
+
+    + getName(): String
+    + setName(name: String): void
+    + getTotalRevenue(strategy: PricingStrategy): float
+    + hadHeavyTruckTripDuringPeak(): boolean
+    + isStrictlyEcoFriendly(): boolean
+    + TollSegment(name: String)
+    + TollSegment(name: String, tripRecords: List<TripRecord>)
+}
+
+note right of TollSegment::getTotalRevenue
+    float total = 0;
+    for (TripRecord rec : tripRecords) {
+        total += rec.getTollFee(strategy);
+    }
+    return total;
+end note
+
+note right of TollSegment::isStrictlyEcoFriendly
+    for (TripRecord rec : tripRecords) {
+        int hour = rec.getDateTime().getHour();
+        boolean isPeak = (hour >= 7 && hour < 9) || (hour >= 16 && hour < 18);
+        if (isPeak && rec.getVehicle().isHeavyWeight()) {
+            return true;
+        }
+    }
+    return false;
+end note
+
+class TripRecord {
+    - distKm: float
+    - dateTime: java.time.LocalDateTime
+    - vehicle: Vehicle
+
+    + getDistKm(): float
+    + getDateTime(): java.time.LocalDateTime
+    + getVehicle(): Vehicle
+    + getTollFee(strategy: PricingStrategy): float
+    + TripRecord(distKm: float, vehicle: Vehicle)
+}
+
+note right of TripRecord::getTollFee
+    return strategy.calculateFee(this);
+end note
+
+abstract class Vehicle {
+    - licensePlate: String
+
+    # Vehicle(licensePlate: String)
+    + getLicensePlate(): String
+    + {abstract} getMultiplier(): int
+    + getOffPeakMultiplier(): float
+    + getWeekendMultiplier(): float
+    + isHeavyWeight(): boolean
+}
+
+note left of Vehicle::getOffPeakMultiplier
+    return 1.0f;
+end note
+
+note left of Vehicle::getWeekendMultiplier
+    return 1.0f;
+end note
+
+note left of Vehicle::isHeavyWeight
+    return false;
+end note
+
+class Motorcycle {
+    + Motorcycle(licensePlate: String)
+    + getMultiplier(): int
+    + getWeekendMultiplier(): float
+}
+
+note bottom of Motorcycle
+    @Override public int getMultiplier() { return 1; }
+    @Override public float getWeekendMultiplier() { return 0.5f; }
+end note
+
+class PassengerCar {
+    + PassengerCar(licensePlate: String)
+    + getMultiplier(): int
+    + getWeekendMultiplier(): float
+}
+
+note bottom of PassengerCar
+    @Override public int getMultiplier() { return 2; }
+    @Override public float getWeekendMultiplier() { return 0.5f; }
+end note
+
+class HeavyTruck {
+    + HeavyTruck(licensePlate: String)
+    + getMultiplier(): int
+    + getOffPeakMultiplier(): float
+    + getWeekendMultiplier(): float
+    + isHeavyWeight(): boolean
+}
+
+note bottom of HeavyTruck
+    @Override public int getMultiplier() { return 4; }
+    @Override public float getOffPeakMultiplier() { return 0.9f; }
+    @Override public float getWeekendMultiplier() { return 2.0f; }
+    @Override public boolean isHeavyWeight() { return true; }
+end note
+
+interface PricingStrategy {
+    + calculateFee(tripRecord: TripRecord): float
+}
+
+class StandardStrategy <<singleton>> {
+    + getInstance(): StandardStrategy
+    + calculateFee(tripRecord: TripRecord): float
+}
+
+note bottom of StandardStrategy
+    return tripRecord.getDistKm() * tripRecord.getVehicle().getMultiplier();
+end note
+
+class EcoPeakStrategy <<singleton>> {
+    + getInstance(): EcoPeakStrategy
+    + calculateFee(tripRecord: TripRecord): float
+}
+
+note bottom of EcoPeakStrategy
+    if peak hours:
+        return distKm * multiplier * 1.5f
+    else:
+        return distKm * multiplier * vehicle.getOffPeakMultiplier()
+end note
+
+class GreenWeekendStrategy <<singleton>> {
+    + getInstance(): GreenWeekendStrategy
+    + calculateFee(tripRecord: TripRecord): float
+}
+
+note bottom of GreenWeekendStrategy
+    @Override public float calculateFee(TripRecord rec) {
+        java.time.DayOfWeek day = rec.getDateTime().getDayOfWeek();
+        if (day == java.time.DayOfWeek.SATURDAY || day == java.time.DayOfWeek.SUNDAY) {
+            return rec.getDistKm() * rec.getVehicle().getMultiplier() * rec.getVehicle().getWeekendMultiplier();
+        } else {
+            return rec.getDistKm() * rec.getVehicle().getMultiplier();
+        }
+    }
+end note
+
+HighwaySystem "1" *-- "0..*" TollSegment
+HighwaySystem "1" o-- "0..*" Vehicle
+HighwaySystem "1" --> "0..1" PricingStrategy : uses
+
+TollSegment "1" *-- "0..*" TripRecord
+TripRecord "*" --> "1" Vehicle
+
+Vehicle <|-- Motorcycle
+Vehicle <|-- PassengerCar
+Vehicle <|-- HeavyTruck
+
+PricingStrategy <|.. GreenWeekendStrategy
+PricingStrategy <|.. StandardStrategy
+PricingStrategy <|.. EcoPeakStrategy
+
+@enduml

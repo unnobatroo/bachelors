@@ -1,11 +1,10 @@
 from __future__ import annotations
 
+import pandas as pd
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-
-import pandas as pd
 
 from poseidon.data_cleaning import DataCleaner
 from poseidon.persistence import PersistenceService
@@ -30,10 +29,10 @@ class ManagerStats:
 
 class VesselManager:
     def __init__(
-        self,
-        vessels: dict[str, VesselInfo],
-        config: dict[str, Any],
-        persistence: PersistenceService,
+            self,
+            vessels: dict[str, VesselInfo],
+            config: dict[str, Any],
+            persistence: PersistenceService,
     ) -> None:
         # initialise manager state, load historical data and hydrate realtime storage
         self.vessels = vessels

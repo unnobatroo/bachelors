@@ -37,6 +37,7 @@ def load_json(path: Path) -> Any:
     # load a json file from disk
     with path.open("r", encoding="utf-8") as file:
         return json.load(file)
+    return None
 
 
 def load_server_config(path: Path) -> dict[str, Any]:

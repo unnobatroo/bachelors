@@ -8,10 +8,10 @@ class VesselReading:
     """Raw telemetry report. Stored as-is, validated only by pandas later."""
 
     def __init__(
-        self,
-        vessel_id: str,
-        readings: dict[str, float],
-        timestamp: datetime,
+            self,
+            vessel_id: str,
+            readings: dict[str, float],
+            timestamp: datetime,
     ) -> None:
         self.vessel_id = vessel_id
         self.readings = readings
