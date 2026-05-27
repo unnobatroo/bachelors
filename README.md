@@ -1,4 +1,4 @@
-# 2nd semester -> Feb - Jun 2026
+# 2nd semester: Feb - Jun 2026
 
 This one was easy, much due to my fail of BasMaths as I didn't get courses that prerequisited it. Highlights of this semesters are the followings:
 
