@@ -1,4 +1,4 @@
-# 2nd sem of Computer Science B.Sc. -> Feb - Jun 2026
+# 2nd semester -> Feb - Jun 2026
 
 This one was easy, much due to my fail of BasMaths as I didn't get courses that prerequisited it. Highlights of this semesters are the followings:
 
@@ -19,4 +19,4 @@ Not really any, to be honest. Tried to be super active, that really paid out in 
 
 Open-source contributions for the summer. There is also a Solar Boat Team competition on Lake Balaton.
 
-For the next sem, Will mostly focus on getting as many credits as possible while keeping my direction the same. Meaning more academics while maintaining my focus on getting the Goethe Certificate C1 and transfering to a TU9.
+For the next sem, will mostly focus on getting as many credits as possible while keeping my direction the same. Meaning more academics, maintaining my focus on getting the Goethe Certificate C1 and transfering to a TU9.
