@@ -5,9 +5,11 @@ This one was easy, much due to my fail of BasMaths as I didn't get courses that 
 1. [Agentic AI Workflow assignment for Programming Languages.](progLangs/!exam/AgenticWorkflow-assignment)
 2. [Full-scale API with ships & ports for Python class.](python/!exams/poseidon_project)
 
+And other than that - learnt a lot about OOP and its design patterns - behavioural, structural, and creational.
+
 ## Regrets
 
-Not really any regrets to be honest. I tried to be super active, that really paid out. And other than that - learnt a little about OOP and design patterns.
+Not really any, to be honest. Tried to be super active, that really paid out in making new connections. Also started hitting the gym regularly!
 
 ## Surprises
 
@@ -15,4 +17,6 @@ Not really any regrets to be honest. I tried to be super active, that really pai
 
 ## What now?
 
-Google Summer of Code for the summer. And Solar Boat Team competition in lake Balaton. Also - focus on getting as much credits as possible whi;e keeping my direction the same. Meaning more academics, with keeping my focus on getting Goethe Zertifikat C1.
+Open-source contributions for the summer. There is also a Solar Boat Team competition on Lake Balaton.
+
+For the next sem, Will mostly focus on getting as many credits as possible while keeping my direction the same. Meaning more academics while maintaining my focus on getting the Goethe Certificate C1 and transfering to a TU9.
