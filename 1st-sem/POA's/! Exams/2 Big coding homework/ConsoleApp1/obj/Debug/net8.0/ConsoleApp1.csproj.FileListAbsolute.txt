@@ -1,0 +1,28 @@
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.deps.json
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.runtimeconfig.json
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.pdb
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfoInputs.cache
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfo.cs
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/refint/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.pdb
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.genruntimeconfig.cache
+/Users/jismailov/ELTE/Semester 1/Pattern of programming/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ref/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.deps.json
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.runtimeconfig.json
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.pdb
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfoInputs.cache
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfo.cs
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/refint/ConsoleApp1.dll
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.pdb
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.genruntimeconfig.cache
+/Users/jismailov/ELTE/Semester 1/Patterns of programming (C#)/! Exams/2 Big coding homework/ConsoleApp1/obj/Debug/net8.0/ref/ConsoleApp1.dll
