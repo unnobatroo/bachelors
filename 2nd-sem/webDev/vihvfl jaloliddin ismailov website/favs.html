@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Favs — Jaloliddin Ismailov. Favourite books, cities, artists, visuals, and the things that keep the work playful." />
+  <title>Favs — Jaloliddin Ismailov</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23000000'/%3E%3Ctext x='2' y='13' font-size='12' fill='%23ffffff' font-weight='bold'%3EJI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header>
+    <div class="site-header-inner">
+      <a href="./index.html" class="site-logo" aria-label="Jaloliddin Ismailov — Home">JI</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav" aria-expanded="false"
+        aria-label="Toggle navigation menu">☰</button>
+      <nav id="primary-nav" role="navigation" aria-label="Primary navigation">
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html" class="active" aria-current="page">Favs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+        <button id="contrast-toggle" aria-pressed="false" title="Toggle high contrast mode">◑ Contrast</button>
+        <button id="font-increase" title="Increase font size" aria-label="Increase font size">A+</button>
+        <button id="font-decrease" title="Decrease font size" aria-label="Decrease font size">A−</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-title">
+    <div class="page-title-inner">
+      <span class="section-label">Things I keep coming back to</span>
+      <h1>Favs</h1>
+    </div>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="content-layout">
+      <main id="main-content" tabindex="-1">
+        <section aria-labelledby="favs-intro-heading">
+          <h2 id="favs-intro-heading">The recurring list</h2>
+          <p>
+            This page merges the template's favorites list with the current interests section, so the softer stuff has
+            a place to live next to the technical work.
+          </p>
+        </section>
+
+        <section aria-labelledby="favorites-heading">
+          <span class="section-label">Personal Mix</span>
+          <h2 id="favorites-heading">What I never get tired of</h2>
+
+          <div class="two-col-grid">
+            <div>
+              <h3 class="h4-compact">Always good</h3>
+              <ul>
+                <li>Programming yet another useless-for-my-career pet project that still makes me like the job more.
+                </li>
+                <li>Cooking something that turns out edible and actually good.</li>
+                <li>Maps, mapping, and the little systems underneath them.</li>
+                <li>Walking through a city and noticing the design choices.</li>
+                <li>Finishing a book and feeling like I can fly.</li>
+                <li>Collecting trash in my journal.</li>
+                <li>All shades of green.</li>
+                <li>Sunflowers and dianthuses.</li>
+                <li>Numbness after a hard workout.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="h4-compact">The long tail</h3>
+              <p class="text-sm text-muted">
+                <em>A Carpet Ride to Khiva</em>, <em>Entergalactic</em>, Budapest, London, Tashkent, New York City,
+                Kit-Kat, Milka Oreo, and the kind of music that keeps a day moving.
+              </p>
+              <ul class="tag-list mt-md" aria-label="Favourite artists">
+                <li class="tag">Radiohead</li>
+                <li class="tag">Zemfira</li>
+                <li class="tag">Hozier</li>
+                <li class="tag">black midi</li>
+                <li class="tag">Kikagaku Moyo</li>
+                <li class="tag">Daniel Caesar</li>
+                <li class="tag">Kanye West</li>
+                <li class="tag">A Tribe Called Quest</li>
+                <li class="tag">Vicente Fernandez</li>
+                <li class="tag">Black Country New Road</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="visuals-heading">
+          <span class="section-label">Template Content</span>
+          <h2 id="visuals-heading">Favorite song</h2>
+          <p>
+            I love Minecraft music! I believe it helps me focus and calm down when things are rough.
+          </p>
+          <details>
+            <summary>Open my favourite song</summary>
+            <audio controls>
+              <source src="media/1-07. Haggstrom.mp3" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </details>
+        </section>
+      </main>
+
+      <aside aria-label="Favs sidebar">
+        <h3>Cities, colours, moods</h3>
+        <ul>
+          <li><strong>Cities</strong> Budapest, London, Tashkent, New York City</li>
+          <li><strong>Colours</strong> all shades of green</li>
+          <li><strong>Mood</strong> curious, slightly over-caffeinated, still sketching</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3>Jaloliddin Ismailov</h3>
+        <p>Computer science student at ELTE in Budapest. Building embedded systems, mapping projects, and
+          climate-focused engineering that connects software to the physical world.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <ul class="list-vertical">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html">Favs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Connect</h3>
+        <ul class="list-vertical-muted">
+          <li><a href="mailto:unnobatroo@icloud.com">unnobatroo@icloud.com</a></li>
+          <li><a href="./media/jaloliddin_ismailov_resume.pdf">Résumé</a></li>
+          <li><a href="https://github.com/unnobatroo" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+          <li><a href="https://www.elte.hu/en" target="_blank" rel="noopener noreferrer">ELTE ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Jaloliddin Ismailov. All rights reserved.</p>
+      <p>Built with semantic HTML, accessible CSS, and purpose.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

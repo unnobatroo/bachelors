@@ -1,0 +1,24 @@
+@startuml state
+skinparam defaultFontName "JetBrains Mono"
+
+[*] --> NEW : create / durability=100
+
+state NEW : multiplier=1.10 (first-use bonus)
+state USED : multiplier=1.00
+state DAMAGED : multiplier=0.75
+state BROKEN : multiplier=0.00
+
+NEW --> USED : durability < 100 and >= 50
+USED --> DAMAGED : durability < 50 and > 0
+DAMAGED --> BROKEN : durability <= 0
+USED --> BROKEN : durability <= 0
+NEW --> BROKEN : durability <= 0
+
+NEW --> NEW : repair() from broken/used/damaged
+USED --> NEW : repair() cost = basePower * 0.5 XP
+DAMAGED --> NEW : repair() cost = basePower * 0.5 XP
+BROKEN --> NEW : repair() cost = basePower * 0.5 XP
+
+BROKEN --> BROKEN : attack blocked
+
+@enduml

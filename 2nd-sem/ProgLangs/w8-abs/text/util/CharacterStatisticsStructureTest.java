@@ -1,0 +1,40 @@
+import check.*;
+import static check.Use.*;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+public class CharacterStatisticsStructureTest {
+    @BeforeAll
+    public static void init() {
+        Use.theClass("text.util.CharacterStatistics")
+           .that(hasUsualModifiers());
+    }
+
+    @Test
+    public void fieldCharToCount() {
+        it.hasField("charToCount: HashMap of Character to Integer")
+          .that(hasUsualModifiers())
+          .thatHasNo(GETTER, SETTER);
+    }
+
+    @Test
+    public void constructor() {
+        it.hasConstructor(withParams("text: String"))
+          .that(hasUsualModifiers());
+    }
+
+    @Test
+    public void methodGetCount() {
+        it.hasMethod("getCount", withParams("c: char"))
+          .that(hasUsualModifiers())
+          .thatReturns("int");
+    }
+
+    @Test
+    public void text() {
+        it.has(TEXTUAL_REPRESENTATION);
+    }
+}
+
+

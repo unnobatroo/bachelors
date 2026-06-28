@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Programozási nyelvek Java 2023-24/2 ZH feladat</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+
+<body>
+  <h1>Programming languages Java Exam, 2024.05.</h1>
+  <h2>Conditions</h2>
+  <p>Do the following <strong>right now</strong>: make sure that no communication device is available to you.</p>
+  <ul>
+  <li><strong>Put away</strong> phones, headphones, tablets etc.</li>
+  <li><strong>Close</strong> all chat programs, mail clients etc.</li>
+  <li><strong>Keep these things off/away</strong> during the exam.</li>
+  </ul>
+  <p>During and after the exam.</p>
+  <ul>
+  <li>If you're found cheating (e.g. giving or receiving help or using forbidden materials) during or after the exam, you are not getting graded this semester.</li>
+  <li>You are forbidden from sharing any part of your exam solution until the day after the exam.</li>
+  <li>You are allowed to use the Java API documentation and the JUnit documentation. You may download them from Canvas.</li>
+  <li>About the code.
+  <ul>
+  <li>Whenever a name is specifically given, use that name exactly.</li>
+  <li>Follow good practices.</li>
+  </ul>
+  </li>
+  </ul>
+  <p>Submitting.</p>
+  <ul>
+  <li>When the time is nearly up (with about 10 minutes left to go), zip the project that you created and upload it into Canvas.
+  <ul>
+  <li>In the context menu, you can use &quot;Küldés/Tömörített mappa&quot; to create the zip.</li>
+  <li>You don't need to pack the <code>jar</code> or <code>.class</code> files.</li>
+  </ul>
+  </li>
+  </ul>
+  <h2>Basic exercise - SimpleChess</h2>
+  <p>In the following, we implement a simple chess-playing program.
+  Create the program according the description find in the structural tests (<code>PiecesSuite</code> and the classes it refers to).</p>
+  <p><strong>Important! The code have to compile and every test have to run correctly for the maximum points!</strong></p>
+  <h2>Helper Classes - Utils ( 3 points )</h2>
+  <p>The <code>Colors</code> enumeration type (1p) implies the colours of the chess figures. The possible values are: light figures -&gt; <code>LIGHT</code> and dark figures -&gt; <code>DARK</code></p>
+  <p>The <code>IllegalMoveException</code> is a custom exception class (1p), which can indicate the different invalid steps in the game. It is able to store and give back messages, which describes the committed mistake.</p>
+  <p>The <code>Actions</code> interface (1p) summarizes the expected methods from chess figures. All figures are able to move onto a specific field (<code>move()</code>), if the step is correct. To be ensured this, the following methods are needed:</p>
+  <ul>
+  <li><code>checkMove()</code>: Checks that the path leading to the field is correct (we make an adequate step with the figure). It can throw <code>IllegalMoveException</code>.</li>
+  <li><code>checkPath()</code>: Checks whether there is an obstacle (other figure) on the path leading to the field. It can throw <code>IllegalMoveException</code>.</li>
+  <li><code>checkField()</code>: It gives back the chess figure positioning on the given field, if there is one.</li>
+  </ul>
+  <h2>The elements of the chess - Pieces ( 18 points )</h2>
+  <p>We realize only 4 kinds of chess figure (<code>Figure</code>) in the simplified chess: the leader/queen (<code>Queen</code>), the bastion (<code>Rook</code>), the runner (<code>Bishop</code>), and the pawn (<code>Pawn</code>)</p>
+  <p><img src="figures.png" alt="Alt text" title="the chess figures"></p>
+  <p>Each single chess figure derives from the abstract <code>Figure</code> class. Every figure has color and column, row values as actual position on the chess board. If the figure is not on the board yet, let the values of the latter two fields be 0, 0 respectively.
+  (Inspect the pictures below for the indexing of the chess fields.)</p>
+  <p><code>checkMove()</code> only the specific figure instance can check the correctness of a step, so this method will be implemented only in the child classes.</p>
+  <p><code>checkField()</code> (1p) It gives back the chess figure positioning on the given field, if there is one. If there is no chess piece present, it gives back <code>null</code> value.
+  Every figure has to know the rest of the chess pieces to check the status of a field, because of this the method gets the chessboard in the form of a <code>HashMap</code>. The key is a specific field of the chessboard, whereon the figure is, and the value is the figure itself. (Comment: we store only those fields where a figure actually stands. Only a single figure can stand on a field, at the same time.)</p>
+  <p><code>checkPath()</code> (3p) checks whether there is an obstacle(other figure) on the path leading to the field. To solve this, move the figure step by step closer to the goal, and when it hits another chess piece before the end field, then throw one <code>IllegalMoveException</code>-t with an informative message.
+  Let us pay attention to not modify the inner state of the figure meanwhile, that is do not move the figure away in case of an invalid route.
+  Hint: The change of the coordinates in every step are calculatable from the sign of the difference of the start and end field.</p>
+  <p>The <code>move()</code> (7p) method moves the figure onto the given field, if it is possible/correct. Only the chess pieces on the board can make a move. The chess piece may move according to the rules of the figure, and not allowed to jump over another figure. If the opponent has a figure on the goal field, then it will be captured, this means the opponents figure removed from the board and our figure gets to his place. It is not possible to capture own figures. The <code>Pawn</code> has exceptional motion/capture rules (see under), pay attention to this specially. Also do not forget to refresh the HashMap representing the board! The method will throw an <code>IllegalMoveException</code> with the appropriate message in case of every false move. This method is responsible for the exception handling, do not propagate the exceptions to higher level. The state of the board remains the same in case of a false move, all figures stay in place. In case of a successful step the <code>move()</code> method returns with value 1, in case of unsuccessful step it returns with 0.
+  Hint: It is very helpful, if we print the change of the figure position to the terminal in its setter method, so we can check what's happening with the figure.</p>
+  <p>The inner representation of the figures stores the positions column, row data in <code>int</code>-s. If we want to address a figure on the board we communicate it in a form like &quot;a2&quot;, where the first letter is the column, and the second is the row of the board. The HashMap works with keys like this.
+  The class has some helper functions: the <code>fieldName()</code> which one gives back the figures own position and the <code>fieldName(int, int)</code> which one gives back the given position in a string format. (Hint: the ASCII code of the 'a' is 97, if necessary) (1p)</p>
+  <p>The figures are capable to give textual representation: colour and type of the figure, and the data of the actual chess field. (1p)</p>
+  <p>In the next classes the <code>checkMove()</code> method is responsible for the correct steps. It throws an <code>IllegalMoveException</code> in case of a wrong move, with the appropriate informations.
+  The <code>Bishop</code> class represents the runners, which may make steps only diagonally on the board. (1p)
+  The <code>Rook</code> class represents the bastions, which may make steps only horizontally or vertically. (1p)
+  The <code>Queen</code> may makes steps diagonally, horizontally, or vertically. (1p)
+  The <code>Pawn</code> has special movement. It can step only one field toward the opponent's direction (light &quot;upwards&quot;, dark &quot;downwards&quot;) or in case of capture one field diagonally forward (henceforward toward the opponent's direction). (Comment: the pawn has an opportunity to move two fields forward from the base line in the classic chess, but you <strong>don't have to</strong> implement this.) (2p)</p>
+  <h2>FigureTest ( 4 points )</h2>
+  <p>Check the program with <code>FigureTest</code> functional tester class. We do not mind the size of the board so far.
+  Let us place some bishops, rooks, queens on the chess board represented by a HashMap in the first test method. Make attempts to do some correct and some invalid steps (E.g. step onto an invalid field, try jump over another figure, capture a figure with the same colour etc.) Verify that the position of the figure changes in case of a valid move only. (2p)
+  One the second test examine the motion of the pawns: They step only toward the correct direction (side or back move is not allowed). They may step only one field, no more, if the field is empty (capture is not allowed). They may make a diagonal step only if they capture an opposite figure. (2p)</p>
+  <h2>Match ( 23 points )</h2>
+  <p>The <code>Match</code> class stores the chess pieces in a <code>HashMap</code> called <code>figures</code>, where the key is the stringified position of the figure, since there is only one figure simultaneously on a field. (Pl. c=1,r=2 =&gt; &quot;a2&quot;) The format of a step consists of 4 <code>int</code> values: starting column, starting row, goal column, goal row. This data is stored in an <code>ArrayList</code>. Likewise, the steps are stored in an <code>ArrayList</code> called <code>moves</code>. Now, the dimension of the board will be important (nxn): <code>size</code> field.</p>
+  <p>The <code>Match()</code> constructor (11p) initialize the game, which will be considerable work.
+  It must process the given file in the parameter list.
+  The file consists of three parts: all parts begin with a header starting with a '_' character.</p>
+  <ul>
+  <li>The dimension of the board can be found in the first part. Only an 5x5, to keep it simple.</li>
+  <li>The starting figures are listed as colour, type and position accordingly in the second part. The values are separated with ';'. Let us prepare ourselves, that there may be some figures with invalid type or position, which ones may not get onto the board. It is enough to signal the wrong cases on the terminal with some description text only, there is no need for proper exception handling here.</li>
+  <li>The third part contains the steps in a text format. E.g.: &quot;c1c4&quot; means, that the figure (if present) on field c1 moves to field c4.</li>
+  </ul>
+  <p>The <code>play()</code> method (11p) is going through the steps and they will be executed if they are correct.
+  The light and dark player move in turns in the chess. The light player starts. The other player may come next if the previous executed a successful move. The unsuccessful steps will be skipped (we display them on the terminal only).
+  It is necessary to check, that there is a figure on the starting field, and the figure does not leave the chess board.
+  Furthermore, there is a special event: if a <code>Pawn</code> reaches the opponent's first row (in case of light player it the 5th row in our example, in case of dark one it is the 1st row), then it will turns into a <code>Queen</code> on the end of the step.</p>
+  <p>The <code>checkCoord()</code> is a helper method (1p), which examines, that the received value is in a suitable range (<code>true</code>), or not (<code>false</code>) (E.g.: It is a correct row or column value for the chess board).</p>
+  <h2>MatchTest ( 2 points )</h2>
+  <p>Let us create a functional tester, which calls the methods of the <code>Match</code> class, to simulate a chess match, based on the <code>Chess5x5.txt</code> file. Let us check a few things: their new position of the figures, which moved, are correct; some field really became empty etc.</p>
+  <p>The setup at the beginning:
+  <img src="setup_begin.png" alt="Alt text" title="start"></p>
+  <p>And at the end:
+  <img src="setup_end.png" alt="Alt text" title="end"></p>
+  
+</body>

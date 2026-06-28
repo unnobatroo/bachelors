@@ -1,0 +1,6 @@
+# adventurerName;type;weaponName;basePower
+Aria;sword;Dawnfang;24
+Aria;bow;Silent Wing;18
+Bram;bow;Recurve;14
+Luna;staff;Moonbranch;20
+Luna;sword;Shortblade;12

@@ -1,0 +1,40 @@
+@startuml sequence
+skinparam DefaultFontName "JetBrains Mono"
+ 
+participant "TollNetwork" as TN
+participant "TollSegment" as TS
+participant "TripRecord" as TR
+participant "PricingStrategy" as PS
+participant "Vehicle" as V
+
+' --- Toll calculation (single trip) ---
+TN -> TS: requestRevenue()
+TS -> TR: getAllTrips()
+TR -> PS: calculateFee(distance, vehicle, timestamp)
+PS -> V: getBaseMultiplier()
+PS --> TR: fee
+TR --> TS: accumulate(fee)
+TS --> TN: totalRevenue
+
+' --- Query 1: most profitable segment (iteration) ---
+loop for each segment
+	TN -> TS: getRevenue()
+	TS -> TR: getAllTrips()
+	TR -> PS: calculateFee(...)
+	PS --> TR: fee
+	TS --> TN: revenue
+end
+
+' --- Query 2: eco-friendly check (heavy truck during peak) ---
+TN -> TS: hadHeavyTruckTripDuringPeak?
+TS -> TR: iterateTrips()
+loop for each trip
+    TR -> V: isHeavyWeight()
+    TR -> TR: getDateTime()
+    alt heavy truck && peak hour
+        TR --> TS: return true
+    end
+end
+TS --> TN: result (boolean)
+
+@enduml
