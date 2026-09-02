@@ -1,0 +1,133 @@
+@startuml class
+skinparam defaultFontName "JetBrains Mono"
+skinparam packageStyle rectangle
+
+package weapons {
+  enum Condition {
+    NEW
+    USED
+    DAMAGED
+    BROKEN
+    --
+    - powerMultiplier: float
+    - minDurability: int
+    ..
+    + {static} fromDurability(durability: int): Condition
+  }
+
+  interface MeleeAttack {
+    + strike(target: quests.Monster): void
+  }
+
+
+  interface RangedAttack {
+    + shoot(target: quests.Monster): void
+  }
+
+  interface MagicalAttack {
+    + castSpell(target: quests.Monster): void
+  }
+
+  abstract class Weapon {
+    # name: String
+    # basePower: float
+    # durability: int
+    # condition: Condition
+    --
+    + {abstract} performAttack(target: quests.Monster): void
+    + reduceDurability(amount: int): void
+    + getEffectivePower(): float
+    + isBroken(): boolean
+  }
+}
+
+package weapons.inventory {
+  class Sword {
+    + performAttack(target: quests.Monster): void
+  }
+
+  class Bow {
+    + performAttack(target: quests.Monster): void
+  }
+
+  class Staff {
+    + performAttack(target: quests.Monster): void
+  }
+}
+
+package quests {
+  class Monster {
+    - name: String
+    - health: float
+    - strength: float
+    - armor: float
+    --
+    + takeDamage(amount: float, bypassArmor: boolean): void
+    + attack(a: guild.Adventurer): void
+  }
+
+  class Quest {
+    - name: String
+    - difficulty: int
+    - isComplete: boolean
+    - monsters: List<Monster>
+    --
+    + attemptQuest(a: guild.Adventurer): boolean
+  }
+}
+
+package guild {
+  class Adventurer {
+    - name: String
+    - basePower: float
+    - health: float
+    - experience: int
+    - rank: int
+    - inventory: List<weapons.Weapon>
+    --
+    + attack(m: quests.Monster): void
+    + takeDamage(amount: float): void
+    + getStrongestWeapon(): weapons.Weapon
+    + gainExperience(amount: int): void
+    + repairWeapon(w: weapons.Weapon): boolean
+  }
+
+  class Guild {
+    - members: List<Adventurer>
+    - quests: List<quests.Quest>
+    --
+    + assignRandomQuest(): void
+    + addMember(a: Adventurer): void
+    + addQuest(q: quests.Quest): void
+  }
+}
+
+package simulation {
+  class Simulation {
+    + main(args: String[]): void
+  }
+}
+
+weapons.inventory.Sword --|> weapons.Weapon
+weapons.inventory.Bow --|> weapons.Weapon
+weapons.inventory.Staff --|> weapons.Weapon
+
+weapons.inventory.Sword ..|> weapons.MeleeAttack
+weapons.inventory.Bow ..|> weapons.RangedAttack
+weapons.inventory.Staff ..|> weapons.MagicalAttack
+
+weapons.Weapon *-- weapons.Condition
+guild.Adventurer "1" o-- "*" weapons.Weapon : inventory
+quests.Quest "1" *-- "*" quests.Monster : enemies
+guild.Guild "1" o-- "*" guild.Adventurer : members
+guild.Guild "1" o-- "*" quests.Quest : board
+
+simulation.Simulation ..> guild.Guild
+simulation.Simulation ..> guild.Adventurer
+simulation.Simulation ..> quests.Quest
+simulation.Simulation ..> quests.Monster
+simulation.Simulation ..> weapons.inventory.Sword
+simulation.Simulation ..> weapons.inventory.Bow
+simulation.Simulation ..> weapons.inventory.Staff
+
+@enduml

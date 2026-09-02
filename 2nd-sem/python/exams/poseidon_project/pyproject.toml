@@ -1,0 +1,45 @@
+[project]
+name = "poseidon-aqms"
+version = "0.1.0"
+description = "Project Poseidon maritime vessel traffic monitor"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.135",
+    "uvicorn[standard]>=0.42",
+    "pydantic>=2.12",
+    "pandas>=2.2",
+    "pyarrow>=18.0",
+    "plotly>=6.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "pytest-cov>=6.0",
+    "httpx>=0.28",
+    "ruff>=0.8",
+    "mypy>=1.13",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "--cov=src/poseidon --cov-report=term-missing"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+mypy_path = "src"
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["pandas", "plotly", "plotly.*"]
+ignore_missing_imports = true

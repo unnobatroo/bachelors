@@ -1,0 +1,3 @@
+file_sizes.txt --- 79 bytes
+data.txt --- 219 bytes
+prac6.ipynb --- 11130 bytes

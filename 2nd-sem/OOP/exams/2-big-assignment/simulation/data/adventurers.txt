@@ -1,0 +1,4 @@
+# name;basePower;health
+Aria;4.0;100
+Bram;2.0;90
+Luna;3.5;95

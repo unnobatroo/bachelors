@@ -1,0 +1,41 @@
+@startuml sequence-fail
+skinparam defaultFontName "JetBrains Mono"
+
+autonumber
+actor Simulation
+participant Guild
+participant Adventurer
+participant Quest
+participant Weapon
+participant Monster
+
+Simulation -> Guild: runSimulation()
+Guild -> Quest: attemptQuest(adventurer)
+Quest -> Adventurer: getStrongestWeapon()
+Adventurer --> Quest: fragile weapon
+
+loop Repeated attacks
+  Quest -> Adventurer: attack(monster)
+  Adventurer -> Weapon: performAttack(monster)
+  Weapon -> Weapon: reduceDurability(amount)
+
+  alt durability <= 0
+    Weapon -> Weapon: condition = BROKEN
+  end
+
+  alt weapon is BROKEN
+    Adventurer -> Monster: takeDamage(basePower + rank, false)
+    note right
+      Armor can fully negate
+      low unarmed damage
+    end note
+  end
+
+  Quest -> Monster: attack(adventurer)
+  Monster -> Adventurer: takeDamage(strength)
+end
+
+Quest --> Guild: false (failed)
+Guild --> Simulation: failure
+
+@enduml

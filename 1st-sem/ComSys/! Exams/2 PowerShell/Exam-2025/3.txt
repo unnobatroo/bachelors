@@ -1,0 +1,7 @@
+Apple is a common fruit.
+This line should not appear in the output.
+An awesome adventure awaits us.
+The quick brown fox jumps over the lazy dog.
+Always be learning new things.
+a small car
+123 numbers

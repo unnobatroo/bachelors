@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Contact — Jaloliddin Ismailov. For project enquiries, collaborations, or general hello. Based in Budapest." />
+  <title>Contact — Jaloliddin Ismailov</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23FFB5D8'/%3E%3Crect x='3' y='3' width='2' height='10' fill='%232D2D2D'/%3E%3Crect x='5' y='11' width='6' height='2' fill='%232D2D2D'/%3E%3Crect x='9' y='3' width='2' height='8' fill='%232D2D2D'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header>
+    <div class="site-header-inner">
+      <a href="./index.html" class="site-logo" aria-label="Jaloliddin Ismailov — Home">JI</a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav" aria-expanded="false"
+        aria-label="Toggle navigation menu">☰</button>
+      <nav id="primary-nav" role="navigation" aria-label="Primary navigation">
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html">Favs</a></li>
+          <li><a href="./contact.html" class="active" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+        <button id="contrast-toggle" aria-pressed="false" title="Toggle high contrast mode">◑ Contrast</button>
+        <button id="font-increase" title="Increase font size" aria-label="Increase font size">A+</button>
+        <button id="font-decrease" title="Decrease font size" aria-label="Decrease font size">A−</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-title">
+    <div class="page-title-inner">
+      <span class="section-label">Let's Make Something Cool</span>
+      <h1>Get In Touch</h1>
+    </div>
+  </div>
+
+  <div class="page-wrapper">
+    <main id="main-content" tabindex="-1">
+
+      <p>Whether you have a project in mind, want to collaborate, or simply want to say hello — I'd love to hear from
+        you. I typically respond within one business day.</p>
+
+      <div class="success-banner" id="success-banner" role="alert" aria-live="polite">
+        <span aria-hidden="true">✓</span>
+        <span>Thank you! Your message has been received.</span>
+      </div>
+
+      <div class="contact-grid">
+
+        <section aria-labelledby="form-heading">
+          <h2 id="form-heading">Send a Message</h2>
+
+          <form class="contact-form" id="contact-form" method="POST" action="#" novalidate
+            aria-describedby="form-notice">
+
+            <div class="form-group">
+              <label for="full-name">Full Name <span class="required" aria-label="required">*</span></label>
+              <input type="text" id="full-name" name="full-name" autocomplete="name" placeholder="e.g. Jamie Smith"
+                required aria-required="true" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span class="required" aria-label="required">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="e.g. jamie@example.com"
+                required aria-required="true" />
+            </div>
+
+            <fieldset class="form-group">
+              <legend>Type of Enquiry <span class="required" aria-label="required">*</span></legend>
+              <div class="radio-group" role="radiogroup" aria-required="true">
+                <div class="radio-item">
+                  <input type="radio" id="enquiry-project" name="enquiry-type" value="new-project" required />
+                  <label for="enquiry-project">New Project / Collaboration</label>
+                </div>
+                <div class="radio-item">
+                  <input type="radio" id="enquiry-other" name="enquiry-type" value="other" />
+                  <label for="enquiry-other">General Hello / Other</label>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-group">
+              <label for="message">Message <span class="required" aria-label="required">*</span></label>
+              <textarea id="message" name="message" rows="6"
+                placeholder="Tell me about your project, timeline, and what you're hoping to achieve…" required
+                aria-required="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input type="checkbox" id="privacy-consent" name="privacy-consent" value="yes" required
+                    aria-required="true" />
+                  <label for="privacy-consent">
+                    I agree that Jaloliddin may use my contact details to respond to this enquiry.
+                    <span class="required" aria-label="required">*</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit">Send Message ►</button>
+
+            <p class="form-notice" id="form-notice">
+              Fields marked <span class="required required-mark">*</span> are required.
+              Your data will only be used to respond to your enquiry.
+            </p>
+
+          </form>
+        </section>
+
+        <aside aria-label="Contact details, map, and FAQ">
+
+          <h3>Direct Contact</h3>
+          <ul class="contact-info-list">
+            <li>
+              <span class="ci-icon" aria-hidden="true"><i class="fas fa-envelope"></i></span>
+              <div><strong>Email</strong><a href="mailto:unnobatroo@icloud.com">unnobatroo@icloud.com</a></div>
+            </li>
+            <li>
+              <span class="ci-icon" aria-hidden="true"><i class="fas fa-clock"></i></span>
+              <div><strong>Response</strong>Within 1 business day</div>
+            </li>
+            <li>
+              <span class="ci-icon" aria-hidden="true"><i class="fas fa-globe"></i></span>
+              <div><strong>Timezone</strong>CET / CEST (Budapest)</div>
+            </li>
+            <li>
+              <span class="ci-icon" aria-hidden="true"><i class="fab fa-github"></i></span>
+              <div><strong>GitHub</strong><a href="https://github.com/unnobatroo" target="_blank"
+                  rel="noopener noreferrer">github.com/unnobatroo ↗</a></div>
+            </li>
+          </ul>
+
+          <hr class="divider" />
+
+          <h3>Find Me — Budapest</h3>
+          <div class="embed-wrap" aria-label="Google Map showing Budapest, Hungary">
+            <iframe src="https://www.google.com/maps?q=Budapest,Hungary&output=embed"
+              title="Google Map — Budapest, Hungary" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <hr class="divider" />
+
+          <h3>Frequently Asked Questions</h3>
+          <div>
+            <details>
+              <summary>Do you work with international teams?</summary>
+              <div class="details-inner">
+                <p>Yes — I work remotely across time zones from the Americas to Asia-Pacific.</p>
+              </div>
+            </details>
+            <details>
+              <summary>How does a typical project begin?</summary>
+              <div class="details-inner">
+                <p>We start with a short call to understand the brief. Then a proposal with scope and timeline. Work
+                  begins once the first milestone is agreed.</p>
+              </div>
+            </details>
+            <details>
+              <summary>What formats will I receive deliverables in?</summary>
+              <div class="details-inner">
+                <p>Embedded firmware via a private Git repository with full handoff documentation. Mapping outputs as
+                  GeoTIFF / GeoJSON plus interactive map links.</p>
+              </div>
+            </details>
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3>Jaloliddin Ismailov</h3>
+        <p>Computer science student at ELTE in Budapest. Building embedded systems, mapping, and climate-focused
+          engineering.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <ul class="list-vertical">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html">Favs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Connect</h3>
+        <ul class="list-vertical">
+          <li><a href="mailto:unnobatroo@icloud.com">unnobatroo@icloud.com</a></li>
+          <li><a href="https://github.com/unnobatroo" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+          <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+          <li><a href="https://www.elte.hu/en" target="_blank" rel="noopener noreferrer">ELTE ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Jaloliddin Ismailov. All rights reserved.</p>
+      <p>Built with semantic HTML, accessible CSS, and pixel love.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('contact-form');
+      var banner = document.getElementById('success-banner');
+      if (!form) return;
+      function showError(input, msg) {
+        clearError(input);
+        var err = document.createElement('span');
+        err.className = 'field-error';
+        err.setAttribute('role', 'alert');
+        err.style.cssText = 'color:#E63946; font-size:0.95rem; display:block; margin-top:0.25rem; font-weight:700;';
+        err.textContent = msg;
+        input.setAttribute('aria-invalid', 'true');
+        input.style.borderColor = '#E63946';
+        input.parentNode.appendChild(err);
+      }
+      function clearError(input) {
+        var ex = input.parentNode.querySelector('.field-error');
+        if (ex) ex.remove();
+        input.removeAttribute('aria-invalid');
+        input.style.borderColor = '';
+      }
+      ['full-name', 'email', 'message'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('blur', function () {
+          if (!el.value.trim()) showError(el, 'This field is required.');
+          else if (id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) showError(el, 'Please enter a valid email address.');
+          else clearError(el);
+        });
+        el.addEventListener('input', function () { clearError(el); });
+      });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var valid = true;
+        ['full-name', 'email', 'message'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          if (!el.value.trim()) { showError(el, 'This field is required.'); valid = false; }
+          else if (id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) { showError(el, 'Please enter a valid email address.'); valid = false; }
+        });
+        var radios = form.querySelectorAll('input[name="enquiry-type"]');
+        var radioChecked = Array.prototype.some.call(radios, function (r) { return r.checked; });
+        if (!radioChecked) { showError(radios[0], 'Please select an enquiry type.'); valid = false; }
+        var privacy = document.getElementById('privacy-consent');
+        if (privacy && !privacy.checked) { showError(privacy, 'You must agree to the privacy notice to proceed.'); valid = false; }
+        if (!valid) {
+          var first = form.querySelector('.field-error');
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        banner.classList.add('visible');
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        form.reset();
+      });
+    }());
+  </script>
+</body>
+
+</html>

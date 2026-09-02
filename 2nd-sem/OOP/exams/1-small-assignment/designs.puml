@@ -1,0 +1,40 @@
+@startuml AlchemistPotions
+skinparam defaultFontName "JetBrains Mono"
+
+enum Rarity {
+    COMMON
+    RARE
+    LEGENDARY
+}
+
+class Potion {
+    - name: String
+    - effectType: String
+    - potency: int
+    - rarity: Rarity
+    - isExpired: bool
+    + Potion(name, effect, potency, rarity, expired)
+}
+
+class Alchemist {
+    - potions: List<Potion>
+    - usedCount: int [cite: 23]
+    - createdCount: int [cite: 23]
+    ---
+    + findStrongest(): Potion [cite: 13]
+    + countHealingPotions(): int [cite: 14]
+    + getRareOrLegendary(): List<Potion> [cite: 15]
+    + brew(ingredients: List<Potion>): Potion [cite: 17]
+    + removeExpired() [cite: 22]
+}
+
+note right of Alchemist::brew
+  Effect: Most frequent in ingredients [cite: 18]
+  Potency: Average + Max [cite: 19]
+  Rarity: Legendary [cite: 20]
+  Status: Expired if any ingredient is expired [cite: 21]
+end note
+
+Alchemist "1" *-- "many" Potion
+Potion +-- Rarity
+@enduml

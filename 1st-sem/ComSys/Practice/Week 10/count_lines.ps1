@@ -1,0 +1,1 @@
+get-content $args[0] | measure

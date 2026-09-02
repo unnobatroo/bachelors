@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Jaloliddin Ismailov — Computer science student at ELTE in Budapest. Embedded systems, mapping, and climate-focused engineering." />
+  <title>Jaloliddin Ismailov — Home</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%23000000'/%3E%3Ctext x='2' y='13' font-size='12' fill='%23ffffff' font-weight='bold'%3EJI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header>
+    <div class="site-header-inner">
+      <a href="./index.html" class="site-logo" aria-label="Jaloliddin Ismailov — Home">JI</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav" aria-expanded="false"
+        aria-label="Toggle navigation menu">☰</button>
+
+      <nav id="primary-nav" role="navigation" aria-label="Primary navigation">
+        <ul>
+          <li><a href="./index.html" class="active" aria-current="page">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html">Favs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="a11y-bar" role="toolbar" aria-label="Accessibility tools">
+        <button id="contrast-toggle" aria-pressed="false" title="Toggle high contrast mode">◑ Contrast</button>
+        <button id="font-increase" title="Increase font size" aria-label="Increase font size">A+</button>
+        <button id="font-decrease" title="Decrease font size" aria-label="Decrease font size">A−</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Embedded systems · Mapping · Climate tech</span>
+      <h1 id="hero-heading">Hi - I'm<br>Jaloliddin Ismailov.</h1>
+      <p class="hero-subtitle">
+        Computer science student at ELTE in Budapest, building embedded and mapping projects that connect software to
+        the physical world and explore resilient infrastructure.
+      </p>
+      <a href="./index.html" class="btn-primary">Read the blog</a>
+      <a href="./favs.html" class="btn-primary mt-sm ml-sm">See my favs</a>
+
+      <div class="hero-image-wrap mt-xl">
+        <img src="media/index.jpeg" alt="A well-lit workspace with a monitor, notebooks, and a carefully arranged desk"
+          width="1080" height="450" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <div class="page-wrapper">
+    <div class="content-layout">
+      <main id="main-content" tabindex="-1">
+        <section aria-labelledby="work-heading">
+          <span class="section-label">Selected Work</span>
+          <h2 id="work-heading">Recent Projects</h2>
+          <div class="work-grid" role="list">
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="media/bme-sbt.jpeg" class="thumbnail-link"
+                  aria-label="BME Solar Boat Team embedded systems work" target="_blank" rel="noopener noreferrer">
+                  <img src="media/bme-sbt.jpeg"
+                    alt="ESP32 microcontroller embedded systems development for solar boat telemetry" width="600"
+                    height="338" loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>BME Solar Boat — Embedded Systems</h3>
+                <p>Safety-critical C application for ESP32, engineered for throttle signal reliability with FreeRTOS
+                  task
+                  management and watchdog timers. Managed ADC sensor telemetry at 50Hz.</p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">C/Embedded</li>
+                  <li class="tag">FreeRTOS</li>
+                  <li class="tag">Hardware</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="media/usa-lights.jpeg" class="thumbnail-link"
+                  aria-label="CASSINI EU Space for Water hackathon satellite project" target="_blank"
+                  rel="noopener noreferrer">
+                  <img src="media/usa-lights.jpeg"
+                    alt="Satellite flood-risk monitoring system using ESA Sentinel-1 data" width="600" height="338"
+                    loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>CASSINI Hackathon — Flood Risk Mapping</h3>
+                <p>Award-winning team project automating SAR imagery analysis with a Python backend and GIS libraries to
+                  visualise flood progression using ESA Sentinel-1 satellite data.</p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">Python/GIS</li>
+                  <li class="tag">Satellite Data</li>
+                  <li class="tag">Climate Tech</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="project-card" role="listitem">
+              <div class="card-image">
+                <a href="media/cern.jpg" class="thumbnail-link"
+                  aria-label="CERN LHCb muon track reconstruction research" target="_blank" rel="noopener noreferrer">
+                  <img src="media/cern.jpg"
+                    alt="CERN particle physics experiment data analysis and reconstruction algorithms" width="600"
+                    height="338" loading="lazy" />
+                </a>
+              </div>
+              <div class="card-body">
+                <h3>CERN LHCb — Research Fellow</h3>
+                <p>Improved muon track reconstruction precision by applying Chi-squared tests at the HLT1 stage and
+                  optimising C++ dependency management in a distributed Linux environment.</p>
+                <ul class="tag-list" aria-label="Project tags">
+                  <li class="tag">C++/Physics</li>
+                  <li class="tag">Data Analysis</li>
+                  <li class="tag">Research</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="intro-heading">
+          <span class="section-label">Template Slot</span>
+          <h2 id="intro-heading">Short intro video</h2>
+          <p>This block is ready for the narrated clip from the media folder.</p>
+
+          <details>
+            <summary>Open video presentation</summary>
+            <div class="details-inner">
+              <div class="embed-wrap">
+                <video controls preload="metadata" poster="media/index.jpeg">
+                  <source src="media/intro-presentation.mp4" type="video/mp4" />
+                  Your browser does not support the video element.
+                </video>
+              </div>
+              <p class="muted-note">The player loads <strong>media/intro-presentation.mp4</strong> and falls back to a poster image if the file is unavailable.</p>
+            </div>
+          </details>
+        </section>
+
+        <section aria-labelledby="tools-heading">
+          <span class="section-label">Approach</span>
+          <h2 id="tools-heading">Development Workflow &amp; Toolkit</h2>
+          <p>
+            Deep focus on embedded systems, climate technology, and mapping systems - combining low-level C/C++
+            engineering with GIS, sensor integration, and real-world infrastructure.
+          </p>
+
+          <details>
+            <summary>View detailed technical toolkit</summary>
+            <div class="details-inner">
+              <div class="table-wrap">
+                <table>
+                  <caption>Jaloliddin Ismailov - Technical Skills &amp; Tools</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Area</th>
+                      <th scope="col">Technologies</th>
+                      <th scope="col">Projects</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Embedded Systems</td>
+                      <td>C, C++, FreeRTOS, ESP32, CAN/TWAI, UART</td>
+                      <td>BME Solar Boat, hardware prototypes</td>
+                    </tr>
+                    <tr>
+                      <td>Climate &amp; GIS</td>
+                      <td>Python, GeoPandas, Rasterio, Sentinel data</td>
+                      <td>CASSINI flood monitoring, satellite analysis</td>
+                    </tr>
+                    <tr>
+                      <td>Data Analysis</td>
+                      <td>C++, Python, statistical methods, Linux</td>
+                      <td>CERN LHCb particle physics research</td>
+                    </tr>
+                    <tr>
+                      <td>Infrastructure</td>
+                      <td>Systems thinking, CAN protocols, sensor networks</td>
+                      <td>Resilience-focused engineering, IoT concepts</td>
+                    </tr>
+                    <tr>
+                      <td>Development</td>
+                      <td>Git, Bash, computer networking, Java</td>
+                      <td>Cross-platform project management</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section aria-labelledby="notes-heading">
+          <span class="section-label">Philosophy</span>
+          <h2 id="notes-heading">Why this matters</h2>
+          <p>
+            Technology is most interesting when it becomes tangible - when it connects software to the physical world,
+            makes invisible systems visible, and shapes how people experience infrastructure and place.
+          </p>
+          <p>
+            The best projects are usually the ones that feel handcrafted, balance technical depth with aesthetics, and
+            keep the work exploratory instead of purely career-shaped.
+          </p>
+          <blockquote class="blockquote-note">
+            "Most of my ideas start while walking through cities. Side projects matter because they preserve
+            creativity, reduce burnout, and encourage experimentation."
+          </blockquote>
+        </section>
+
+        <section aria-labelledby="workflow-heading">
+          <span class="section-label">Process</span>
+          <h2 id="workflow-heading">Development Workflow</h2>
+          <div class="single-grid">
+            <div>
+              <h3 class="heading-compact">Project workflow</h3>
+              <ol class="process-list">
+                <li><strong>Problem Definition</strong> - Understand requirements, constraints, and stakeholder needs
+                </li>
+                <li><strong>System Design</strong> - Architecture, hardware selection, protocol decisions</li>
+                <li><strong>Prototyping</strong> - Build proof-of-concept, test assumptions</li>
+                <li><strong>Development</strong> - Implement core functionality with rigorous testing</li>
+                <li><strong>Integration</strong> - Hardware-software integration, sensor calibration</li>
+                <li><strong>Testing &amp; Validation</strong> - Field testing, reliability verification</li>
+              </ol>
+            </div>
+
+            <div>
+              <h3 class="heading-compact">Technical stack definition</h3>
+              <dl class="def-list">
+                <dt>Embedded Systems</dt>
+                <dd>C/C++ with FreeRTOS for microcontroller projects, ESP32, ARM Cortex architectures</dd>
+
+                <dt>Mapping &amp; GIS</dt>
+                <dd>Python libraries such as GeoPandas and Rasterio, satellite imagery processing, coordinate systems
+                </dd>
+
+                <dt>Development Tools</dt>
+                <dd>VS Code, Git/GitHub, GCC toolchain, Linux environments, Bash scripting</dd>
+
+                <dt>Data Analysis</dt>
+                <dd>Statistical methods, C++ for performance-critical work, Python for rapid prototyping</dd>
+
+                <dt>Communication</dt>
+                <dd>CAN/UART protocols, real-time data streaming, sensor networks</dd>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <aside aria-label="Quick info sidebar">
+        <h3>Quick info</h3>
+        <ul>
+          <li>
+            <strong>Location</strong>
+            Budapest, Hungary
+          </li>
+          <li>
+            <strong>Education</strong>
+            ELTE (BSc Computer Science)
+          </li>
+          <li>
+            <strong>Focus</strong>
+            Embedded · Mapping · Climate Tech
+          </li>
+          <li>
+            <strong>Current</strong>
+            BME Solar Boat Team
+          </li>
+          <li>
+            <strong>Skills</strong>
+            C, C++, Python, GIS, FreeRTOS
+          </li>
+        </ul>
+
+        <hr class="divider" />
+
+        <h3>Get in touch</h3>
+        <p class="muted-note">Interested in embedded systems, climate tech, or mapping projects? Let's talk.</p>
+        <a href="./about.html" class="btn-primary btn-sm">Learn about me</a>
+        <a href="./contact.html" class="btn-primary btn-sm">Send message</a>
+      </aside>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <h3>Jaloliddin Ismailov</h3>
+        <p>Computer science student at ELTE in Budapest. Building embedded systems, mapping projects, and
+          climate-focused engineering that connects software to the physical world.</p>
+      </div>
+      <div>
+        <h3>Navigation</h3>
+        <ul class="list-vertical">
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./favs.html">Favs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Connect</h3>
+        <ul class="list-vertical-muted">
+          <li><a href="mailto:unnobatroo@icloud.com">unnobatroo@icloud.com</a></li>
+          <li><a href="./media/jaloliddin_ismailov_resume.pdf">Résumé</a></li>
+          <li><a href="https://github.com/unnobatroo" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+          <li><a href="https://www.elte.hu/en" target="_blank" rel="noopener noreferrer">ELTE ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Jaloliddin Ismailov. All rights reserved.</p>
+      <p>Built with semantic HTML, accessible CSS, and purpose.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

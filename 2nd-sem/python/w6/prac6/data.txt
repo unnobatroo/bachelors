@@ -1,0 +1,5 @@
+Alice Johnson, ID: 1001, Major: Computer Science
+Bob Smith, ID: 1002, Major: Mathematics
+Carla Lee, ID: 1003, Major: Physics
+David Kim, ID: 1004, Major: Data Science
+Elena Petrova, ID: 1005, Major: Software Engineering

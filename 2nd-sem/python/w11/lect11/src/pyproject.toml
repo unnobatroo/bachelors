@@ -1,0 +1,22 @@
+[project]
+name = "lecture11-src-demos"
+version = "0.1.0"
+description = "Classroom demo scripts for Lecture 11: applied Python for machine learning, computer vision, and PyTorch"
+requires-python = ">=3.12"
+dependencies = [
+  "joblib",
+  "matplotlib",
+  "numpy",
+  "pandas",
+  "scikit-image",
+  "scikit-learn",
+  "torch",
+  "torchvision",
+  "ultralytics",
+]
+
+[dependency-groups]
+dev = [
+  "ipykernel",
+  "jupyterlab",
+]

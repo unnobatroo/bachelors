@@ -1,0 +1,6 @@
+{
+  "dataset": "iris",
+  "best_k": 5,
+  "test_accuracy": 0.9333,
+  "note": "This artifact is safe to load only from trusted sources and should travel with dependency metadata."
+}

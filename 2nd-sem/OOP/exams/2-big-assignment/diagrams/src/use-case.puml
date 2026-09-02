@@ -1,0 +1,32 @@
+@startuml use-case
+left to right direction
+skinparam defaultFontName "JetBrains Mono"
+
+actor Adventurer as Player
+actor "Guild Master" as System
+
+rectangle "Adventurer's Guild" {
+  usecase "Load Input Files" as Load
+  usecase "Manage Members" as Members
+  usecase "Manage Quest Board" as Quests
+  usecase "Attempt Quest" as Attempt
+  usecase "Select Strongest Weapon" as Select
+  usecase "Fight Monster" as Fight
+  usecase "Gain Experience\n& Rank Up" as Progress
+  usecase "Repair Weapon" as Repair
+  usecase "Run Simulation" as Run
+}
+
+Player --> Attempt
+Player --> Repair
+System --> Load
+System --> Members
+System --> Quests
+System --> Run
+
+Attempt .> Select : <<include>>
+Attempt .> Fight : <<include>>
+Attempt .> Progress : <<include>>
+Run .> Attempt : <<include>>
+
+@enduml
