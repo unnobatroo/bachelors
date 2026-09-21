@@ -1,0 +1,8 @@
+3
+Property
+Service 10000
+Lucky 100
+2
+David Greedy
+Eva Careful
+1 1 1 1
