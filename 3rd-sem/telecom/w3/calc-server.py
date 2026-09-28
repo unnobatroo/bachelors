@@ -1,8 +1,6 @@
 """
 Practice 3 - Exercise 2: Calculator TCP Server
-Task: Receive two integers and an operator packed into a binary struct,
-calculate the result, and return it to the client.
-
+Task: Receive binary struct (two ints + 1 op byte), calculate result, return string.
 Usage: python3 calc_server.py <port>
 """
 
@@ -10,32 +8,18 @@ import socket
 import struct
 import sys
 
-# Read port from terminal command line
 port = int(sys.argv[1])
+packer = struct.Struct('I I 1s')
 
-# Define the expected binary structure: 2 unsigned ints (I) and 1 char/byte (1s)
-unpacker = struct.Struct('I I 1s')
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
+    server.bind(('localhost', port))
+    server.listen(1)
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('localhost', port))
-server.listen(1)
-
-while True:
-    conn, client_addr = server.accept()
-
-    # Receive exact size of packed struct bytes (12 bytes)
-    data = conn.recv(unpacker.size)
-
-    if data:
-        # Unpack binary payload into Python tuple: (num1, num2, b'op')
-        num1, num2, op = unpacker.unpack(data)
-        op_str = op.decode('utf-8')
-
-        # Calculate result dynamically
-        result = eval(f"{num1} {op_str} {num2}")
-        print(f"Calculated: {num1} {op_str} {num2} = {result}")
-
-        # Send result back as text
-        conn.sendall(str(result).encode())
-
-    conn.close()
+    while True:
+        conn, _ = server.accept()
+        with conn:
+            data = conn.recv(packer.size)
+            if data:
+                n1, n2, op = packer.unpack(data)
+                result = eval(f"{n1} {op.decode()} {n2}")
+                conn.sendall(str(result).encode())
