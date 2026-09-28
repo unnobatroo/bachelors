@@ -101,6 +101,32 @@ classDiagram
     class PlayerFactory {
         +createPlayer(String, String)$ Player
     }
+    class InvalidInputException {
+        +InvalidInputException(String)
+    }
+    class Main {
+        +main(String[])$ void
+    }
+    class TestRunner {
+        -int passed$
+        -int failed$
+        +main(String[])$ void
+        -assertTrue(String, boolean)$ void
+        -assertEquals(String, Object, Object)$ void
+        -testGreedyStrategy()$ void
+        -testCarefulStrategy()$ void
+        -testTacticalStrategy()$ void
+        -testFactories()$ void
+        -testLuckyField()$ void
+        -testServiceField()$ void
+        -testPropertyFieldPurchaseAndRent()$ void
+        -testPropertyFieldHouseAndElimination()$ void
+        -testCyclicMovement()$ void
+        -testGameLoaderValid()$ void
+        -testGameLoaderInvalid()$ void
+        -testFullSimulationScenario()$ void
+    }
+    note for TestRunner "46 white-box and black-box checks: player strategies, factories, field mechanics, bankruptcy, file loading, and simulation"
 
     Field <|-- PropertyField
     Field <|-- ServiceField
@@ -115,39 +141,102 @@ classDiagram
     CapitalyGame o-- Dice
     GameLoader ..> FieldFactory
     GameLoader ..> PlayerFactory
+    GameLoader ..> InvalidInputException : throws
+    Main ..> GameLoader : loads
+    Main ..> CapitalyGame : runs
+    Main ..> Dice : creates
+    TestRunner ..> CapitalyGame : tests
+    TestRunner ..> GameLoader : tests
+    TestRunner ..> Player : tests
+    TestRunner ..> Field : tests
+    TestRunner ..> InvalidInputException : tests
 ```
 
-## Methods
+## State machine diagram
 
-`Field` and subclasses
-- `getId()` — field index on the board.
-- `apply(player)` — what happens when the player lands here (purchase/rent/house for `PropertyField`, fee for `ServiceField`, reward for `LuckyField`).
-- `PropertyField.reset()` — clears owner and house after the owner goes bankrupt.
-- `PropertyField.describe()` — short label like `Field #3 [House]`, used when listing owned properties.
+### Property field lifecycle
 
-`Player` (abstract) and subclasses
-- `GreedyPlayer`, `CarefulPlayer`, `TacticalPlayer` — each implements `wantsToSpend(price)` with its own rule (afford it / at most half the balance / skip every second chance).
-- `getName()`, `getStrategyName()`, `getMoney()`, `getPosition()`, `isAlive()`, `getProperties()` — state accessors.
-- `move(steps, boardSize)` — advances cyclically: `(pos + steps) % boardSize`.
-- `pay(amount)` / `receiveMoney(amount)` — updates the balance.
-- `eliminate()` — marks the player bankrupt and resets all owned properties.
-- `wantsToBuyProperty(price)` / `wantsToBuildHouse(price)` — both delegate to `wantsToSpend`.
+```mermaid
+stateDiagram-v2
+    [*] --> Unowned: Initial board setup
 
-`FieldFactory` / `PlayerFactory`
-- `createField(id, type, scanner)` — builds the right `Field` for the type token; reads the extra integer for service/lucky fields.
-- `createPlayer(name, strategyType)` — builds the right `Player` subclass for the type token.
+    Unowned --> OwnedWithoutHouse: Player buys property for 1000
+    OwnedWithoutHouse --> OwnedWithHouse: Owner builds house for 4000
 
-`Dice`
-- `roll()` — next roll value.
-- `random()` / `fromList(list)` — random rolls, or a fixed sequence that repeats.
+    OwnedWithoutHouse --> Unowned: Owner bankrupt (properties reset)
+    OwnedWithHouse --> Unowned: Owner bankrupt (house demolished & reset)
 
-`CapitalyGame`
-- `playRound()` — one turn per living player: roll, move, apply field.
-- `playRounds(totalRounds)` — repeats `playRound`, stopping early if one or zero players remain.
-- `printPlayersState()` — prints the final state of every player.
+    OwnedWithoutHouse --> OwnedWithoutHouse: Opponent visits (pays 500 rent)
+    OwnedWithHouse --> OwnedWithHouse: Opponent visits (pays 2000 rent)
+```
 
-`GameLoader`
-- `loadFromFile(filePath)` — parses the input file into fields, players, and optional dice rolls. Throws `FileNotFoundException` or `InvalidInputException`.
+## Sequence diagram
+
+The following sequence illustrates a single simulation round in `CapitalyGame`, highlighting movement and polymorphic interaction with fields:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant Main
+    participant GameLoader
+    participant CapitalyGame
+    participant Player
+    participant Dice
+    participant Field as PropertyField / ServiceField / LuckyField
+
+    User->>Main: run(filePath, rounds)
+    Main->>GameLoader: loadFromFile(filePath)
+    GameLoader-->>Main: GameData(fields, players, diceRolls)
+    Main->>CapitalyGame: playRounds(totalRounds)
+
+    loop Each Round (while living players > 1)
+        loop Each Player
+            CapitalyGame->>Player: isAlive()
+            alt Player is active
+                CapitalyGame->>Dice: roll()
+                Dice-->>CapitalyGame: steps
+                CapitalyGame->>Player: move(steps, boardSize)
+                Player-->>CapitalyGame: newPosition
+
+                CapitalyGame->>Field: apply(player)
+
+                alt LuckyField
+                    Field->>Player: receiveMoney(reward)
+                else ServiceField
+                    Field->>Player: pay(cost)
+                    opt Cannot afford fee
+                        Player->>Player: eliminate()
+                    end
+                else PropertyField (Unowned)
+                    Field->>Player: wantsToBuyProperty(1000)
+                    opt Player chooses to buy
+                        Player->>Player: pay(1000)
+                        Player->>Field: setOwner(player)
+                    end
+                else PropertyField (Owned by visitor)
+                    opt No house
+                        Field->>Player: wantsToBuildHouse(4000)
+                        opt Player chooses to build
+                            Player->>Player: pay(4000)
+                            Player->>Field: setHasHouse(true)
+                        end
+                    end
+                else PropertyField (Owned by opponent)
+                    Field->>Player: pay(rent)
+                    alt Can afford rent
+                        Field->>Player: owner.receiveMoney(rent)
+                    else Cannot afford rent
+                        Player->>Field: owner.receiveMoney(remainingMoney)
+                        Player->>Player: eliminate()
+                    end
+                end
+            end
+        end
+    end
+
+    CapitalyGame->>Main: printPlayersState()
+```
 
 ## Testing
 
@@ -164,10 +253,14 @@ Black-box:
 - File loading: a valid file, a missing file (`FileNotFoundException`), and an unknown field type (`InvalidInputException`).
 - A full multi-round game on `sample_bankruptcy.txt` with fixed dice, checking final balances.
 
-Build and run:
+## Build and Run
 
-```
-javac -d bin src/capitaly/*.java src/capitaly/*/*.java
-java -cp bin capitaly.TestRunner
-java -cp bin capitaly.Main sample_game.txt 5
+All compilation and execution is handled via `run.sh`:
+
+```bash
+./run.sh                          # Compiles & runs default game (sample_game.txt, 5 rounds)
+./run.sh <file_path> <rounds>     # Compiles & runs custom input file and rounds
+./run.sh test                     # Compiles & runs the test suite
+./run.sh build                    # Compiles without running
+./run.sh clean                    # Cleans the compiled classes (bin/)
 ```
