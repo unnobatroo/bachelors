@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 2.</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <h1>2. Ticket purchase</h1>
+    <div id="main">
+        <div id="visual">
+            <h3>Arena</h3>
+            <div id="stage">Stage</div>
+            <div id="standing" class="sector-0">
+                <button id="sub-standing">➖</button>
+                <button id="add-standing">➕</button>
+            </div>
+            <table id="seating"></table>
+        </div>
+        <div id="info">
+            <h3>Ticket information</h3>
+            <table id="cost-info">
+                <tr>
+                    <td>Standing:</td>
+                    <td><span id="sector-0-amount">0</span> ticket</td>
+                    <td>x <span id="sector-0-cost">0</span> EUR =</td>
+                    <td><span id="sector-0-total">0</span> EUR</td>
+                </tr>
+                <tr>
+                    <td>Sector I.:</td>
+                    <td><span id="sector-1-amount">0</span> ticket</td>
+                    <td>x <span id="sector-1-cost">0</span> EUR =</td>
+                    <td><span id="sector-1-total">0</span> EUR</td>
+                </tr>
+                <tr>
+                    <td>Sector II.:</td>
+                    <td><span id="sector-2-amount">0</span> ticket</td>
+                    <td>x <span id="sector-2-cost">0</span> EUR =</td>
+                    <td><span id="sector-2-total">0</span> EUR</td>
+                </tr>
+                <tr>
+                    <td>Sector III.:</td>
+                    <td><span id="sector-3-amount">0</span> ticket</td>
+                    <td>x <span id="sector-3-cost">0</span> EUR =</td>
+                    <td><span id="sector-3-total">0</span> EUR</td>
+                </tr>
+            </table>
+            <div id="sum">
+                <span id="total">0</span> EUR
+            </div>
+            <div>
+                <button id="purchase">Purchase</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
