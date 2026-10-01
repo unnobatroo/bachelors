@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Makers - Board Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Map Makers</h1>
+        </header>
+
+        <main class="game-main">
+            <div class="game-board-section">
+                <div class="map-container">
+                    <table class="game-map" id="gameMap">
+                        <tr>
+                            <td class="game-cell terrain-forest" data-row="0" data-col="0"></td>
+                            <td class="game-cell terrain-water" data-row="0" data-col="1"></td>
+                            <td class="game-cell terrain-empty placeable" data-row="0" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="0" data-col="3"></td>
+                            <td class="game-cell terrain-farm" data-row="0" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="0" data-col="5"></td>
+                            <td class="game-cell terrain-town" data-row="0" data-col="6"></td>
+                            <td class="game-cell terrain-empty invalid" data-row="0" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="0" data-col="8"></td>
+                            <td class="game-cell terrain-water" data-row="0" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="0" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-farm" data-row="1" data-col="0"></td>
+                            <td class="game-cell terrain-mountain" data-row="1" data-col="1"></td>
+                            <td class="game-cell terrain-empty preview" data-row="1" data-col="2"></td>
+                            <td class="game-cell terrain-empty preview" data-row="1" data-col="3"></td>
+                            <td class="game-cell terrain-forest" data-row="1" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="1" data-col="5"></td>
+                            <td class="game-cell terrain-water" data-row="1" data-col="6"></td>
+                            <td class="game-cell terrain-town" data-row="1" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="1" data-col="8"></td>
+                            <td class="game-cell terrain-farm" data-row="1" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="1" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="2" data-col="0"></td>
+                            <td class="game-cell terrain-town" data-row="2" data-col="1"></td>
+                            <td class="game-cell terrain-empty preview" data-row="2" data-col="2"></td>
+                            <td class="game-cell terrain-forest" data-row="2" data-col="3"></td>
+                            <td class="game-cell terrain-empty placeable" data-row="2" data-col="4"></td>
+                            <td class="game-cell terrain-empty placeable" data-row="2" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="2" data-col="6"></td>
+                            <td class="game-cell terrain-water" data-row="2" data-col="7"></td>
+                            <td class="game-cell terrain-empty invalid" data-row="2" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="2" data-col="9"></td>
+                            <td class="game-cell terrain-farm" data-row="2" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="7"></td>
+                            <td class="game-cell terrain-mountain" data-row="3" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="3" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="4" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="2"></td>
+                            <td class="game-cell terrain-mountain" data-row="5" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="5" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="6" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="7" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="8"></td>
+                            <td class="game-cell terrain-mountain" data-row="8" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="8" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="4"></td>
+                            <td class="game-cell terrain-mountain" data-row="9" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="9" data-col="10"></td>
+                        </tr>
+                        <tr>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="0"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="1"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="2"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="3"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="4"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="5"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="6"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="7"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="8"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="9"></td>
+                            <td class="game-cell terrain-empty" data-row="10" data-col="10"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <aside class="game-sidebar">
+                <div class="current-piece-section">
+                    <h3>Current Piece</h3>
+                    <div class="piece-container">
+                        <div class=\"piece-preview\" id=\"piecePreview">
+                            <div class="piece-preview-grid">
+                                <div class="piece-cell terrain-type-water" data-row="0" data-col="0"></div>
+                                <div class="piece-cell terrain-type-water" data-row="0" data-col="1"></div>
+                                <div class="piece-cell terrain-type-water" data-row="0" data-col="2"></div>
+                                <div class="piece-cell" data-row="1" data-col="0"></div>
+                                <div class="piece-cell" data-row="1" data-col="1"></div>
+                                <div class="piece-cell" data-row="1" data-col="2"></div>
+                                <div class="piece-cell" data-row="2" data-col="0"></div>
+                                <div class="piece-cell" data-row="2" data-col="1"></div>
+                                <div class="piece-cell" data-row="2" data-col="2"></div>
+                            </div>
+                        </div>
+                        <div class="piece-info">
+                            <span class="piece-time">Time: <span id="pieceTime">2</span></span>
+                            <span class="piece-type">Type: <span id="pieceType">water</span></span>
+                        </div>
+                    </div>
+                    <div class="piece-controls">
+                        <button class="control-btn" id="rotateBtn">🔄 Rotate</button>
+                        <button class="control-btn" id="flipBtn">↔️ Flip</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+    </div>
+</body>
+</html>

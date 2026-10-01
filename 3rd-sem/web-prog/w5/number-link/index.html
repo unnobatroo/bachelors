@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Link Puzzle</title>
+  <meta name="description" content="Interactive Number Link Puzzle Game">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header>
+    <h1>Number Link Puzzle</h1>
+    <p class="subtitle">Connect matching numbers with continuous paths</p>
+  </header>
+  <main>
+    <div class="puzzle-section">
+      <div class="table-container">
+  <table class="game">
+      <caption>Initial state</caption>
+      <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>4</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>4</td>
+          <td>2</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td></td>
+          <td>1</td>
+          <td>3</td>
+          <td></td>
+      </tr>
+  </table>
+
+  <table class="game">
+      <caption>Solution</caption>
+      <tr>
+          <td class="color1 bottom">1</td>
+          <td class="color2 bottom">2</td>
+          <td class="color3 right">3</td>
+          <td class="color3 left right"></td>
+          <td class="color3 left bottom"></td>
+      </tr>
+      <tr>
+          <td class="color1 top bottom"></td>
+          <td class="color2 top right"></td>
+          <td class="color2 left bottom"></td>
+          <td class="color4 bottom">4</td>
+          <td class="color3 top bottom"></td>
+      </tr>
+      <tr>
+          <td class="color1 top bottom"></td>
+          <td class="color4 bottom ">4</td>
+          <td class="color2 top">2</td>
+          <td class="color4 top bottom "></td>
+          <td class="color3 top bottom"></td>
+      </tr>
+      <tr>
+          <td class="color1 top bottom"></td>
+          <td class="color4 top right"></td>
+          <td class="color4 left right"></td>
+          <td class="color4 left top"></td>
+          <td class="color3 top bottom"></td>
+      </tr>
+      <tr>
+          <td class="color1 top right"></td>
+          <td class="color1 left right"></td>
+          <td class="color1 left">1</td>
+          <td class="color3 right">3</td>
+          <td class="color3 top left"></td>
+      </tr>
+  </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

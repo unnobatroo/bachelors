@@ -1,0 +1,283 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin: 0 0 10px 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin: 0;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Main layout */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.puzzle-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* Table styles */
+table.game {
+  border-collapse: collapse;
+  --line-width: 6px;
+  margin: 0;
+  background: white;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+table.game::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+table.game caption {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+table.game tr:nth-child(even) {
+  background: none;
+}
+
+table.game td {
+  padding: 0;
+  width: clamp(40px, 8vw, 60px);
+  height: clamp(40px, 8vw, 60px);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #666;
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 700;
+  background: #fafafa;
+  transition: all 0.3s ease;
+}
+
+table.game td:hover {
+  background: #e8f4fd;
+  border-color: #4a90e2;
+}
+
+/* Directional line styles - keeping original functionality */
+.right::before,
+.left::before {
+  content: "";
+  height: calc(var(--line-width) * 2);
+  position: absolute;
+  top: calc(50% - var(--line-width));
+  left: calc(-1 * var(--line-width));
+  right: calc(-1 * var(--line-width));
+  border-radius: calc(2 * var(--line-width));
+  z-index: 0;
+  opacity: 0.9;
+}
+
+/* Only apply negative z-index for cells with content */
+td:not(:empty).right::before,
+td:not(:empty).left::before {
+  z-index: -1;
+}
+
+.right::before {
+  left: calc(50% - var(--line-width));
+}
+
+.left::before {
+  right: calc(50% - var(--line-width));
+}
+
+.left.right::before {
+  left: calc(-1 * var(--line-width));
+  right: calc(-1 * var(--line-width));
+}
+
+.top::after,
+.bottom::after {
+  content: "";
+  width: calc(var(--line-width) * 2);
+  left: calc(50% - var(--line-width));
+  top: calc(-1 * var(--line-width));
+  bottom: calc(-1 * var(--line-width));
+  position: absolute;
+  border-radius: calc(2 * var(--line-width));
+  z-index: 0;
+  opacity: 0.9;
+}
+
+/* Only apply negative z-index for cells with content */
+td:not(:empty).top::after,
+td:not(:empty).bottom::after {
+  z-index: -1;
+}
+
+.bottom::after {
+  top: calc(50% - var(--line-width));
+}
+
+.top::after {
+  bottom: calc(50% - var(--line-width));
+}
+
+.bottom.top::after {
+  top: calc(-1 * var(--line-width));
+  bottom: calc(-1 * var(--line-width));
+}
+
+/* Clean color scheme with solid colors */
+.color1::after, .color1::before {
+  background: #ff4757;
+}
+.color2::after, .color2::before {
+  background: #2ed573;
+}
+.color3::after, .color3::before {
+  background: #ffa502;
+}
+.color4::after, .color4::before {
+  background: #3742fa;
+}
+.color5::after, .color5::before {
+  background: #ff3838;
+}
+.color6::after, .color6::before {
+  background: #8854d0;
+}
+.color7::after, .color7::before {
+  background: #ff6348;
+}
+.color8::after, .color8::before {
+  background: #20bf6b;
+}
+.color9::after, .color9::before {
+  background: #eb2f06;
+}
+.color10::after, .color10::before {
+  background: #57606f;
+}
+.color11::after, .color11::before {
+  background: #2f3542;
+}
+.color12::after, .color12::before {
+  background: #a4b0be;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .puzzle-section {
+    padding: 20px;
+  }
+  
+  .table-container {
+    gap: 20px;
+  }
+  
+  table.game {
+    --line-width: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  table.game {
+    --line-width: 3px;
+  }
+  
+  .puzzle-section {
+    padding: 15px;
+    margin: 0 5px;
+  }
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.puzzle-section {
+  animation: fadeIn 0.8s ease-out;
+}
+
+table.game {
+  animation: fadeIn 1s ease-out 0.2s both;
+}
+
+/* Number styling */
+table.game td:not(:empty) {
+  color: #2d3436;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 10;
+}

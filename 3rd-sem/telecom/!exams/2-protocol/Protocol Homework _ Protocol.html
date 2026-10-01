@@ -1,0 +1,60 @@
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <title>Protocol Homework / Protocol</title>
+    </head>
+    <body>
+        <form action="." method="post">
+            Neptun ID / Neptun id: <input id="neptun" name="neptun" />
+            <input type="submit" value="Add a házit!" />
+        </form>
+        <b
+            >Input file generator:
+            <a
+                href="https://ggombos.web.elte.hu/halobeadando/2-protokoll/protkollInputGenerator.py"
+                data-moz-translations-id="0"
+                >protkollInputGenerator.py</a
+            ></b
+        ><br /><br />
+
+        <h1>Task1</h1>
+        Read the binary files received in the parameter and print the contents
+        of the first record to the standard output! (the return value of the
+        unpack)<br />- Parameter1 structure: integer, float, bool<br />-
+        Parameter2 structure: bool, char, 9 length string<br />- Parameter3
+        structure: 9 length string, float, integer<br />- Parameter4 structure:
+        bool, integer, char<br />
+        <h1>Task2</h1>
+        Write the following value to stdout (print) in binary format (the return
+        value of the pack)! The length of the string is indicated by the number
+        behind the text!<br />Struct parameter to use: f, i, c, ?, Xs (X is the
+        length of the string, eg: 3s)<br />- "first"(15), 73, True<br />- 76.5,
+        False, 'X'<br />- 64, "second"(13), 83.9<br />- 'Z', 95, "third"(16)<br /><b
+            >Parameters of the script</b
+        >: <br />
+        <ul>
+            <li>
+                python3 client.py &lt; file1 &gt; &lt; file2 &gt; &lt; fil3 &gt;
+                &lt; fil4 &gt;
+            </li>
+            <ul>
+                <li>e.g. python3 client.py db1.bin db2.bin db3.bin db4.bin</li>
+            </ul>
+        </ul>
+
+        <b>Example output</b>: <br />
+        (b'F', b'123456789', 35)<br />
+        (35, 37.2999923706055, True)<br />
+        (True, b'123456789', b'F')<br />
+        (35, b'F', 37.2999923706055)<br />
+        b'elso\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01'<br />
+        b'\x00\x00\xadB\x00X'<br />
+        b'J\x00\x00\x000+x000\x00\x00\x00\x00\x00\x00\x00\x00\xcd\xcc\xbbB'<br />
+        b'Z\x00\x00\x00i\x00\x00\x00\x00third\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'<br />
+
+        <br />
+        <b>Submission</b>: Send it to the TMS in <b>.zip</b> file should contain
+        one and only one file called <b>client.py</b>!<br />
+    </body>
+</html>

@@ -1,0 +1,410 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Game container */
+.game-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    color: #4a5568;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Main game area */
+.game-main {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    flex: 1;
+}
+
+/* Game board section */
+.game-board-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.map-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Game map */
+.game-map {
+    border-collapse: separate;
+    border-spacing: 2px;
+    margin: 0 auto;
+}
+
+.game-map td {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    background: #f8fafc;
+}
+
+.game-map td:hover {
+    border-color: #4299e1;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(66, 153, 225, 0.3);
+}
+
+/* Terrain types - Color-based styling for table cells */
+.game-map td.terrain-empty {
+    background: #f8fafc;
+}
+
+.game-map td.terrain-mountain {
+    background: linear-gradient(135deg, #8b5a3c, #6b4226);
+    border-color: #553c28;
+}
+
+.game-map td.terrain-forest {
+    background: linear-gradient(135deg, #38a169, #2f855a);
+    border-color: #276749;
+}
+
+.game-map td.terrain-town {
+    background: linear-gradient(135deg, #d69e2e, #b7791f);
+    border-color: #975a16;
+}
+
+.game-map td.terrain-farm {
+    background: linear-gradient(135deg, #ecc94b, #d69e2e);
+    border-color: #b7791f;
+}
+
+.game-map td.terrain-water {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    border-color: #2c5aa0;
+}
+
+/* Game state classes for table cells */
+.game-map td.placeable {
+    border-color: #38a169;
+    background-color: rgba(56, 161, 105, 0.1);
+    cursor: pointer;
+}
+
+.game-map td.invalid {
+    border-color: #e53e3e;
+    background-color: rgba(229, 62, 62, 0.1);
+    cursor: not-allowed;
+}
+
+.game-map td.preview {
+    border-color: #4299e1;
+    background-color: rgba(66, 153, 225, 0.2);
+}
+
+
+
+/* Sidebar */
+.game-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-sidebar h3 {
+    color: #2d3748;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Sidebar sections */
+.current-piece-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Current piece section */
+.piece-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.piece-preview {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 120px;
+    min-width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Piece preview styling */
+.piece-preview {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 120px;
+    min-width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.piece-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-template-rows: repeat(3, 30px);
+    gap: 2px;
+}
+
+.piece-cell {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+/* Terrain type classes for piece preview cells */
+.piece-cell.terrain-type-water {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    border-color: #2c5aa0;
+}
+
+.piece-cell.terrain-type-forest {
+    background: linear-gradient(135deg, #38a169, #2f855a);
+    border-color: #276749;
+}
+
+.piece-cell.terrain-type-town {
+    background: linear-gradient(135deg, #d69e2e, #b7791f);
+    border-color: #975a16;
+}
+
+.piece-cell.terrain-type-farm {
+    background: linear-gradient(135deg, #ecc94b, #d69e2e);
+    border-color: #b7791f;
+}
+
+.piece-cell.terrain-type-mountain {
+    background: linear-gradient(135deg, #8b5a3c, #6b4226);
+    border-color: #553c28;
+}
+
+/* Game state classes for JavaScript */
+.game-cell {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.game-cell.placeable {
+    border-color: #38a169;
+    background-color: rgba(56, 161, 105, 0.1);
+    cursor: pointer;
+}
+
+.game-cell.invalid {
+    border-color: #e53e3e;
+    background-color: rgba(229, 62, 62, 0.1);
+    cursor: not-allowed;
+}
+
+.game-cell.preview {
+    border-color: #4299e1;
+    background-color: rgba(66, 153, 225, 0.2);
+}
+
+/* Piece transformation states */
+.piece-rotated-90 {
+    transform: rotate(90deg);
+}
+
+.piece-rotated-180 {
+    transform: rotate(180deg);
+}
+
+.piece-rotated-270 {
+    transform: rotate(270deg);
+}
+
+.piece-mirrored {
+    transform: scaleX(-1);
+}
+
+/* Active states */
+.terrain-type-water {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+.terrain-type-forest {
+    background: linear-gradient(135deg, #38a169, #2f855a);
+}
+
+.terrain-type-town {
+    background: linear-gradient(135deg, #d69e2e, #b7791f);
+}
+
+.terrain-type-farm {
+    background: linear-gradient(135deg, #ecc94b, #d69e2e);
+}
+
+.terrain-type-mountain {
+    background: linear-gradient(135deg, #8b5a3c, #6b4226);
+}
+
+.piece-info {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.piece-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    flex: 1;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: linear-gradient(135deg, #3182ce, #2c5aa0);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+}
+
+
+
+
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .game-main {
+        grid-template-columns: 1fr 280px;
+    }
+    
+    .game-map td {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .game-main {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .game-sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 2rem;
+    }
+    
+    .game-map td {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .piece-controls {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-map td {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .current-piece-section {
+        padding: 15px;
+    }
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-container > * {
+    animation: fadeIn 0.6s ease-out;
+}
+
