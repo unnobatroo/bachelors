@@ -30,12 +30,12 @@ Taken in person and structured as a progressive funnel to test conceptual depth:
 ### Module 1: Real Numbers, Boundedness & Inverse Functions
 
 - **Practice Problem Types:**
-  - **Invertibility Proofs:** Prove injectivity algebraically: $\forall x, t \in D_f : f(x) = f(t) \implies x = t$. [🎥 _Professor Leonard: 1-to-1 Functions and Inverses_](https://www.youtube.com/watch?v=WzFvEubO85g)
+  - **Invertibility Proofs:** Prove injectivity algebraically: $\forall x, t \in D_f : f(x) = f(t) \implies x = t$. [🎥 _Professor Leonard: One to One Functions_](https://www.youtube.com/watch?v=C0Q_m2UDerc)
   - **Domain / Range Calculation:** Evaluate $D_f$ and $R_f$, explicitly establishing that $D_{f^{-1}} = R_f$. [📖 _Paul's Online Math Notes: Inverse Functions_](https://tutorial.math.lamar.edu/Classes/CalcI/InverseFunctions.aspx)
   - **Formula Derivation:** Algebraically isolate $x$ in terms of $y$ to build $f^{-1}(y)$, keeping domain constraints in mind (e.g., handling principal square roots).
 - **Theoretical Grounding (130 Questions):**
   - Axioms of real numbers ($\mathbb{R}$), intervals, and the Extended Real Number Set $\overline{\mathbb{R}}$.
-  - Definitions of upper/lower bounds, supremum ($\sup H$), infimum ($\inf H$), maximum, minimum. [🎥 _Wrath of Math: Supremum and Infimum Definition_](https://www.youtube.com/watch?v=apA_7vBkIME)
+  - Definitions of upper/lower bounds, supremum ($\sup H$), infimum ($\inf H$), maximum, minimum. [🎥 _Wrath of Math: Definition of Supremum and Infimum of a Set_](https://www.youtube.com/watch?v=QRGIhqz9vh4)
   - **The Axiom of Completeness:** Every non-empty subset of $\mathbb{R}$ that is bounded above has a supremum in $\mathbb{R}$.
 - **Required Theorems to Prove:**
   - **Theorem 1:** Triangle Inequalities in $\mathbb{R}$ ($|x+y| \le |x|+|y|$ and $|x-y| \ge ||x|-|y||$).
@@ -45,7 +45,7 @@ Taken in person and structured as a progressive funnel to test conceptual depth:
 - **Practice Problem Types:**
   - **Composite Domain Determination:** Solve the nested domain condition algebraically:
     $$D_{f \circ g} = \{x \in D_g \mid g(x) \in D_f\}$$
-    _Warning:_ Never determine the domain from the _simplified_ final formula. [🎥 _Professor Leonard: Evaluating Composite Functions_](https://www.youtube.com/watch?v=FdetKz1nZic)
+    _Warning:_ Never determine the domain from the _simplified_ final formula. [🎥 _Professor Leonard: Composition of Functions_](https://www.youtube.com/watch?v=EsgHKmLSPVc)
   - **Formula Derivation:** Evaluate $f(g(x))$ and simplify under domain conditions, particularly noting piecewise outputs or interval restrictions like $\sqrt{x^2} = |x|$.
 
 ### Module 3: Sequence Limits by Definition ($\varepsilon - N$ and $P - N$)
@@ -74,7 +74,7 @@ Taken in person and structured as a progressive funnel to test conceptual depth:
 ### Module 5: Monotone, Recursive, and $e$-Sequences
 
 - **Practice Problem Types:**
-  - **Recursive Sequences ($a\_{n+1} = f(a_n)$):** Use mathematical induction to prove boundedness and monotonicity, then find the finite limit by solving $L = f(L)$. [🎥 _Abdul Bari: Recurrence Relations (Algorithmic Logic)_](https://www.youtube.com/watch?v=8bZhOEKHEuo) | [🎥 _Math Sorcerer: Induction Proofs_](https://www.youtube.com/watch?v=tHJjX833a6Q)
+  - **Recursive Sequences ($a\_{n+1} = f(a_n)$):** Use mathematical induction to prove boundedness and monotonicity, then find the finite limit by solving $L = f(L)$. [🎥 _Abdul Bari: Recurrence Relation_](https://www.youtube.com/watch?v=4V30R3I1vLI) | [🎥 _The Math Sorcerer: How to Write a Mathematical Induction Proof_](https://www.youtube.com/watch?v=IfdKxy7HFlc)
   - **Euler's $e$ Limits:** Transform sequence limits into the canonical form $\lim_{n\to\infty} \left(1 + \frac{x}{n}\right)^n = e^x$.
 - **Theoretical Grounding & Theorems to Prove:**
   - **Theorem 13 (Monotone Convergence Theorem):** Monotonically increasing bounded sequences are convergent. [🎥 _Turnupmath: Monotone Convergence Theorem Proved_](https://www.youtube.com/watch?v=7TLtTIJ8hts)
@@ -87,7 +87,7 @@ Taken in person and structured as a progressive funnel to test conceptual depth:
 
 - **Practice Problem Types:**
   - **Geometric Series:** Sum $\sum_{n=p}^\infty q^n = \frac{q^p}{1-q}$ when $|q| < 1$. Note the starting index $p$. [📖 _Paul's Online Math Notes: Series Basics_](https://tutorial.math.lamar.edu/classes/calcii/seriesintro.aspx)
-  - **Telescoping Series:** Utilize partial fraction decomposition to evaluate sums via limits of partial sums $S_n$. [🎥 _Professor Leonard: Telescoping Series_](https://www.youtube.com/watch?v=34d7U0w2r60)
+  - **Telescoping Series:** Utilize partial fraction decomposition to evaluate sums via limits of partial sums $S_n$. [🎥 _The Organic Chemistry Tutor: Telescoping Series_](https://www.youtube.com/watch?v=XVkdhU6nJbo)
 - **Required Theorems to Prove:**
   - **Theorem 17:** Convergence and sum of geometric series.
   - **Theorem 18:** The Zero-Sequence Test ($a_n \to 0$ as a strictly _necessary_, but not sufficient, condition for convergence).
@@ -131,7 +131,7 @@ Taken in person and structured as a progressive funnel to test conceptual depth:
     \lim_{x\to 0} \frac{\sin x}{x} = 1, \quad \lim_{x\to 0} \frac{1-\cos x}{x^2} = \frac{1}{2}, \quad \lim_{x\to 0} \frac{e^x-1}{x} = 1
     $$
 - **Required Theorems to Prove:**
-  - **Theorem 32:** Formal proofs of the basic limits for trigonometric and exponential functions. [🎥 _Mathologer: The secret of sin(x)/x_](https://www.youtube.com/watch?v=4CjA1vXhXFw)
+  - **Theorem 32:** Formal proofs of the basic limits for trigonometric and exponential functions. [🎥 _Dr. Trefor Bazett: Geometric Proof of sin(x)/x Limit_](https://www.youtube.com/watch?v=f2PRu5QPa3o)
 
 ### Module 11: Topology of $\mathbb{R}$, Continuity & Global Theorems
 
