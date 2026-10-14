@@ -32,3 +32,6 @@ apphost
 # R project state
 .Rproj.user
 /3rd-sem/cloud-native-architectures-2026-autumn/
+
+# Java
+*.class
