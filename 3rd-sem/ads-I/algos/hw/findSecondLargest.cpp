@@ -1,3 +1,4 @@
+#include <chrono>
 #include <climits>
 #include <iostream>
 
@@ -21,10 +22,15 @@ int findSecondLargest(const SNode* head) {
 }
 
 int main() {
-  SNode* h = makeSList(randomInts(10));
-  printSList(h);
+  const int n = 1000;
+  SNode* list = makeSList(randomInts(n));
 
-  std::cout << "second largest: " << findSecondLargest(h) << '\n';
+  auto t0 = std::chrono::steady_clock::now();
+  int ans = findSecondLargest(list);
+  auto t1 = std::chrono::steady_clock::now();
 
-  freeSList(h);
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+  std::cout << n << " elements: " << ms << " ms -> " << ans << '\n';
+
+  freeSList(list);
 }

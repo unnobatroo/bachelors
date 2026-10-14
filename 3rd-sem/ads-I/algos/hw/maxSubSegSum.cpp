@@ -22,12 +22,13 @@ long long maxSubArray(const std::vector<int>& nums) {
 }
 
 int main() {
-  auto big = randomInts(10'000'000);
+  const int n = 1'000'000;
+  auto data = randomInts(n);
 
   auto t0 = std::chrono::steady_clock::now();
-  long long ans = maxSubArray(big);
+  long long ans = maxSubArray(data);
   auto t1 = std::chrono::steady_clock::now();
 
   auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
-  std::cout << "10M elements: " << ms << " ms -> " << ans << '\n';
+  std::cout << n << " elements: " << ms << " ms -> " << ans << '\n';
 }

@@ -1,11 +1,28 @@
 CXX = clang++
 CXXFLAGS = -Wall -Wextra -std=c++17
+# Optimized build: make CXXFLAGS="-Wall -Wextra -std=c++17 -O2" <name>
 
-# `make findSecondLargest` builds ./findSecondLargest from its .cpp + lib/.
-# New exercises get this for free as long as the .cpp name matches.
-%: %.cpp lib/lists.cpp
+# Your exercises — add new names here and they get a build rule for free.
+EXERCISES = findSecondLargest maxSubSegSum
+
+.PHONY: all clean help
+
+all: $(EXERCISES)
+
+# Static pattern rule: gives every name in EXERCISES a real target,
+# which is also what makes shell autocomplete work.
+$(EXERCISES): %: %.cpp lib/lists.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Add new exercise names here as you create them.
+# `make run-findSecondLargest` builds (if needed) then runs it.
+run-%: %
+	./$<
+
 clean:
-	rm -f findSecondLargest maxSubSegSum
+	rm -f $(EXERCISES)
+
+help:
+	@echo "make all          build all exercises"
+	@echo "make <name>       build one exercise"
+	@echo "make run-<name>   build and run it"
+	@echo "make clean        delete built binaries"
