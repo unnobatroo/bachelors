@@ -1,3 +1,34 @@
+# Build artifacts
+a.out
+*.exe
+*.o
+*.dSYM/
+
+# .NET build output
+bin/
+obj/
+
+# Python
+__pycache__/
+*.pyc
+
+# IDEs
+.idea/
+.vscode/
+
+# macOS
 .DS_Store
+
+# Ad-hoc compiled binaries (no file extension)
+matrix_program
+tasks
+programma
+1-static-counter
+2-recursion
+read-file-from-user
+while
+apphost
+
+# R project state
 .Rproj.user
 /3rd-sem/cloud-native-architectures-2026-autumn/
