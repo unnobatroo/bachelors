@@ -14,18 +14,20 @@ Every player starts at position 0 with 10000. Each round, every living player ro
 - **Careful** — buys or builds only if the cost is at most half of its current balance.
 - **Tactical** — skips every second opportunity it could afford.
 
-A player who cannot pay a fee or rent goes bankrupt: their properties become unowned again (houses demolished) and they stop playing. The program runs a given number of rounds, then prints each player's strategy, status, balance, position, and properties.
+A player who cannot pay a fee or rent goes bankrupt: their balance is zeroed (remaining funds go to the property owner on rent bankruptcy), their properties become unowned again (houses demolished), and they stop playing. The program runs a given number of rounds, then prints each player's strategy, status, balance, position, and properties.
 
 ## Design
 
 OOP principles:
+
 - **Encapsulation** — all state is private; other classes go through methods (`pay`, `receiveMoney`, `eliminate`), and `getProperties()` returns an unmodifiable list.
 - **Abstraction** — `Field` and `Player` are abstract; `Dice` is an interface.
 - **Inheritance** — `PropertyField`/`ServiceField`/`LuckyField` extend `Field`; `GreedyPlayer`/`CarefulPlayer`/`TacticalPlayer` extend `Player`.
 - **Polymorphism** — the game iterates over `Field` and `Player` without knowing concrete types; `apply()` and `wantsToSpend()` dispatch to the right implementation. Each player subclass implements its own buying rule.
 
 Patterns:
-- **Factory** — `FieldFactory` and `PlayerFactory` turn input tokens into objects and reject unknown types, keeping construction out of `GameLoader`.
+
+- **Factory** — `FieldFactory` and `PlayerFactory` turn input tokens into objects and reject unknown types or invalid arguments, keeping construction out of `GameLoader`.
 - `Dice` is a functional interface: `Dice.random()` rolls 1–6; `Dice.fromList(...)` cycles a fixed sequence so games can be reproduced and tested.
 
 `GameLoader` reads and validates the input file (fields, players, optional dice rolls) and throws `InvalidInputException` on malformed data.
@@ -113,6 +115,7 @@ classDiagram
         +main(String[])$ void
         -assertTrue(String, boolean)$ void
         -assertEquals(String, Object, Object)$ void
+        -assertThrows(String, Class, ThrowingRunnable)$ void
         -testGreedyStrategy()$ void
         -testCarefulStrategy()$ void
         -testTacticalStrategy()$ void
@@ -122,11 +125,12 @@ classDiagram
         -testPropertyFieldPurchaseAndRent()$ void
         -testPropertyFieldHouseAndElimination()$ void
         -testCyclicMovement()$ void
+        -testAlgebraicAndExceptionGuards()$ void
         -testGameLoaderValid()$ void
         -testGameLoaderInvalid()$ void
         -testFullSimulationScenario()$ void
     }
-    note for TestRunner "46 white-box and black-box checks: player strategies, factories, field mechanics, bankruptcy, file loading, and simulation"
+    note for TestRunner "61 white-box and black-box checks: player strategies, factories, field mechanics, bankruptcy, algebraic invariants, file loading, and simulation"
 
     Field <|-- PropertyField
     Field <|-- ServiceField
@@ -240,17 +244,20 @@ sequenceDiagram
 
 ## Testing
 
-`TestRunner` contains 46 checks and exits non-zero on failure.
+`TestRunner` contains 61 checks and exits non-zero on failure.
 
 White-box:
+
 - Each player type's buying rules at different balances, including tactical's alternating skip.
-- Factory creation of every field type and player type, including argument parsing.
-- Property mechanics: buying, rent payment, house building, upgraded rent, and bankruptcy (remaining balance goes to the owner, properties reset).
+- Factory creation of every field type and player type, including argument parsing and rejection of non-positive costs/rewards.
+- Property mechanics: buying, rent payment, house building, upgraded rent, and bankruptcy (remaining balance goes to the owner, bankrupt player's balance is zeroed, properties reset).
 - Service fee deduction and bankruptcy on an unaffordable fee; lucky field payout.
+- Algebraic & exception guards: negative/overpayment checks, non-positive movement steps or board size, negative/zero field parameters, and out-of-range or empty dice lists.
 
 Black-box:
+
 - Board wrap-around via modulo movement.
-- File loading: a valid file, a missing file (`FileNotFoundException`), and an unknown field type (`InvalidInputException`).
+- File loading: a valid file, a missing file (`FileNotFoundException`), unknown field type (`InvalidInputException`), and malformed or out-of-range dice rolls (`InvalidInputException`).
 - A full multi-round game on `sample_bankruptcy.txt` with fixed dice, checking final balances.
 
 ## Build and Run

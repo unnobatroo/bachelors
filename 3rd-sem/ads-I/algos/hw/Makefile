@@ -3,7 +3,7 @@ CXXFLAGS = -Wall -Wextra -std=c++17
 # Optimized build: make CXXFLAGS="-Wall -Wextra -std=c++17 -O2" <name>
 
 # Your exercises — add new names here and they get a build rule for free.
-EXERCISES = findSecondLargest maxSubSegSum
+EXERCISES = findSecondLargest maxSubSegSum isPalindrome
 
 .PHONY: all clean help
 

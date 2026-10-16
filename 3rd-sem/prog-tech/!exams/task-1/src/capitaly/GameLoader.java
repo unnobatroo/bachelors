@@ -19,6 +19,10 @@ public class GameLoader {
 
     public static GameData loadFromFile(String filePath)
         throws FileNotFoundException, InvalidInputException {
+        if (filePath == null || filePath.isBlank()) {
+            throw new InvalidInputException("File path cannot be empty.");
+        }
+
         File file = new File(filePath);
         if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("File not found: " + filePath);
@@ -78,11 +82,16 @@ public class GameLoader {
             }
 
             List<Integer> diceRolls = new ArrayList<>();
-            while (scanner.hasNextInt()) {
-                int roll = scanner.nextInt();
-                if (roll <= 0) {
+            while (scanner.hasNext()) {
+                if (!scanner.hasNextInt()) {
                     throw new InvalidInputException(
-                        "Dice roll must be positive, got: " + roll
+                        "Expected integer dice roll, got: " + scanner.next()
+                    );
+                }
+                int roll = scanner.nextInt();
+                if (roll < 1 || roll > 6) {
+                    throw new InvalidInputException(
+                        "Dice roll must be between 1 and 6, got: " + roll
                     );
                 }
                 diceRolls.add(roll);

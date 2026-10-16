@@ -11,6 +11,18 @@ public class FieldFactory {
 
     public static Field createField(int id, String type, Scanner scanner)
         throws InvalidInputException {
+        if (id < 0) {
+            throw new InvalidInputException(
+                "Field id cannot be negative, got: " + id
+            );
+        }
+        if (type == null || type.isBlank()) {
+            throw new InvalidInputException("Field type cannot be empty.");
+        }
+        if (scanner == null) {
+            throw new InvalidInputException("Scanner cannot be null.");
+        }
+
         return switch (type.toLowerCase()) {
             case "property", "p" -> new PropertyField(id);
             case "service", "s" -> {
@@ -21,7 +33,16 @@ public class FieldFactory {
                             " requires an integer cost."
                     );
                 }
-                yield new ServiceField(id, scanner.nextInt());
+                int cost = scanner.nextInt();
+                if (cost <= 0) {
+                    throw new InvalidInputException(
+                        "Service field cost at index " +
+                            id +
+                            " must be positive, got: " +
+                            cost
+                    );
+                }
+                yield new ServiceField(id, cost);
             }
             case "lucky", "l" -> {
                 if (!scanner.hasNextInt()) {
@@ -31,7 +52,16 @@ public class FieldFactory {
                             " requires an integer reward."
                     );
                 }
-                yield new LuckyField(id, scanner.nextInt());
+                int reward = scanner.nextInt();
+                if (reward <= 0) {
+                    throw new InvalidInputException(
+                        "Lucky field reward at index " +
+                            id +
+                            " must be positive, got: " +
+                            reward
+                    );
+                }
+                yield new LuckyField(id, reward);
             }
             default -> throw new InvalidInputException(
                 "Unknown field type: " + type

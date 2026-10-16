@@ -3,65 +3,73 @@
 #include <vector>
 
 /// Singly linked list node.
-struct SNode { int num; SNode* next; };
+struct SNode {
+  int num;
+  SNode* next;
+};
 
 /// Doubly linked list node.
-struct DNode { int num; DNode* next; DNode* prev; };
+struct DNode {
+  int num;
+  DNode* next;
+  DNode* prev;
+};
 
-/**
- * Build a singly linked list with a dummy header node (H1L).
- * @param vals  element values, in list order
- * @return pointer to the header node. `head->num` is unused;
- *         the first real element is `head->next`.
- *         Caller owns the list — release with freeSList.
- */
-SNode* makeSList(const std::vector<int>& vals);
+/// Singly linked list with a dummy header node.
+/// First element: `header()->next`. Destructor frees all nodes.
+///
+///     SList list({4, 1, 7});   // linear
+///     SList circ(vals, true);  // circular: tail links back to header
+class SList {
+public:
+  /// Build from `vals` in order; `circular` links tail back to header.
+  SList(const std::vector<int>& vals, bool circular = false);
 
-/**
- * Build a doubly linked list with a dummy header node.
- * Same ownership and header conventions as makeSList.
- * Release with freeDList.
- */
-DNode* makeDList(const std::vector<int>& vals);
+  /// Free all nodes.
+  ~SList();
 
-/**
- * Build a circular singly linked list: the last node's `next`
- * points back to the header (so `head` is also the loop's end marker).
- * Release with freeCSList.
- */
-SNode* makeCSList(const std::vector<int>& vals);
+  // Owning lists can't be copied (would double-free).
+  SList(const SList&) = delete;
+  SList& operator=(const SList&) = delete;
 
-/**
- * Build a circular doubly linked list: `tail->next == head`
- * and `head->prev == tail`. Release with freeCDList.
- */
-DNode* makeCDList(const std::vector<int>& vals);
+  /// The dummy header node.
+  SNode* header() const { return head; }
 
-/// Free a linear singly linked list, header included.
-void freeSList(SNode* head);
+  /// First real element, or nullptr if empty.
+  SNode* first() const { return head->next; }
 
-/// Free a linear doubly linked list, header included.
-void freeDList(DNode* head);
+  /// Print elements space-separated.
+  void print() const;
 
-/// Free a circular singly linked list built by makeCSList.
-void freeCSList(SNode* head);
+private:
+  SNode* head;
+};
 
-/// Free a circular doubly linked list built by makeCDList.
-void freeCDList(DNode* head);
+/// Doubly linked list with a dummy header node.
+/// Same API as SList; in circular mode `header()->prev` is the tail.
+class DList {
+public:
+  /// Build from `vals` in order; `circular` links tail back to header.
+  DList(const std::vector<int>& vals, bool circular = false);
 
-/**
- * Print the elements after the header, space-separated.
- * Stops at nullptr or back at the header, so it works for
- * both linear and circular singly linked lists.
- */
-void printSList(const SNode* head);
+  /// Free all nodes.
+  ~DList();
 
-/// Like printSList, for doubly linked lists.
-void printDList(const DNode* head);
+  DList(const DList&) = delete;
+  DList& operator=(const DList&) = delete;
 
-/**
- * Generate n random ints in [lo, hi].
- * Feed the result straight into any make* function:
- * `makeSList(randomInts(10))`.
- */
+  /// The dummy header node.
+  DNode* header() const { return head; }
+
+  /// First real element, or nullptr if empty.
+  DNode* first() const { return head->next; }
+
+  /// Print elements space-separated.
+  void print() const;
+
+private:
+  DNode* head;
+};
+
+/// `n` random ints in `[lo, hi]`: `SList list(randomInts(10))`.
 std::vector<int> randomInts(int n, int lo = -100, int hi = 100);

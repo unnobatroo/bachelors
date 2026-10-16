@@ -29,21 +29,36 @@ public class PropertyField extends Field {
 
     @Override
     public void apply(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        if (!player.isAlive()) return;
+
         if (owner == null) {
-            if (player.wantsToBuyProperty(BUY_PRICE)) {
+            if (
+                player.getMoney() >= BUY_PRICE &&
+                player.wantsToBuyProperty(BUY_PRICE)
+            ) {
                 player.pay(BUY_PRICE);
                 this.owner = player;
                 player.addProperty(this);
             }
         } else if (owner == player) {
-            if (!hasHouse && player.wantsToBuildHouse(HOUSE_PRICE)) {
+            if (
+                !hasHouse &&
+                player.getMoney() >= HOUSE_PRICE &&
+                player.wantsToBuildHouse(HOUSE_PRICE)
+            ) {
                 player.pay(HOUSE_PRICE);
                 this.hasHouse = true;
             }
         } else {
             int rent = hasHouse ? HOUSE_RENT : BASE_RENT;
             if (player.getMoney() < rent) {
-                owner.receiveMoney(player.getMoney());
+                int remaining = player.getMoney();
+                if (remaining > 0) {
+                    owner.receiveMoney(remaining);
+                }
                 player.eliminate();
             } else {
                 player.pay(rent);

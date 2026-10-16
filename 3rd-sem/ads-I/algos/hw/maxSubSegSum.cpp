@@ -1,28 +1,34 @@
 #include <algorithm>
 #include <chrono>
 #include <climits>
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 
 #include "lib/lists.h"
 
-// - Kadane's algorithm.
-// - Empty input returns 0; otherwise the best segment may be all-negative.
+/// Largest sum of a non-empty contiguous segment (Kadane's).
+/// One pass, O(n)/O(1). Empty -> 0; all-negative -> max element.
 long long maxSubArray(const std::vector<int>& nums) {
   long long best = LLONG_MIN;
   long long curr = 0;
 
   for (int v : nums) {
     long long value = v;
-    curr = std::max(value, curr + value);  // extend or restart the segment
+    curr = std::max(value, curr + value);
     best = std::max(best, curr);
   }
 
   return nums.empty() ? 0 : best;
 }
 
-int main() {
-  const int n = 1'000'000;
+// Usage: ./maxSubSegSum <n> — runs on n random ints and prints the time.
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    return 1;
+  }
+
+  int n = std::atoi(argv[1]);
   auto data = randomInts(n);
 
   auto t0 = std::chrono::steady_clock::now();

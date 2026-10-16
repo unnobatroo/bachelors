@@ -5,6 +5,7 @@ import capitaly.factory.PlayerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Scanner;
 
 public class TestRunner {
@@ -42,6 +43,43 @@ public class TestRunner {
         }
     }
 
+    private static void assertThrows(
+        String testName,
+        Class<? extends Throwable> expectedType,
+        ThrowingRunnable action
+    ) {
+        try {
+            action.run();
+            System.err.println(
+                "[FAIL] " +
+                    testName +
+                    " - expected exception: " +
+                    expectedType.getSimpleName() +
+                    ", but none was thrown"
+            );
+            failed++;
+        } catch (Throwable t) {
+            if (expectedType.isInstance(t)) {
+                assertTrue(testName, true);
+            } else {
+                System.err.println(
+                    "[FAIL] " +
+                        testName +
+                        " - expected: " +
+                        expectedType.getSimpleName() +
+                        ", got: " +
+                        t.getClass().getSimpleName()
+                );
+                failed++;
+            }
+        }
+    }
+
+    @FunctionalInterface
+    private interface ThrowingRunnable {
+        void run() throws Exception;
+    }
+
     public static void main(String[] args) {
         System.out.println("Running Capitaly test suite...\n");
 
@@ -54,6 +92,7 @@ public class TestRunner {
         testPropertyFieldPurchaseAndRent();
         testPropertyFieldHouseAndElimination();
         testCyclicMovement();
+        testAlgebraicAndExceptionGuards();
         testGameLoaderValid();
         testGameLoaderInvalid();
         testFullSimulationScenario();
@@ -219,6 +258,11 @@ public class TestRunner {
             "unaffordable service bankrupts the player",
             !player.isAlive()
         );
+        assertEquals(
+            "bankrupt player balance is zeroed out",
+            0,
+            player.getMoney()
+        );
     }
 
     private static void testPropertyFieldPurchaseAndRent() {
@@ -250,6 +294,11 @@ public class TestRunner {
         prop.apply(visitor);
         assertTrue("visitor bankrupt on unaffordable rent", !visitor.isAlive());
         assertEquals(
+            "visitor balance zeroed on bankruptcy",
+            0,
+            visitor.getMoney()
+        );
+        assertEquals(
             "owner collects the remaining 1000",
             6000,
             owner.getMoney()
@@ -262,6 +311,66 @@ public class TestRunner {
         assertEquals("moves 3 fields", 3, player.getPosition());
         player.move(4, 5);
         assertEquals("wraps around: (3+4) % 5 = 2", 2, player.getPosition());
+    }
+
+    private static void testAlgebraicAndExceptionGuards() {
+        Player player = new GreedyPlayer("GuardTester");
+
+        assertThrows(
+            "negative payment throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> player.pay(-100)
+        );
+        assertThrows(
+            "overpayment throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> player.pay(20_000)
+        );
+        assertThrows(
+            "negative receiveMoney throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> player.receiveMoney(-50)
+        );
+        assertThrows(
+            "non-positive move steps throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> player.move(0, 5)
+        );
+        assertThrows(
+            "non-positive board size throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> player.move(2, 0)
+        );
+        assertThrows(
+            "negative ServiceField cost throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> new ServiceField(1, -200)
+        );
+        assertThrows(
+            "negative LuckyField reward throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> new LuckyField(1, 0)
+        );
+        assertThrows(
+            "empty Dice.fromList throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> Dice.fromList(List.of())
+        );
+        assertThrows(
+            "out-of-range Dice.fromList throws IllegalArgumentException",
+            IllegalArgumentException.class,
+            () -> Dice.fromList(List.of(1, 7))
+        );
+        assertThrows(
+            "factory rejects negative Service cost with InvalidInputException",
+            InvalidInputException.class,
+            () -> FieldFactory.createField(1, "Service", new Scanner("-100"))
+        );
+        assertThrows(
+            "factory rejects zero Lucky reward with InvalidInputException",
+            InvalidInputException.class,
+            () -> FieldFactory.createField(1, "Lucky", new Scanner("0"))
+        );
     }
 
     private static void testGameLoaderValid() {
@@ -278,14 +387,11 @@ public class TestRunner {
     }
 
     private static void testGameLoaderInvalid() {
-        boolean caught = false;
-        try {
-            GameLoader.loadFromFile("non_existent_file.txt");
-        } catch (FileNotFoundException e) {
-            caught = true;
-        } catch (Exception ignored) {
-        }
-        assertTrue("missing file -> FileNotFoundException", caught);
+        assertThrows(
+            "missing file -> FileNotFoundException",
+            FileNotFoundException.class,
+            () -> GameLoader.loadFromFile("non_existent_file.txt")
+        );
 
         try {
             File temp = File.createTempFile("bad_game", ".txt");
@@ -294,13 +400,31 @@ public class TestRunner {
                 temp.toPath(),
                 "2\nUnknownField\nProperty\n1\nP Greedy"
             );
-            caught = false;
-            try {
-                GameLoader.loadFromFile(temp.getAbsolutePath());
-            } catch (InvalidInputException e) {
-                caught = true;
-            }
-            assertTrue("unknown field type -> InvalidInputException", caught);
+            assertThrows(
+                "unknown field type -> InvalidInputException",
+                InvalidInputException.class,
+                () -> GameLoader.loadFromFile(temp.getAbsolutePath())
+            );
+
+            Files.writeString(
+                temp.toPath(),
+                "1\nProperty\n1\nP Greedy\n1 2 invalid_token"
+            );
+            assertThrows(
+                "non-integer dice roll -> InvalidInputException",
+                InvalidInputException.class,
+                () -> GameLoader.loadFromFile(temp.getAbsolutePath())
+            );
+
+            Files.writeString(
+                temp.toPath(),
+                "1\nProperty\n1\nP Greedy\n1 9"
+            );
+            assertThrows(
+                "out-of-range dice roll (9) -> InvalidInputException",
+                InvalidInputException.class,
+                () -> GameLoader.loadFromFile(temp.getAbsolutePath())
+            );
         } catch (Exception e) {
             assertTrue("temp file setup failed", false);
         }

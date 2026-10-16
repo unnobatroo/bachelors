@@ -10,6 +10,13 @@ public class PlayerFactory {
 
     public static Player createPlayer(String name, String strategyType)
         throws InvalidInputException {
+        if (name == null || name.isBlank()) {
+            throw new InvalidInputException("Player name cannot be empty.");
+        }
+        if (strategyType == null || strategyType.isBlank()) {
+            throw new InvalidInputException("Player strategy cannot be empty.");
+        }
+
         return switch (strategyType.toLowerCase()) {
             case "greedy", "g" -> new GreedyPlayer(name);
             case "careful", "c" -> new CarefulPlayer(name);

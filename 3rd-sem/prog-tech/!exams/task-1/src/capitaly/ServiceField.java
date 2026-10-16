@@ -6,6 +6,11 @@ public class ServiceField extends Field {
 
     public ServiceField(int id, int cost) {
         super(id);
+        if (cost <= 0) {
+            throw new IllegalArgumentException(
+                "Service field cost must be positive, got: " + cost
+            );
+        }
         this.cost = cost;
     }
 
@@ -15,6 +20,11 @@ public class ServiceField extends Field {
 
     @Override
     public void apply(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        if (!player.isAlive()) return;
+
         if (player.getMoney() < cost) {
             player.eliminate();
         } else {

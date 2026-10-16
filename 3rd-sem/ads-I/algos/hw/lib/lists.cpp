@@ -3,70 +3,22 @@
 #include <iostream>
 #include <random>
 
-SNode* makeSList(const std::vector<int>& vals) {
-  SNode* head = new SNode{0, nullptr};
+SList::SList(const std::vector<int>& vals, bool circular) {
+  head = new SNode{0, nullptr};
   SNode* tail = head;
   for (int v : vals) {
     tail->next = new SNode{v, nullptr};
     tail = tail->next;
   }
-  return head;
-}
-
-DNode* makeDList(const std::vector<int>& vals) {
-  DNode* head = new DNode{0, nullptr, nullptr};
-  DNode* tail = head;
-  for (int v : vals) {
-    tail->next = new DNode{v, nullptr, tail};
-    tail = tail->next;
-  }
-  return head;
-}
-
-SNode* makeCSList(const std::vector<int>& vals) {
-  SNode* head = new SNode{0, nullptr};
-  SNode* tail = head;
-  for (int v : vals) {
-    tail->next = new SNode{v, nullptr};
-    tail = tail->next;
-  }
-  tail->next = head;  // close the loop
-  return head;
-}
-
-DNode* makeCDList(const std::vector<int>& vals) {
-  DNode* head = new DNode{0, nullptr, nullptr};
-  DNode* tail = head;
-  for (int v : vals) {
-    tail->next = new DNode{v, nullptr, tail};
-    tail = tail->next;
-  }
-  tail->next = head;  // close the loop both ways
-  head->prev = tail;
-  return head;
-}
-
-void freeSList(SNode* head) {
-  while (head) {
-    SNode* next = head->next;
-    delete head;
-    head = next;
+  if (circular) {
+    tail->next = head;  // close the loop
   }
 }
 
-void freeDList(DNode* head) {
-  while (head) {
-    DNode* next = head->next;
-    delete head;
-    head = next;
-  }
-}
-
-// Circular frees: delete every node after the header, then the header.
-
-void freeCSList(SNode* head) {
+// One loop covers both kinds: linear ends at nullptr, circular back at head.
+SList::~SList() {
   SNode* c = head->next;
-  while (c != head) {
+  while (c != nullptr && c != head) {
     SNode* next = c->next;
     delete c;
     c = next;
@@ -74,9 +26,29 @@ void freeCSList(SNode* head) {
   delete head;
 }
 
-void freeCDList(DNode* head) {
+void SList::print() const {
+  for (const SNode* c = first(); c != nullptr && c != head; c = c->next) {
+    std::cout << c->num << ' ';
+  }
+  std::cout << '\n';
+}
+
+DList::DList(const std::vector<int>& vals, bool circular) {
+  head = new DNode{0, nullptr, nullptr};
+  DNode* tail = head;
+  for (int v : vals) {
+    tail->next = new DNode{v, nullptr, tail};
+    tail = tail->next;
+  }
+  if (circular) {
+    tail->next = head;  // close the loop both ways
+    head->prev = tail;
+  }
+}
+
+DList::~DList() {
   DNode* c = head->next;
-  while (c != head) {
+  while (c != nullptr && c != head) {
     DNode* next = c->next;
     delete c;
     c = next;
@@ -84,15 +56,8 @@ void freeCDList(DNode* head) {
   delete head;
 }
 
-void printSList(const SNode* head) {
-  for (const SNode* c = head->next; c && c != head; c = c->next) {
-    std::cout << c->num << ' ';
-  }
-  std::cout << '\n';
-}
-
-void printDList(const DNode* head) {
-  for (const DNode* c = head->next; c && c != head; c = c->next) {
+void DList::print() const {
+  for (const DNode* c = first(); c != nullptr && c != head; c = c->next) {
     std::cout << c->num << ' ';
   }
   std::cout << '\n';
