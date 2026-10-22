@@ -1,23 +1,23 @@
-# Build artifacts
+# OS
+.DS_Store
+
+# IDEs & Editors
+.idea/
+.vscode/
+*.iml
+
+# AI / Agent workspaces
+.agent-vault/
+.codex-vault/
+.agents/
+.gemini/
+
+# C / C++ / Native build artifacts
 a.out
 *.exe
 *.o
+*.so
 *.dSYM/
-
-# .NET build output
-bin/
-obj/
-
-# Python
-__pycache__/
-*.pyc
-
-# IDEs
-.idea/
-.vscode/
-
-# macOS
-.DS_Store
 
 # Ad-hoc compiled binaries (no file extension)
 matrix_program
@@ -29,9 +29,33 @@ read-file-from-user
 while
 apphost
 
+# Java / .NET / Build outputs
+*.class
+bin/
+obj/
+out/
+target/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.ipynb_checkpoints/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
 # R project state
 .Rproj.user
-/3rd-sem/cloud-native-architectures-2026-autumn/
 
-# Java
-*.class
+# Logs
+*.log
+
+# Independent nested course repositories
+/3rd-sem/cloud/
+/3rd-sem/cloud-native-architectures-2026-autumn/

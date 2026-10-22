@@ -1,17 +1,19 @@
 // ==========================================
-// TASK 1: Array Methods
+// TASK 1.a
 // ==========================================
-
-// 1.a: Map each number to its square
 const numbers = [5, 2, 15, -3, 6, -8, -2];
 const squares = numbers.map((x) => x ** 2);
-console.log("1.a Squares:", squares);
+console.log(squares);
 
-// 1.b: Find the smallest element using Infinity
+// ==========================================
+// TASK 1.b
+// ==========================================
 const smallest = numbers.reduce((min, x) => Math.min(min, x), Infinity);
-console.log("1.b Smallest:", smallest);
+console.log(smallest);
 
-// 1.c: Find row index full of 0s (-1 if none)
+// ==========================================
+// TASK 1.c
+// ==========================================
 const matrix = [
   [1, 0, 3],
   [0, 2, 0],
@@ -19,9 +21,11 @@ const matrix = [
   [0, 0, 0],
 ];
 const zeroRowIdx = matrix.findIndex((row) => row.every((x) => x === 0));
-console.log("1.c Zero row index:", zeroRowIdx);
+console.log(zeroRowIdx);
 
-// 1.d: Extract imdbID for movies made after 2010
+// ==========================================
+// TASK 1.d
+// ==========================================
 const searchResults = {
   Search: [
     {
@@ -73,71 +77,80 @@ const searchResults = {
   totalResults: "51",
   Response: "True",
 };
-
 const post2010Movies = searchResults.Search.filter(
-  (item) => Number(item.Year) > 2010 && item.Type === "movie",
-).map((item) => item.imdbID);
-
-console.log("1.d Post-2010 movie IDs:", post2010Movies);
+  (x) => Number(x.Year) > 2010 && x.Type === "movie",
+).map((x) => x.imdbID);
+console.log(post2010Movies);
 
 // ==========================================
-// TASKS 2 & 3: DOM Tasks (Browser only)
+// TASKS 2 & 3 (Browser DOM environment)
 // ==========================================
 if (typeof document !== "undefined") {
-  // ------------------------------------------
-  // TASK 2: Color Sliders
-  // ------------------------------------------
+  // ==========================================
+  // TASK 2.a
+  // ==========================================
   const sliders = document.querySelectorAll('input[type="range"]');
-  const [hueInput, satInput, lightInput] = sliders;
+  const [hue, sat, light] = sliders;
   const colorBtn = document.querySelector('button[type="button"]');
   const hslInput = document.querySelector('input[type="text"][readonly]');
 
-  function getHslColor() {
-    return `hsl(${hueInput.value}, ${satInput.value}%, ${lightInput.value}%)`;
-  }
-
-  // 2.a & 2.b: Set text & background color on button click
   colorBtn.addEventListener("click", () => {
-    const hsl = getHslColor();
-    hslInput.value = hsl; // 2.a
-    document.body.style.backgroundColor = hsl; // 2.b
+    hslInput.value = `hsl(${hue.value}, ${sat.value}%, ${light.value}%)`;
   });
 
-  // 2.c: Immediately change background on slider movement
+  // ==========================================
+  // TASK 2.b
+  // ==========================================
+  colorBtn.addEventListener("click", () => {
+    document.body.style.backgroundColor = `hsl(${hue.value}, ${sat.value}%, ${light.value}%)`;
+  });
+
+  // ==========================================
+  // TASK 2.c
+  // ==========================================
   sliders.forEach((slider) => {
     slider.addEventListener("input", () => {
-      const hsl = getHslColor();
-      hslInput.value = hsl;
-      document.body.style.backgroundColor = hsl;
+      document.body.style.backgroundColor = `hsl(${hue.value}, ${sat.value}%, ${light.value}%)`;
     });
   });
 
-  // ------------------------------------------
-  // TASK 3: Contact List (Single Event Handler)
-  // ------------------------------------------
-  const contactsContainer = document.querySelector("#contacts");
+  // ==========================================
+  // TASK 3.a
+  // ==========================================
+  const contacts = document.querySelector("#contacts");
 
-  contactsContainer.addEventListener("click", (e) => {
-    // 3.b guard: If click wasn't on a button, do nothing
-    if (!e.target.matches("button")) return;
+  contacts.addEventListener("click", (e) => {
+    if (e.target.matches("button")) {
+      console.log(e.target.innerText, e.target.dataset.toggle);
+    }
+  });
 
-    const btn = e.target;
-    const section = btn.closest("section");
+  // ==========================================
+  // TASK 3.b
+  // ==========================================
+  contacts.addEventListener("click", (e) => {
+    if (e.target.matches("button")) {
+      const name = e.target.closest("section").querySelector(".name").innerText;
+      console.log(name);
+    }
+  });
 
-    // 3.a: Log button label and data-toggle attribute
-    console.log(
-      `Label: "${btn.innerText}", data-toggle: "${btn.dataset.toggle}"`,
-    );
+  // ==========================================
+  // TASK 3.c
+  // ==========================================
+  contacts.addEventListener("click", (e) => {
+    if (e.target.matches("button")) {
+      e.target.closest("section").querySelector(".email").hidden = false;
+    }
+  });
 
-    // 3.b: Log the contact name
-    const contactName = section.querySelector(".name").innerText;
-    console.log(`Contact: ${contactName}`);
-
-    // 3.c & 3.d: Show field matching data-toggle (email, address, phone)
-    const fieldClass = btn.dataset.toggle;
-    const fieldElement = section.querySelector(`.${fieldClass}`);
-    if (fieldElement) {
-      fieldElement.hidden = false;
+  // ==========================================
+  // TASK 3.d
+  // ==========================================
+  contacts.addEventListener("click", (e) => {
+    if (e.target.matches("button")) {
+      const field = e.target.dataset.toggle;
+      e.target.closest("section").querySelector(`.${field}`).hidden = false;
     }
   });
 }
