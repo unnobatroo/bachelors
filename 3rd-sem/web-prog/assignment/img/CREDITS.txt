@@ -1,0 +1,6 @@
+Pixel-art assets (all CC0 / public domain):
+
+- grass.png, wall.png — Kenney "Tiny Town" tileset (tiles 1, 126)
+  https://kenney.nl/assets/tiny-town — License: CC0-1.0
+- house.png — "Pixel Brick House" by GrumpyDiamond, OpenGameArt
+  https://opengameart.org/content/pixel-brick-house — License: CC0-1.0

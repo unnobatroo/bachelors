@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lands of the Nameless King</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="js/levels.js" defer></script>
+        <script src="js/board.js" defer></script>
+        <script src="js/validator.js" defer></script>
+        <script src="js/storage.js" defer></script>
+        <script src="js/timer.js" defer></script>
+        <script src="js/view.js" defer></script>
+        <script src="js/game.js" defer></script>
+        <script src="js/app.js" defer></script>
+    </head>
+    <body>
+        <!-- start screen -->
+        <section id="screen-start" class="screen">
+            <div class="panel start-panel">
+                <h1 class="game-title">Lands of the<br />Nameless King</h1>
+                <p class="subtitle">
+                    Divide the land fairly among the villagers.
+                </p>
+
+                <form id="start-form" novalidate>
+                    <label class="field">
+                        <span class="field-label">Your name</span>
+                        <input
+                            type="text"
+                            id="player-name"
+                            maxlength="24"
+                            autocomplete="off"
+                            placeholder="e.g. Cleverton"
+                            required
+                        />
+                    </label>
+                    <p id="name-error" class="form-error" role="alert" hidden>
+                        Please enter your name to play.
+                    </p>
+
+                    <fieldset class="level-picker">
+                        <legend>Choose a level</legend>
+                        <div id="level-options" class="level-options">
+                            <!-- filled by js -->
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-primary">
+                        Start Game
+                    </button>
+                    <button type="button" id="btn-rules" class="btn">
+                        How to play
+                    </button>
+                </form>
+
+                <div class="start-columns">
+                    <div class="start-box">
+                        <h2>Saved games</h2>
+                        <ul id="save-list" class="save-list">
+                            <!-- filled by js -->
+                        </ul>
+                        <p id="no-saves" class="muted">No saved games yet.</p>
+                    </div>
+                    <div class="start-box">
+                        <h2>King's Book of Glory</h2>
+                        <div id="leaderboards"><!-- filled by js --></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- rules -->
+            <div
+                id="rules-overlay"
+                class="overlay"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Game rules"
+                hidden
+            >
+                <div class="panel overlay-panel">
+                    <h2>Game rules</h2>
+                    <ul class="rules-list">
+                        <li>
+                            Every house must own exactly as many connected cells
+                            as the number on it (the house cell counts too).
+                        </li>
+                        <li>
+                            Property cells connect horizontally and vertically —
+                            diagonal contact does not count.
+                        </li>
+                        <li>A property may contain exactly one house.</li>
+                        <li>
+                            Two different properties may never touch
+                            horizontally or vertically — walls must separate
+                            them. They may touch diagonally.
+                        </li>
+                        <li>
+                            All wall cells must form a single connected network.
+                        </li>
+                        <li>Walls may never fill a whole 2×2 block.</li>
+                    </ul>
+                    <h2>Controls</h2>
+                    <ul class="rules-list">
+                        <li>
+                            <b>Left-click</b> — build / remove a wall. Hold and
+                            drag to paint several cells.
+                        </li>
+                        <li>
+                            <b>Right-click</b> — mark a cell as wall-free
+                            property (or remove the mark).
+                        </li>
+                        <li>Cells with houses cannot be changed.</li>
+                    </ul>
+                    <button
+                        type="button"
+                        id="btn-rules-close"
+                        class="btn btn-primary"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- game screen -->
+        <section id="screen-game" class="screen" hidden>
+            <div class="panel game-panel">
+                <header class="hud">
+                    <div class="hud-item">
+                        <span class="hud-label">Player</span
+                        ><span id="hud-player">–</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">Level</span
+                        ><span id="hud-level">–</span>
+                    </div>
+                    <div class="hud-item">
+                        <span class="hud-label">Time</span
+                        ><span id="hud-time">0:00</span>
+                    </div>
+                    <div class="hud-actions">
+                        <button type="button" id="btn-save" class="btn">
+                            Save game
+                        </button>
+                        <button type="button" id="btn-menu" class="btn">
+                            Main menu
+                        </button>
+                    </div>
+                </header>
+
+                <p
+                    id="save-feedback"
+                    class="save-feedback"
+                    role="status"
+                    hidden
+                >
+                    Game saved.
+                </p>
+                <div
+                    id="board"
+                    class="board"
+                    role="group"
+                    aria-label="Puzzle board"
+                >
+                    <!-- filled by js -->
+                </div>
+
+                <div class="legend">
+                    <span
+                        ><i
+                            aria-hidden="true"
+                            class="swatch swatch-undecided"
+                        ></i
+                        >Undecided</span
+                    >
+                    <span
+                        ><i aria-hidden="true" class="swatch swatch-marked"></i
+                        >Property</span
+                    >
+                    <span
+                        ><i aria-hidden="true" class="swatch swatch-wall"></i
+                        >Wall</span
+                    >
+                    <span
+                        ><i aria-hidden="true" class="swatch swatch-error"></i
+                        >Error</span
+                    >
+                </div>
+            </div>
+
+            <!-- victory -->
+            <div
+                id="victory-overlay"
+                class="overlay"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Victory"
+                hidden
+            >
+                <div class="panel overlay-panel victory-panel">
+                    <h2>The land is divided!</h2>
+                    <p id="victory-text"></p>
+                    <button
+                        type="button"
+                        id="btn-victory-menu"
+                        class="btn btn-primary"
+                    >
+                        Back to main menu
+                    </button>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
