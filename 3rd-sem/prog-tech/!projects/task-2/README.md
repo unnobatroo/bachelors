@@ -1,7 +1,5 @@
 # Pebble Game
 
-## Task
-
 Two-player board game played on an $n \times n$ grid:
 
 - At the start of a match, $n$ white and $n$ black pebbles are placed on the board at random positions. White goes first.
@@ -13,7 +11,16 @@ Two-player board game played on an $n \times n$ grid:
   - $6 \times 6 \rightarrow 30$ turns ($5n$)
 - The match ends after $5n$ turns (or immediately if a player loses all of their pebbles). Whoever has more pebbles left on the board wins; equal pebble counts result in a draw. A message dialog announces the result and a new game starts automatically.
 
-## Architecture (Model vs. View)
+## Build and Run
+
+```bash
+./run.sh          # Compiles & launches the Swing GUI
+./run.sh test     # Compiles & runs the automated test suite (5656 checks)
+./run.sh build    # Compiles all classes into bin/ with -Xlint:all
+./run.sh clean    # Removes bin/
+```
+
+## Architecture
 
 The project is split into two halves inside the `pebble` package:
 
@@ -30,13 +37,13 @@ The project is split into two halves inside the `pebble` package:
    - `PebbleGUI` — `JFrame` window that wires mouse clicks, keyboard shortcuts, board size dropdown, and the end-of-game popup to `PebbleGame`.
    - `Main` — starts `PebbleGUI` on the Swing Event Dispatch Thread (`SwingUtilities.invokeLater`).
 
-## How the Core Logic Works
+## Logic
 
-### 1. Random Setup (`Board(int size, Random rng)`)
+### 1. Random setup `Board(int size, Random rng)`
 
 Creates a list of all $n^2$ coordinates, calls `Collections.shuffle(spots, rng)`, and puts `WHITE` on the first $n$ coordinates and `BLACK` on the next $n$ coordinates so $n$ white and $n$ black pebbles never overlap. A second constructor `Board(Cell[][] src)` accepts a fixed grid for deterministic tests.
 
-### 2. Chain-Push Mechanics (`Board.pushChain(Position start, Direction dir)`)
+### 2. Chain mechanics `Board.pushChain(Position start, Direction dir)`
 
 When a pebble at `start` moves in `dir`, it pushes any contiguous line of pebbles directly in front of it, stopping at the first `EMPTY` square (or the board edge):
 
@@ -73,13 +80,13 @@ When a pebble at `start` moves in `dir`, it pushes any contiguous line of pebble
    ```
    Copying backwards (`end <- end-1 <- ... <- start`) shifts every pebble 1 step forward without overwriting anything, then clears `start` to `EMPTY`.
 
-### 3. Turn & Win Rules (`PebbleGame`)
+### 3. Rules `PebbleGame`
 
 - **Selection (`canSelect` / `select`)**: A player can only select a cell if `!isGameOver()` and `board.get(pos) == currentPlayer`.
 - **Executing a Move (`move(Position start, Direction dir)`)**: Checks `canSelect(start)` and `board.inBounds(start.step(dir))` (so a player on the border cannot accidentally push their own pebble straight off the board into nothing when pressing an arrow key; only pushed neighbours at the end of a chain fall off). Then it runs `board.pushChain(start, dir)`, clears `selected`, increments `turnsPlayed`, and flips `currentPlayer = currentPlayer.opposite()`.
 - **Game Over & Winner (`isGameOver()`, `winner()`)**: Ends when `turnsPlayed >= maxTurns` ($5n$) or when either player hits `0` pebbles. Compares `count(Cell.WHITE)` vs `count(Cell.BLACK)` and returns `WHITE`, `BLACK`, or `EMPTY` (draw).
 
-### 4. Swing GUI & Event Flow (`PebbleGUI` & `CellButton`)
+### 4.GUI `PebbleGUI` & `CellButton`
 
 - **Window Sizing (`pack()`)**: In `startNewGame(BoardSize preset)`, an $n \times n$ `GridLayout` of `CellButton`s (each `84x84` px preferred size) is placed into `boardContainer` followed by `pack()`, resizing the `JFrame` tightly around $3\times 3$, $4\times 4$, or $6\times 6$ every time.
 - **Two Ways to Move a Pebble**:
@@ -215,67 +222,6 @@ classDiagram
     TestRunner ..> PebbleGame
 ```
 
-## Methods Overview
-
-| Class        | Method                                   | Description                                                                                                                         |
-| ------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `Cell`       | `opposite()`                             | Flips `WHITE` $\leftrightarrow$ `BLACK`, leaves `EMPTY` as `EMPTY`.                                                                 |
-| `Direction`  | `fromDelta(dr, dc)`                      | Maps a 1-step orthogonal `(dr, dc)` offset to its `Direction`, or `null`.                                                           |
-| `BoardSize`  | `maxTurns()`                             | Returns $5n$ turns for board dimension $n$.                                                                                         |
-| `Position`   | `step(dir)`                              | Returns the neighboring coordinate one step in `dir`.                                                                               |
-| `Position`   | `directionTo(target)`                    | Returns the orthogonal `Direction` to `target` if adjacent, else `null`.                                                            |
-| `Board`      | `inBounds(...)`                          | Checks whether coordinates lie inside $[0, n) \times [0, n)$.                                                                       |
-| `Board`      | `pushChain(start, dir)`                  | Shifts the contiguous line of pebbles from `start` one step in `dir`; drops the tail pebble if pushed off the edge.                 |
-| `Board`      | `count(color)`                           | Counts pebbles of `color` remaining on the board.                                                                                   |
-| `PebbleGame` | `canSelect(pos)`                         | True when the game is running and `pos` holds the current player's pebble.                                                          |
-| `PebbleGame` | `select(pos)` / `clearSelection()`       | Sets or clears the selected pebble coordinate.                                                                                      |
-| `PebbleGame` | `move(start, dir)` / `moveSelected(dir)` | Validates the step, calls `Board.pushChain`, increments turns, and flips the active player.                                         |
-| `PebbleGame` | `isGameOver()`                           | True when `turnsPlayed >= maxTurns` ($5n$) or either color reaches `0` pebbles.                                                     |
-| `PebbleGame` | `winner()`                               | Returns the color with more pebbles on the board, or `Cell.EMPTY` on a draw.                                                        |
-| `CellButton` | `sync(state, selected, target)`          | Updates tile state/highlights from the model and repaints.                                                                          |
-| `CellButton` | `paintComponent(g)`                      | Draws the checkerboard tile, highlight border, and pebble disc.                                                                     |
-| `PebbleGUI`  | `startNewGame(preset)`                   | Rebuilds the $n \times n$ `CellButton` grid and calls `pack()` so the window fits the board.                                        |
-| `PebbleGUI`  | `onCellClick(clicked)`                   | Deselects on re-click, pushes if `clicked` is adjacent to the selected pebble, or selects a pebble.                                 |
-| `PebbleGUI`  | `tryMove(dir)`                           | Runs `game.moveSelected(dir)`, refreshes the UI, and shows the `JOptionPane` winner/draw dialog + auto-restarts when the game ends. |
-| `PebbleGUI`  | `refresh()`                              | Syncs all `CellButton` cells and the status label with `PebbleGame`.                                                                |
-
-| Class        | Method                                   | Description                                                                                                                         |
-| ------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `Cell`       | `opposite()`                             | Flips `WHITE` $\leftrightarrow$ `BLACK`, leaves `EMPTY` as `EMPTY`.                                                                 |
-| `Direction`  | `fromDelta(dr, dc)`                      | Maps a 1-step orthogonal `(dr, dc)` offset to its `Direction`, or `null`.                                                           |
-| `BoardSize`  | `maxTurns()`                             | Returns $5n$ turns for board dimension $n$.                                                                                         |
-| `Position`   | `step(dir)`                              | Returns the neighboring coordinate one step in `dir`.                                                                               |
-| `Position`   | `directionTo(target)`                    | Returns the orthogonal `Direction` to `target` if adjacent, else `null`.                                                            |
-| `Board`      | `inBounds(...)`                          | Checks whether coordinates lie inside $[0, n) \times [0, n)$.                                                                       |
-| `Board`      | `pushChain(start, dir)`                  | Shifts the contiguous line of pebbles from `start` one step in `dir`; drops the tail pebble if pushed off the edge.                 |
-| `Board`      | `count(color)`                           | Counts pebbles of `color` remaining on the board.                                                                                   |
-| `PebbleGame` | `canSelect(pos)`                         | True when the game is running and `pos` holds the current player's pebble.                                                          |
-| `PebbleGame` | `select(pos)` / `clearSelection()`       | Sets or clears the selected pebble coordinate.                                                                                      |
-| `PebbleGame` | `move(start, dir)` / `moveSelected(dir)` | Validates the step, calls `Board.pushChain`, increments turns, and flips the active player.                                         |
-| `PebbleGame` | `isGameOver()`                           | True when `turnsPlayed >= maxTurns` ($5n$) or either color reaches `0` pebbles.                                                     |
-| `PebbleGame` | `winner()`                               | Returns the color with more pebbles on the board, or `Cell.EMPTY` on a draw.                                                        |
-| `CellButton` | `sync(state, selected, target)`          | Updates tile state/highlights from the model and repaints.                                                                          |
-| `CellButton` | `paintComponent(g)`                      | Draws the checkerboard tile, highlight border, and pebble disc.                                                                     |
-| `PebbleGUI`  | `startNewGame(preset)`                   | Rebuilds the $n \times n$ `CellButton` grid and calls `pack()` so the window fits the board.                                        |
-| `PebbleGUI`  | `onCellClick(clicked)`                   | Deselects on re-click, pushes if `clicked` is adjacent to the selected pebble, or selects a pebble.                                 |
-| `PebbleGUI`  | `tryMove(dir)`                           | Runs `game.moveSelected(dir)`, refreshes the UI, and shows the `JOptionPane` winner/draw dialog + auto-restarts when the game ends. |
-| `PebbleGUI`  | `refresh()`                              | Syncs all `CellButton` cells and the status label with `PebbleGame`.                                                                |
-
-## Events and Event Handlers
-
-| Event Source                                    | Event                      | Handler in `PebbleGUI`    | Effect                                                                                                    |
-| ----------------------------------------------- | -------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `CellButton[r][c]`                              | `ActionEvent` (click)      | `onCellClick(pos)`        | Selects/deselects a pebble at `pos`, or pushes the selected pebble toward `pos` if orthogonally adjacent. |
-| Root pane key map (`W`/`A`/`S`/`D`, Arrow keys) | `KeyEvent` / `ActionEvent` | `tryMove(dir)`            | Pushes the selected pebble in `dir`.                                                                      |
-| `sizeBox` (`JComboBox<BoardSize>`)              | `ActionEvent`              | `startNewGame(chosen)`    | Starts a fresh game at $3\times 3$, $4\times 4$, or $6\times 6$ and resizes the window via `pack()`.      |
-| `New Game` button                               | `ActionEvent`              | `startNewGame(boardSize)` | Resets the board and turn counter at the current board size.                                              |
-| Event Source                                    | Event                      | Handler in `PebbleGUI`    | Effect                                                                                                    |
-| ---                                             | ---                        | ---                       | ---                                                                                                       |
-| `CellButton[r][c]`                              | `ActionEvent` (click)      | `onCellClick(pos)`        | Selects/deselects a pebble at `pos`, or pushes the selected pebble toward `pos` if orthogonally adjacent. |
-| Root pane key map (`W`/`A`/`S`/`D`, Arrow keys) | `KeyEvent` / `ActionEvent` | `tryMove(dir)`            | Pushes the selected pebble in `dir`.                                                                      |
-| `sizeBox` (`JComboBox<BoardSize>`)              | `ActionEvent`              | `startNewGame(chosen)`    | Starts a fresh game at $3\times 3$, $4\times 4$, or $6\times 6$ and resizes the window via `pack()`.      |
-| `New Game` button                               | `ActionEvent`              | `startNewGame(boardSize)` | Resets the board and turn counter at the current board size.                                              |
-
 ## Testing
 
 `TestRunner` runs 5656 checks across 44 test suites (including a 1,000-game / 21,565-move property-based stress test) and exits non-zero on failure:
@@ -288,12 +234,3 @@ classDiagram
 - `testMoveAndPushMechanics` — verifies pushing horizontal and vertical chains into an empty gap without moving pebbles beyond the gap, turn alternation, and pushing edge pebbles off the board.
 - `testRulesAndEndConditions` — verifies invalid move rejection (empty cell, opponent pebble, self-push off edge, null inputs), `select`/`moveSelected`, draw at `maxTurns`, early victory when the opponent loses their last pebble, and exception guards.
 - `testAlgebraicStressFuzz` — simulates 1,000 full games (`21,565` moves) across $3\times 3$, $4\times 4$, and $6\times 6$ boards, verifying on every move that off-ray cells and beyond-gap cells are untouched, contiguous chain cells shift by 1 step, pebble conservation/edge fall-off holds, and termination invariants match.
-
-## Build and Run
-
-```bash
-./run.sh          # Compiles & launches the Swing GUI
-./run.sh test     # Compiles & runs the automated test suite (5656 checks)
-./run.sh build    # Compiles all classes into bin/ with -Xlint:all
-./run.sh clean    # Removes bin/
-```

@@ -1,0 +1,83 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-2"></head><body>
+<h3>Barkóba</h3>
+Készítsünk egy barkóba alkalmazást. A szerver legyen képes kiszolgálni több klienst. A szerver válasszon egy egész számot 1..100 között véletlenszerűen. A kliensek próbálják kitalálni a számot.<br>
+<ul>
+	<li> A kliens logaritmikus keresés segítségével találja ki a gondolt számot. AZAZ a kliens NE a standard inputról dolgozzon.</li>
+	<li> Ha egy kliens kitalálta a számot, akkor a szerver minden újabb kliens üzenetre a "Vége" (V) üzenetet küldi, amire a kliensek kilépnek. </li>
+	<li> Nyertél (Y), Kiestél (K) és Vége (V) üzenet fogadása esetén a kliens bontja a kapcsolatot és terminál. Igen (I) / Nem (N) esetén folytatja a kérdezgetést.</li>
+	<li> A kommunikációhoz TCP-t használjunk!</li>
+	<li> A server a SELECT fv-t használja több kliens kiszolgálásához!!!!!</li>
+	<li> Ha a játék végetért, akkor minden kérésre a szerver válaszoljon, hogy "Vége" (V).</li>
+</ul>
+Üzenet formátum:
+<ul>
+	<li> Klienstől: <b>bináris formában</b> egy db karakter (c), 32 bites egész szám (i). (struct) Ne használjuk a byte sorrend módosító operátort a struct-ban! ('!')</li>
+	<ul>
+		<li> A karakter lehet: <b>&lt;</b>: kisebb-e, <b>&gt;</b>: nagyobb-e, <b>=</b>: egyenlő-e</li>
+		<li> pl: ('&gt;',10) //a szám nagyobb mint 10</li>
+	</ul>
+	<li> Szervertől: ugyanaz a <b>bináris formátum </b>, de a számnak nincs szerepe, bármi lehet (struct)</li>
+	<ul>
+		<li> A karakter lehet: <b>I</b>: Igen, <b>N</b>: Nem, <b>K</b>: Kiestél, <b>Y</b>: Nyertél, <b>V</b>: Vége</li>
+		<li> pl: ('V',0)</li>
+	</ul>
+</ul>
+<br>
+<b>Script paraméterezése</b>: <br>
+<ul>
+	<li> python3 client.py &lt; hostname &gt;  &lt; port szám &gt;   </li>
+	<ul>
+		<li> pl: python3 client.py localhost 10000</li>
+	</ul>
+	<li> python3 server.py &lt; hostname &gt; &lt; port szám &gt;   </li>
+	<ul>
+		<li> pl: python3 server.py localhost 10000</li>
+	</ul>
+</ul>
+<br>
+<br>
+Leadás: A program leadása a TMS rendszeren keresztül <b>.zip</b> formátumban, amiben egy <b>client.py</b> és egy <b>server.py</b> szerepeljen!<br>
+<br>
+
+<b>#####################################################################################################################</b><br>
+<h3>Question / Answer</h3>
+Let's make a question / answer application. The server should be able to serve several clients. The server should choose an integer between 1..100 at random. Clients try to guess the number.<br>
+<ul>
+	<li> The client uses a logarithmic search to find the intended number. The client should NOT work from the standard input. </li>
+	<li> If a client has guessed the number, the server sends the message "End" (V) to every new client message, after which the clients exit. </li>
+	<li> Upon receiving Win (Y), Lose (K) and End (V) messages, the client disconnects and terminates the connection. In case of Yes (I) / No (N), it continue the questioning. </li>
+	<li> Use TCP for communication!</li>
+	<li> The server uses SELECT funtion to serve multiple clients!!!!!</li>
+	<li> If the game is over, the server send End (V) for every question!</li>
+</ul>
+Message format:
+<ul>
+	<li> Form Client: <b>bytes format</b> one char (c), one integer (i). (struct) Do not use the byte order manipulation operator! ('!')</li>
+	<ul>
+		<li> The char is: <b>&lt;</b>: lower then, <b>&gt;</b>: bigger then, <b>=</b>: equals</li>
+		<li> ex: ('&gt;',10) //the number is bigger then 10</li>
+	</ul>
+	<li> From Server: same <b>bytes format </b>, but the number is irrelevant (struct)</li>
+	<ul>
+		<li> The char is: <b>I</b>: Yes, <b>N</b>: No, <b>K</b>: Quit, <b>Y</b>: Win, <b>V</b>: End</li>
+		<li> ex: ('V',0)</li>
+	</ul>
+</ul>
+<br>
+<b>Parameters of the script</b>: <br>
+<ul>
+	<li> python3 client.py &lt; hostname &gt;  &lt; port number &gt;   </li>
+	<ul>
+		<li> ex: python3 client.py localhost 10000</li>
+	</ul>
+	<li> python3 server.py &lt; hostname &gt; &lt; port number &gt;   </li>
+	<ul>
+		<li> ex: python3 server.py localhost 10000</li>
+	</ul>
+</ul>
+<br>
+<br>
+<b>Submission</b>: Send it to the TMS in <b>.zip</b> file which should contain a <b>client.py</b> and a <b>server.py</b> only!<br>
+<br>
+</body></html>

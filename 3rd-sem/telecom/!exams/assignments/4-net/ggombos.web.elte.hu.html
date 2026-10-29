@@ -1,0 +1,194 @@
+<html lang="de"><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1250"></head><body>
+<h3>NetCopy GmbH</h3>
+Erstellen Sie eine Netcopy-Client/Server-Anwendung, mit der Sie eine Datei übertragen und die übertragenen Daten mit einer CRC- oder MD5-Prüfsumme überprüfen können! Während der Aufgabe <b>drei</b> eine Komponente/ein Programm ist vorzubereiten:<br>
+<br>
+1. <b>Checksum Server</b>: (Dateiidentifikation, Prüfsumme Länge, Prüfsumme, Ablauf (in s)) ermöglicht es Ihnen, Vieren zu speichern und abzufragen. Einzelheiten zum Protokoll finden Sie unten.<br>
+2. <b>Netcopy-Client</b>: sendet eine Datei, die in einem Befehlszeilenargument angegeben ist, an den Server. Während/am Ende der Übertragung berechnet es eine md5-Prüfsumme für die Datei und lädt sie dann zusammen mit einer Datei-ID auf den Checksum-Server hoch. Das Ablaufdatum beträgt 60 Sekunden. Eine Dateikennung ist eine ganze Zahl, die auch in einem Befehlszeilenargument eingegeben werden muss.<br>
+3. <b>Netcopy Server</b>: Warten auf einen Kunden zum Beitritt. Nach der Verbindung erhält es die übertragenen Bytes und platziert sie in der im Befehlszeilenargument angegebenen Datei. Am Ende ruft es die md5 Prüfsumme für die Datei-ID vom Checksum-Server ab und überprüft die Richtigkeit der übertragenen Datei, deren Ergebnis auch auf stdoutput geschrieben wird. Die Datei-ID muss auch ein Befehlszeilenargument sein. <br>
+
+<h3>Checksum Server</h3>
+<ul>
+	<li> Nachricht einfügen</li>
+	<ul>
+		<li> Format: Text</li>
+		<li> Struktur: ON|&lt; Datei darauf. &gt;|&lt; Gültigkeit in Sekunden &gt;|&lt; Prüfsumme Länge in Byte Zählung &gt;|&lt; checksum bytes &gt;&gt;</li>
+		<li> Das „|“ Trennzeichen</li>
+		<li> Beispiel: BE|1237671|60|12|abcdefabdef</li>
+		<ul>
+			<li> In diesem Fall: die Datei: 1237671, 60sec ist die Gültigkeitsdauer, 12 Byte der Prüfsumme, abcdefabcdef ist die Prüfsumme selbst</li>
+			<li> Antwort Nachricht: OK</li>
+		</ul>
+	</ul>
+	<li> Nimmt die Botschaft heraus</li>
+	<ul>
+		<li> Format: Text</li>
+		<li> Struktur: KI|&lt; Datei darauf. &gt;</li>
+		<li> Das „|“ Trennzeichen</li>
+		<li> Beispiel: OFF|1237671</li>
+		<ul>
+			<li> Das heißt, bitte Prüfsumme für die Dateikennung 1237671</li>
+			<li> Antwortnachricht: &lt; Prüfsummenlänge in Byte-Anzahl &gt;|&lt; Checksummen-Bytes &gt;</li>
+			<li> Beispiel: 12|abcdabcdef</li>
+		</ul>
+		<li> Wenn es keine Prüfsumme gibt, sendet sie: 0|</li>
+	</ul>
+	<li> Lauf</li>
+	<ul>
+		<li> python3 checksum_srv.py &lt; ip &gt; &lt; port&gt;</li>
+		<ul>
+			<li> &lt; ip&gt; - z.B. localhost für Server-Adressbindung</li>
+			<li> &lt; port &gt; - wird auf diesem Port verfügbar sein</li>
+		</ul>
+		<li> Der Server läuft in einem unendlichen Zyklus und kann mehrere Clients gleichzeitig bedienen. Kommunikation ist TCP, sie verarbeitet nur die oben genannten Nachrichten.</li>
+		<li> Post-Expiry-Prüfsummen werden gelöscht, aber es reicht aus, nur auf die nächste Anfrage zu überprüfen.</li>
+	</ul>
+</ul>
+
+<h3>NetCopy-Client</h3>
+<ul>
+	<li> Operation:</li>
+	<ul>
+		<li> Es ist mit dem Server verbunden, deren Adresse und Port Sie in einem Befehlszeilenargument erhalten.</li>
+		<li> Kontinuierliche Übertragung von Dateibytes auf den Server.</li>
+		<li> Kommunizieren Sie mit dem Checksum-Server, wie dort beschrieben.</li>
+		<li> Nachdem die Datei übertragen und die Prüfsumme platziert wurde, trennt sie die Verbindung und das Terminal.</li>
+	</ul>
+	<li> Laufen:</li>
+	<ul>
+		<li> python3 netcopy_cli.py &lt; srv_ip &gt; &lt; srv_port &gt; &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt; &lt; Datei mit Pfad &gt; &lt; Dateinamenpfad &gt;</li>
+		<li> &lt; Datei auf &gt;: integer</li>
+		<li> &lt; srv_ip &gt; &lt; srv_port &gt;: Verfügbarkeit des netcopy-Servers</li>
+		<li> &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt;: Verfügbarkeit des Checksum-Servers</li>
+	</ul>
+</ul>
+
+<h3>NetCopy Server GmbH</h3>
+<ul>
+<li> Operation:</li>
+<ul>
+  <li> Binden Sie den Socket an die im Befehlszeilenargument angegebene Adresse.</li>
+  <li> Er wartet auf einen Kunden.</li>
+  <li> Wenn Sie es akzeptiert haben, erhält es die Bytes der Datei kontinuierlich und schreibt sie in die im Befehlsargument angegebene Datei.</li>
+  <li> Wenn Sie ein Dateiendsignal lesen, schließt es die Verbindung und überprüft dann die Datei mit dem Checksum-Server.</li>
+  <li> Kommunizieren Sie mit dem Checksum-Server, wie dort beschrieben.</li>
+  <li> Im Falle eines Fehlers muss es auf dem Stdout geschrieben sein: CSUM CORRUPTED</li>
+  <li> Bei korrekter Übermittlung muss sie auf das Stdout geschrieben werden: CSUM OK</li>
+  <li> Datei empfangen und überprüfen nach dem Terminal des Programms.</li>
+</ul>
+<li> Laufen:</li>
+<ul>
+	<li> python3 netcopy_srv.py &lt; srv_ip &gt; &lt; srv_port &gt; &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt; &lt; Datei mit Pfad &gt; &lt; Dateiname mit Pfad &gt;</li>
+	<ul>
+		<li> &lt; Datei auf &gt;: integer ua. wie im Client – so rufen Sie die Prüfsumme vom Server ab</li>
+		<li> &lt; srv_ip &gt; &lt; srv_port &gt;: Verfügbarkeit des Netcopy-Servers – muss bei Bindung erfolgen</li>
+		<li> &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt;: Verfügbarkeit des Checksum-Servers</li>
+		<li> &lt; Dateiname &gt; : hier können Sie die Bytes schreiben, die Sie erhalten haben</li>
+	</ul>
+</ul>
+</ul>
+<br>
+Einreichung: Senden Sie das Programm auf dem TMS-System <b>.zip</b> Format, in welchem <b>checksum_srv.py</b>, eins <b>netcopy_cli.py</b> und eins <b>netcopy_srv.py</b> Enthalten sein!<br>
+<br>
+<br>
+
+
+
+<b>###########-##-#-##-##-##-###-#####-###-##-###-##-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-##-#</b><br>
+<h3>NetCopyEn GmbH</h3>
+
+
+Erstellen Sie eine netcopy client/server-Anwendung, die die aktivierte Übertragung einer Datei und die Validierung der übertragenen Daten mit einer CRC- oder MD5-Prüfsumme ist! Während der Aufgabe, <b>drei</b>Komponenten/Programme müssen vorbereitet werden:<br>
+<br>
+1. <b>Checksum Server</b>: Speicherdaten: (Dateikennung, Prüfsumme Länge, Prüfsumme, Ablauf (in Sekunden)). Details zum Protokoll finden Sie unten.<br>
+2. <b>Netcopy-Client</b>: Überträgt die in einem Befehlszeilenargument enthaltene Datei auf den Server. Während/am Ende der Übertragung berechnet sie eine Prüfsumme für die Datei und lädt sie dann mit der Datei-ID auf den Checksum-Server hoch. Die Ablaufzeit beträgt 60 Sekunden. Die Datei ist die Kennung einer Ganzzahl, die ebenfalls in einem Befehlsargument angegeben werden muss.<br>
+3. <b>Netcopy Server</b>: Wartet darauf, dass sich ein Client verbindet. Nach der Verbindung empfängt es die übertragenen Bytes und platziert sie in der Datei im Befehlszeilenargument. Am Ende ruft es die mit der Dateikennung verknüpften Prüfungen vom Checksum-Server ab und überprüft die Richtigkeit der übertragenen Datei, wodurch sie auch in die Standardausgabe geschrieben wird. Die Datei muss auch ein Befehlszeilenargument sein. <br>
+
+<h3>Checksum server</h3>
+<ul>
+	<li> Insert message</li>
+	<ul>
+		<li> Format: text</li>
+		<li> Structure: BE|&lt; file id &gt;|&lt; validity in seconds &gt;|&lt; checksum length in bytes &gt;|&lt; checksum bytes &gt;</li>
+		<li> The "|" is the delimiter character</li>
+		<li> Example: BE|1237671|60|12|abcdefabcdef</li>
+		<ul>
+			<li> In this case: the file number: 1237671, the validity period is 60 seconds, the checksum is 12 bytes, the checksum itself is abcdefabcdef</li>
+			<li> Response message: OK</li>
+		</ul>
+	</ul>
+	<li> Take out message</li>
+	<ul>
+		<li> Format: text</li>
+		<li> Structure: KI|&lt; file id &gt;</li>
+		<li> The "|" is the delimiter character</li>
+		<li> Example: KI|1237671</li>
+		<ul>
+			<li> That is, we are asking for the checksum for file ID 1237671</li>
+			<li> Response message: &lt; checksum length in bytes &gt;| &lt; checksum bytes &gt;</li>
+			<li> Example: 12|abcdefabcdef</li>
+		</ul>
+		<li> If there is no checksum, it sends: 0|</li>
+	</ul>
+	<li> Run</li>
+	<ul>
+		<li> python3 checksum_srv.py &lt; ip &gt; &lt; port &gt;</li>
+		<ul>
+			<li> &lt; ip &gt; - e.g. localhost is the address of the server when binding</li>
+			<li> &lt; port &gt; - will be available on this port</li>
+		</ul>
+		<li> The server runs in an endless cycle and can serve several clients at the same time. The communication is TCP, it only handles the above messages.</li>
+		<li> Post-expiration checksums are deleted, but it is enough if you only check them at the next request.</li>
+	</ul>
+</ul>
+
+<h3>NetCopy Client</h3>
+<ul>
+	<li> Operation:</li>
+	<ul>
+		<li> Connects to the server, whose address and port you receive in command line arguments.</li>
+		<li> Sequential transfer of file bytes to the server.</li>
+		<li> It communicates with the Checksum server as described there.</li>
+		<li> After transferring the file and placing the checksum, disconnect and terminal.</li>
+	</ul>
+	<li> Run:</li>
+	<ul>
+		<li> python3 netcopy_cli.py &lt; srv_ip &gt; &lt; srv_port &gt; &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt; &lt; file id &gt; &lt; filename with path &gt;</li>
+		<li> &lt; file id &gt;: integer</li>
+		<li> &lt; srv_ip &gt; &lt; srv_port &gt;: netcopy server address</li>
+		<li> &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt;: Checksum server address</li>
+	</ul>
+</ul>
+
+<h3>NetCopy Server</h3>
+<ul>
+	<li> Operation:</li>
+	<ul>
+		<li> Binds the socket to the address specified in the command line argument.</li>
+		<li> Waiting for a client.</li>
+		<li> If accepted, it accepts the bytes of the file sequentially and writes them to the file specified in the paragraph line argument.</li>
+		<li> When an end-of-file signal is read, it closes the connection and then checks the file with the Checksum server.</li>
+		<li> It communicates with the Checksum server as described there.</li>
+		<li> In the event of an error, the following should be written to stdout: CSUM CORRUPTED</li>
+		<li> If the transfer is correct, the following should be written to stdout: CSUM OK</li>
+		<li> After receiving and checking the file, the program is terminal.</li>
+	</ul>
+	<li> Run:</li>
+	<ul>
+		<li> python3 netcopy_srv.py &lt; srv_ip &gt; &lt; srv_port &gt; &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt; &lt; file id &gt; &lt; filename with path &gt;</li>
+		<ul>
+			<li> &lt; file id &gt;: integer same as for the client - based on this, it requests the checksum from the server</li>
+			<li> &lt; srv_ip &gt; &lt; srv_port &gt;: address of the netcopy server - required when binding</li>
+			<li> &lt; chsum_srv_ip &gt; &lt; chsum_srv_port &gt;: Checksum server address</li>
+			<li> &lt; file name &gt; : write the received bytes here</li>
+		</ul>
+<!--		<li> The server runs in an endless cycle and can serve several clients at the same time. The communication is TCP, it only handles the above messages.</li>-->
+	</ul>
+</ul>
+<br>
+Einreichung: Senden Sie es an das TMS in <b>.zip</b> Format, enthält welche <b>checksum_srv.py</b>, die <b>netcopy_cli.py</b> und ein <b>netcopy_srv.py</b> Nur!<br>
+
+<br>
+<br>
+
+</body></html>
