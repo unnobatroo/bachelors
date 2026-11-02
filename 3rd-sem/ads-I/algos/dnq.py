@@ -58,6 +58,7 @@ def bs_dnq(arr, target, left=0, right=None):
     elif arr[mid] > target: return bs_dnq(arr, target, left, mid - 1)
     elif arr[mid] < target: return bs_dnq(arr, target, mid + 1, right)
 
+
 target = int(input("Which number are we searching today? "))
 nums = sorted(random.sample(range(1, 1 << 31), 1000000))
 

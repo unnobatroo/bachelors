@@ -34,13 +34,16 @@ class Node:
 
         return " -> ".join(elements) + " -> None"
 
+
 def findSecondMax(head_ptr):
-    if not head_ptr or not head_ptr.next: return None
+    if not head_ptr or not head_ptr.next:
+        return None
 
     m1 = head_ptr.val
     m2 = head_ptr.next.val
 
-    if m2 > m1: m1, m2 = m2, m1
+    if m2 > m1:
+        m1, m2 = m2, m1
 
     curr = head_ptr.next.next
 
@@ -51,11 +54,13 @@ def findSecondMax(head_ptr):
             m2 = m1
             m1 = val
 
-        elif val > m2 and val != m1: m2 = val
+        elif val > m2 and val != m1:
+            m2 = val
 
         curr = curr.next
 
     return m2
+
 
 ls = Node.create_ls(random.sample(range(1, 100), 10))
 

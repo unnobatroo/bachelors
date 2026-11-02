@@ -25,7 +25,8 @@ public enum Direction {
     /** maps a 1-step (dr, dc) offset to a direction, null if diagonal or >1 step */
     public static Direction fromDelta(int dr, int dc) {
         for (Direction d : values()) {
-            if (d.dr == dr && d.dc == dc) return d;
+            if (d.dr == dr && d.dc == dc)
+                return d;
         }
         return null;
     }

@@ -63,10 +63,10 @@ public final class PebbleGUI extends JFrame {
     /** binds arrow keys and WASD to push the selected pebble */
     private void bindKeys() {
         int[][] keys = {
-            { KeyEvent.VK_UP, KeyEvent.VK_W },
-            { KeyEvent.VK_DOWN, KeyEvent.VK_S },
-            { KeyEvent.VK_LEFT, KeyEvent.VK_A },
-            { KeyEvent.VK_RIGHT, KeyEvent.VK_D },
+                { KeyEvent.VK_UP, KeyEvent.VK_W },
+                { KeyEvent.VK_DOWN, KeyEvent.VK_S },
+                { KeyEvent.VK_LEFT, KeyEvent.VK_A },
+                { KeyEvent.VK_RIGHT, KeyEvent.VK_D },
         };
         Direction[] dirs = Direction.values();
         JComponent root = getRootPane();
@@ -76,8 +76,8 @@ public final class PebbleGUI extends JFrame {
             String key = "push_" + dir;
             for (int code : keys[i]) {
                 root
-                    .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                    .put(KeyStroke.getKeyStroke(code, 0), key);
+                        .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                        .put(KeyStroke.getKeyStroke(code, 0), key);
             }
             root.getActionMap().put(key, new AbstractAction() {
                 @Override
@@ -90,7 +90,8 @@ public final class PebbleGUI extends JFrame {
 
     /** rebuilds the board for the chosen size and packs the window to fit */
     private void startNewGame(BoardSize preset) {
-        if (preset != null) this.boardSize = preset;
+        if (preset != null)
+            this.boardSize = preset;
         this.game = new PebbleGame(this.boardSize);
 
         int n = game.size();
@@ -113,7 +114,10 @@ public final class PebbleGUI extends JFrame {
         pack();
     }
 
-    /** handles cell click: toggle selection, push into adjacent cell, or select own pebble */
+    /**
+     * handles cell click: toggle selection, push into adjacent cell, or select own
+     * pebble
+     */
     private void onCellClick(Position clicked) {
         Position sel = game.selected();
         if (clicked.equals(sel)) {
@@ -130,16 +134,20 @@ public final class PebbleGUI extends JFrame {
         }
     }
 
-    /** executes a directional move on the selected pebble and checks for game over */
+    /**
+     * executes a directional move on the selected pebble and checks for game over
+     */
     private void tryMove(Direction dir) {
-        if (!game.moveSelected(dir)) return;
+        if (!game.moveSelected(dir))
+            return;
         refresh();
-        if (!game.isGameOver()) return;
+        if (!game.isGameOver())
+            return;
 
         Cell w = game.winner();
         String msg = (w == Cell.EMPTY ? "Draw!" : w.label() + " wins!") +
-            " (White: " + game.count(Cell.WHITE) +
-            ", Black: " + game.count(Cell.BLACK) + ")";
+                " (White: " + game.count(Cell.WHITE) +
+                ", Black: " + game.count(Cell.BLACK) + ")";
         JOptionPane.showMessageDialog(this, msg, "Game Over", JOptionPane.INFORMATION_MESSAGE);
         startNewGame(boardSize);
     }
@@ -152,16 +160,14 @@ public final class PebbleGUI extends JFrame {
             for (int c = 0; c < n; c++) {
                 Position p = new Position(r, c);
                 buttons[r][c].sync(
-                    game.cellAt(r, c),
-                    p.equals(sel),
-                    sel != null && sel.directionTo(p) != null
-                );
+                        game.cellAt(r, c),
+                        p.equals(sel),
+                        sel != null && sel.directionTo(p) != null);
             }
         }
         statusLabel.setText(
-            game.currentPlayer().label() + "'s turn  |  Turns left: " +
-            game.remainingTurns() + "  |  White: " + game.count(Cell.WHITE) +
-            "  Black: " + game.count(Cell.BLACK)
-        );
+                game.currentPlayer().label() + "'s turn  |  Turns left: " +
+                        game.remainingTurns() + "  |  White: " + game.count(Cell.WHITE) +
+                        "  Black: " + game.count(Cell.BLACK));
     }
 }
