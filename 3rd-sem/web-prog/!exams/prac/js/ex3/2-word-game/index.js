@@ -14,3 +14,13 @@ const divEndOfGame = document.querySelector("#end-of-game");
 const btnRestart = document.querySelector("#restart");
 
 // ========= Solution =========
+
+// a. (1 pt)
+// Choose a random word from the array wordList
+// and display it in the div divTheWord that is inside
+// the details element. (You can use this to view the solution
+// while testing.)
+
+import { worldList } from "./words.js";
+
+divTheWord.textContent = worldList[random(0, worldList.length - 1)]

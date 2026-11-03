@@ -1,0 +1,16 @@
+pascals_triangle_row(k : ℤ) : Queue
+    Q : Queue
+    SetEmpty(Q)
+    push(Q, 1)
+    
+    for i := 1 to k - 1 do
+        push(Q, 0)
+        prev := 0
+        do
+            x := pop(Q)
+            push(Q, prev + x)
+            prev := x
+        while x ≠ 0
+    end for
+    
+    return Q

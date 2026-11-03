@@ -1,0 +1,32 @@
+precede(q, r : E2*)
+    p : E2*
+    p := r->prev
+
+    q->prev := p ; q->next := r
+    p->next := q ; r->prev := q
+
+
+c2l_intersection(L1, L2 : E2*) : E2*
+    L_res, p1, p2, q : E2*
+    L_res := new E2
+
+    p1 := L1->next
+    p2 := L2->next
+
+    while p1 ≠ L1 ∧ p2 ≠ L2 do
+        if p1->key = p2->key:
+            q := new E2
+            q->key := p1->key
+
+            precede(q, L_res)
+
+            p1 := p1->next
+            p2 := p2->next
+
+        else if p1->key < p2->key then
+            p1 := p1->next
+
+        else
+            p2 := p2->next
+
+    return L_res

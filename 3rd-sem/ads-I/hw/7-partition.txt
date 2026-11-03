@@ -1,0 +1,28 @@
+partition(head : E1*, pivot : T) : E1*
+    l_dummy, r_dummy, l, r, p, res : E1*
+    
+    l_dummy := new E1
+    r_dummy := new E1
+    
+    l := l_dummy
+    r := r_dummy
+    p := head
+
+    while p ≠ 0 do
+        if p->key < pivot then
+            l->next := p
+            l := p
+        else
+            r->next := p
+            r := p
+        end if
+        p := p->next
+
+    l->next := r_dummy->next
+    r->next := 0
+    
+    res := l_dummy->next
+    delete l_dummy
+    delete r_dummy
+    
+    return res

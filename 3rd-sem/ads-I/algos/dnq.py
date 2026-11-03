@@ -1,6 +1,6 @@
 import random
 
-# arr = random.sample(range(1, 1 << 31), 10000)
+arr = random.sample(range(1, 1 << 31), 100000)
 
 
 def sum_dnq(arr, left=0, right=None):
@@ -12,7 +12,8 @@ def sum_dnq(arr, left=0, right=None):
     return sum_dnq(arr, left, mid) + sum_dnq(arr, mid + 1, right)
 
 # print(
-#     "Congrats! You're not dolboyob." if exp := sum(arr) == (act := sum_dnq(arr)
+#     "Congrats! You're not dolboyob."
+#     if (exp := sum(arr)) == (act := sum_dnq(arr))
 #     else f"Jalalabad is waiting for you my friend!\n{exp} was the real result, while you calculated {act}"
 # )
 
@@ -25,7 +26,7 @@ def count_dnq(arr, left=0, right=None):
 
     return count_dnq(arr, left, mid) + count_dnq(arr, mid + 1, right)
 
-# print("Nice" if len(arr) == count_dnq(arr) else "Pizdes")
+print("Nice" if len(arr) == count_dnq(arr) else "Pizdes")
 
 
 def max_dnq(arr, left=0, right=None):
@@ -42,7 +43,8 @@ def max_dnq(arr, left=0, right=None):
     return left_max
 
 # print(
-#     "No need for a ticket to Jalalabad." if exp := max(arr)) == (act := max_dnq(arr)
+#     "No need for a ticket to Jalalabad."
+#     if (exp := max(arr)) == (act := max_dnq(arr))
 #     else f"Time to open Aviasales.ru!\n{exp} was the real result, while you calculated {act}"
 # )
 
@@ -63,6 +65,7 @@ target = int(input("Which number are we searching today? "))
 nums = sorted(random.sample(range(1, 1 << 31), 1000000))
 
 print(
-    "Nicely done!" if (exp := bs_dnq(nums, target)) == (act := target in nums)
+    "Nicely done!"
+    if (exp := bs_dnq(nums, target)) == (act := target in nums)
     else f"Off target.\nYour answer was {exp} while it must have been {act}"
 )

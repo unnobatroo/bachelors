@@ -1,0 +1,20 @@
+version = 1
+revision = 5
+requires-python = ">=3.13"
+
+[[package]]
+name = "hw"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "pyllist" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pyllist", specifier = ">=0.3" }]
+
+[[package]]
+name = "pyllist"
+version = "0.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d6/da/68160735f958f76bba1daaaef86fd831230c19454fb6d8721df93ebe59b3/pyllist-0.3.tar.gz", hash = "sha256:6afd58ab1bccfa948da78dc9bfb5915c38bb280a19e68926c4a9d1c9e9cac45f", size = 19598, upload-time = "2017-11-18T20:04:38.553Z" }

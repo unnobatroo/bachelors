@@ -19,16 +19,19 @@ const students = [
 // ========= Solution =========
 // Hogy hívják azt a diákot, akinek a kódja xrpwmb?
 // What's the name of the student whose code is "xrpwmb"?
-
+task1.textContent = students.find(s => s.code === "xrpwmb").name;
 
 // Kik azok a diákok, akiknek csupa 5-ösük van?
 // Who are the students that received no grade other than 5?
-
+let nerds = students.filter(s => s.grades.every(grade => grade === 5));
+task2.textContent = nerds.map(nerd => nerd.name).join(", ");
 
 // Hány olyan diák van, aki megbukott (legalább 3 darab 1-ese van)?
 // How many students have failed (received at least three 1s)?
+let disappointments = students.filter(s => s.grades.filter(grade => grade === 1).length >= 3)
+task3.textContent = disappointments.length;
 
-
+const countOnes = s => s.grades.filter(grade => grade === 1).length;
 // Ki kapta a legtöbb egyest?
 // Who received the highest number of 1s?
-
+task4.textContent = students.reduce((best, curr) => countOnes(best) > countOnes(curr) ? best : curr).name;
