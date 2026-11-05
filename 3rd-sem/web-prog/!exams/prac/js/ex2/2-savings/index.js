@@ -10,35 +10,33 @@ const divContainer = document.querySelector(".container");
 const mul_reads = form.querySelectorAll("input");
 let M = 0;
 for (const single_read of mul_reads) {
-  M += Number(single_read.dataset.consumption);
+    M += Number(single_read.dataset.consumption);
 }
 console.log(M);
 
 function updateChart() {
-  // b. (2 pts)
-  // Calculate the current consumption ( ci ) for each input
-  // and log the values to the console. Read the current value ( value ) of the input,
-  // divide it by the maximum value ( max attribute of the input)
-  // and multiply it by data-consumption. (ci=(value/max)*consumption).
-  // Note: the value of ci matches the value of consumption when the page loads
-  // since every slider is set to its maximum value.
+    // b. (2 pts)
+    // Calculate the current consumption ( ci ) for each input
+    // and log the values to the console. Read the current value ( value ) of the input,
+    // divide it by the maximum value ( max attribute of the input)
+    // and multiply it by data-consumption. (ci=(value/max)*consumption).
+    // Note: the value of ci matches the value of consumption when the page loads
+    // since every slider is set to its maximum value.
 
-  const ciValues = [...mul_reads].map(
-    input => (Number(input.value) / Number(input.max)) * Number(input.dataset.consumption)
-  );
-  console.log(ciValues);
+    const ciValues = [...mul_reads].map(input => (Number(input.value) / Number(input.max)) * Number(input.dataset.consumption));
+    console.log(ciValues);
 
-  // c. (2 pts)
-  // Every input has a corresponding label element on chart under the form.
-  // The label's 'for' attribute matches the 'id' attribute of the input it belongs to.
-  // Set the 'label' element's width style property to ci / M * 100 percent (%)
-  // for each input field (e.g. '65%' ).
+    // c. (2 pts)
+    // Every input has a corresponding label element on chart under the form.
+    // The label's 'for' attribute matches the 'id' attribute of the input it belongs to.
+    // Set the 'label' element's width style property to ci / M * 100 percent (%)
+    // for each input field (e.g. '65%' ).
 
-  for (let i = 0; i < mul_reads.length; i++) {
-	  const label = mul_reads[i].labels[0];
-	  const percent = (ciValues[i] / M) * 100;
-	  label.style.width = percent + "%";
-	}
+    for (let i = 0; i < mul_reads.length; i++) {
+        const label = mul_reads[i].labels[0];
+        const percent = (ciValues[i] / M) * 100;
+        label.style.width = percent + "%";
+    }
 }
 
 updateChart();
